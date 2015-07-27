@@ -16,6 +16,8 @@
 	</properties>
 
 	<dependencies>
+
+		<!-- 测试引入 start -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -23,6 +25,13 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- 测试引入 start -->
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -112,7 +121,7 @@
 			<scope>provided</scope>
 		</dependency>
 
-<!-- 		spring 事物配置 -->
+		<!-- spring 事物配置 -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>

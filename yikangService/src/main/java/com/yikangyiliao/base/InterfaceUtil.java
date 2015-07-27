@@ -30,6 +30,7 @@ public class InterfaceUtil {
 		
 		serviceClassName.put("00-01", "seniorAccountService");
 		mathodClassPath.put("00-01-01","saveSeniorAccount");
+		mathodClassPath.put("00-01-02","getSeniorAccountById");
 		
 	}
 	
