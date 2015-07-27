@@ -28,7 +28,7 @@
 		<property name="configLocation"
 			value="/WEB-INF/classes/config/mybatis/myBatisConfigration.xml"></property>
 		<property name="mapperLocations" value="/WEB-INF/classes/config/mybatis/mapper/*.xml" />
-		<property name="typeAliasesPackage" value="com.yikangyiliao.pension.dao" />
+<!-- 		<property name="typeAliasesPackage" value="com.yikangyiliao.pension.dao" /> -->
 	</bean>
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
@@ -37,30 +37,31 @@
 	</bean>
 	
 	 <!-- ================================事务相关控制=================================================    -->
-<!--    <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">      -->
-<!--           <property name="dataSource" ref="MyDataSource"></property> -->
-<!--    </bean>      -->
+   <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">     
+          <property name="dataSource" ref="myDataSource"></property>
+   </bean>     
   
-<!--   <tx:advice id="ykTxAdvice" transaction-manager="transactionManager"> -->
-<!--     <tx:attributes> -->
+  <tx:advice id="ykTxAdvice" transaction-manager="transactionManager">
+    <tx:attributes>
     
-<!--       <tx:method name="delete*" propagation="REQUIRED" read-only="false"  rollback-for="java.lang.Exception" no-rollback-for="java.lang.RuntimeException"/> -->
+      <tx:method name="delete*" propagation="REQUIRED" read-only="false"  rollback-for="java.lang.Exception" no-rollback-for="java.lang.RuntimeException"/>
                             
-<!--       <tx:method name="insert*" propagation="REQUIRED" read-only="false"  rollback-for="java.lang.RuntimeException" /> -->
-<!--       <tx:method name="save*" propagation="REQUIRED" read-only="false"    rollback-for="java.lang.RuntimeException" /> -->
+      <tx:method name="insert*" propagation="REQUIRED" read-only="false"  rollback-for="java.lang.RuntimeException" />
+      <tx:method name="save*" propagation="REQUIRED" read-only="false"    rollback-for="java.lang.RuntimeException" />
       
-<!--       <tx:method name="update*" propagation="REQUIRED" read-only="false"  rollback-for="java.lang.Exception" /> -->
+      <tx:method name="update*" propagation="REQUIRED" read-only="false"  rollback-for="java.lang.Exception" />
       
-<!--       <tx:method name="find*" propagation="SUPPORTS"/> -->
-<!--       <tx:method name="get*" propagation="SUPPORTS"/> -->
-<!--       <tx:method name="select*" propagation="SUPPORTS"/> -->
-<!--     </tx:attributes> -->
-<!--   </tx:advice> -->
+      <tx:method name="find*" propagation="SUPPORTS"/>
+      <tx:method name="get*" propagation="SUPPORTS"/>
+      <tx:method name="select*" propagation="SUPPORTS"/>
+    </tx:attributes>
+  </tx:advice>
   
-<!--   <aop:config>     -->
-<!--     <aop:pointcut id="ykTxAdvicePointCut" expression="execution(public * com.yikangyiliao.service.*.*(..))" /> 把事务控制在Service层 -->
-<!--     <aop:advisor pointcut-ref="ykTxAdvicePointCut" advice-ref="ykTxAdvice" /> -->
-<!--   </aop:config> -->
+  <aop:config>    
+<!--     把事务控制在Service层 -->
+    <aop:pointcut id="ykTxAdvicePointCut" expression="execution(public * com.yikangyiliao.pension.service.*.*(..))" /> 
+    <aop:advisor pointcut-ref="ykTxAdvicePointCut" advice-ref="ykTxAdvice" />
+  </aop:config>
 
 
 </beans>
