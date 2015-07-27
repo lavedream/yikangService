@@ -15,8 +15,8 @@ public class RedisExample{
 	@Autowired
 	private RedisTemplate<String, String> template;
 	
-	@Resource(name="redisTemplate")
-	private ListOperations<String, String> listOps;
+//	@Resource(name="redisTemplate")
+//	private ListOperations<String, String> listOps;
 	
 	
 	public void save(String key,String value){

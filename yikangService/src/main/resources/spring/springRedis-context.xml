@@ -5,13 +5,6 @@
 
 	<bean id="jedisConnectionFactory"
 		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"  p:host-name="localhost" p:port="6379">
-<!-- 		<constructor-arg> -->
-<!-- 			<bean -->
-<!-- 				class="org.springframework.data.redis.connection.jredis.DefaultJredisPool"> -->
-<!-- 				<constructor-arg value="localhost" /> -->
-<!-- 				<constructor-arg value="6379" /> -->
-<!-- 			</bean> -->
-<!-- 		</constructor-arg> -->
 	</bean>
 	
 	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"

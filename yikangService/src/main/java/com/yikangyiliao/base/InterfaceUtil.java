@@ -25,8 +25,12 @@ public class InterfaceUtil {
 	static{
 		serviceClassName=new HashMap<String,String>();
 		mathodClassPath=new HashMap<String,String>();
-		serviceClassName.put("0-0-1","test");
+		serviceClassName.put("0-0","test");
 		mathodClassPath.put("0-0-1","test");
+		
+		serviceClassName.put("00-01", "seniorAccountService");
+		mathodClassPath.put("00-01-01","saveSeniorAccount");
+		
 	}
 	
 	public void loadConfigInterface(String filePath){
@@ -36,6 +40,7 @@ public class InterfaceUtil {
 	        InputStream is = InterfaceUtil.class.getClassLoader()
 	                .getResourceAsStream("student.xml");
 	        //saxParser.parse(is);
+	        // TODO 后期添加本功能
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -54,6 +59,7 @@ public class InterfaceUtil {
 	 *
 	 ***/
 	public static String getBeanNameByServiceCode(String serviceCode){
+		serviceCode=serviceCode.substring(0,serviceCode.lastIndexOf('-'));
 		return serviceClassName.get(serviceCode);
 	}
 
@@ -66,4 +72,12 @@ public class InterfaceUtil {
 	public static String getMethodNameByServiceCode(String serviceCode){
 		return mathodClassPath.get(serviceCode);
 	}
+	
+	
+	public static void main(String[] args) {
+		String codeStr="00-02-01";
+		System.out.println(codeStr.substring(0,codeStr.lastIndexOf('-')));
+	}
+	
+	
 }

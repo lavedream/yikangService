@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yikangyiliao.base.encryption.AES;
 
+
+
 @Controller
 public class ServiceController {
 
@@ -34,33 +36,37 @@ public class ServiceController {
 
 			Map<String, Object> rtnMap = new HashMap<String, Object>();
 
-			String beanName = InterfaceUtil
-					.getBeanNameByServiceCode(serverviceCode);
+			String beanName = InterfaceUtil.getBeanNameByServiceCode(serverviceCode);
 
-			String methodName = InterfaceUtil
-					.getMethodNameByServiceCode(serverviceCode);
+			String methodName = InterfaceUtil.getMethodNameByServiceCode(serverviceCode);
 
 			if (null != beanName) {
 				if (null != methodName) {
 
-					Object invokObject = ApplicationContextUtil.applicationContext
-							.getBean(beanName);
+					Object invokObject = ApplicationContextUtil.applicationContext.getBean(beanName);
 
 					try {
 						Method returnMethod = invokObject.getClass().getMethod(
 								methodName, Map.class);
 
 						Map<String, Object> paramMap = new HashMap<String, Object>();
-						rtnMap = (Map<String, Object>) returnMethod.invoke(
-								invokObject, paramMap);
+						if(null != paramData && paramData.length()>0){
+							paramData=AES.Decrypt(paramData, "1234567890abcDEF");
+							paramMap=objectMapper.readValue(paramData, Map.class);
+						}
+					
+						rtnMap = (Map<String, Object>) returnMethod.invoke(invokObject, paramMap);
 
 						// 获取返回
-						Object data = rtnMap.get("data");
+						if(null != rtnMap.get("data")){
+							Object data = rtnMap.get("data");
 
-						String jsonStr = objectMapper.writeValueAsString(data);
-						String enStr = AES.Encrypt(jsonStr, "1234567890abcDEF");
+							String jsonStr = objectMapper.writeValueAsString(data);
+							String enStr = AES.Encrypt(jsonStr, "1234567890abcDEF");
 
-						rtnMap.put("data", enStr);
+							rtnMap.put("data", enStr);
+						}
+
 
 						//return objectMapper.writeValueAsString(rtnMap);
 						return rtnMap;

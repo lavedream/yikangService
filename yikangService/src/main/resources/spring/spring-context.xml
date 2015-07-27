@@ -9,7 +9,7 @@
         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
 
-<!-- 	<import resource="springDataSource-context.xml" /> -->
+	<import resource="springDataSource-context.xml" />
 	<context:component-scan base-package="com.yikangyiliao">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
@@ -44,9 +44,6 @@
 			</list>
 		</property>
 	</bean>
-	
-	
-<!-- 	<import resource="spring-context.xml"/> -->
 	
 	<bean class="com.yikangyiliao.base.ApplicationContextUtil" lazy-init="false"></bean>
 <!-- 	<bean name="test"  class="com.yikangyiliao.pension.service.TestService" lazy-init="false"></bean> -->
