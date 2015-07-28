@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +26,7 @@ public class ServiceController {
 
 	private ObjectMapper objectMapper = new ObjectMapper();
 
-	@RequestMapping(value = "/service/{serverviceCode}",produces = "text/json;charset=UTF-8")
+	@RequestMapping(value = "/service/{serverviceCode}")
 	@ResponseBody
 	public Map<String,Object> doMethod(@PathVariable String serverviceCode, String paramData) {
 		// String code="test";

@@ -1,6 +1,8 @@
 package com.yikang.base;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -10,6 +12,12 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.junit.Test;
+import org.junit.internal.runners.JUnit4ClassRunner;
+import org.junit.runner.RunWith;
+
+import com.yikangyiliao.base.encryption.AES;
 
 
 /**
@@ -17,17 +25,32 @@ import org.apache.http.util.EntityUtils;
  * @date 2015/07/27 18:22
  * @发送请求工具类
  * **/
+
+@RunWith(JUnit4ClassRunner.class)
 public class SendRequest {
 
 	private static String REQUEST_URL = "http://127.0.0.1:8088/service/";
+	
+	private static ObjectMapper objectMapper = new ObjectMapper();
 
-	public static void sendPost(String serviceCode,String  paramData) throws IOException {
+	public static void sendPost(String serviceCode,Map<String,Object>  paramData) throws IOException {
 		
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		
+		
+		
 		try {
-			HttpGet httpget = new HttpGet(REQUEST_URL+serviceCode+"?paramData="+paramData);
+			
+			String paramDataJsonString=objectMapper.writeValueAsString(paramData);
+			
+			try {
+				paramDataJsonString=AES.Encrypt(paramDataJsonString, "1234567890abcDEF");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			HttpGet httpget = new HttpGet(REQUEST_URL+serviceCode+"?paramData="+paramDataJsonString);
 
 			System.out.println("Executing request " + httpget.getRequestLine());
 
@@ -52,7 +75,9 @@ public class SendRequest {
 			String responseBody = httpclient.execute(httpget, responseHandler);
 			System.out.println("----------------------------------------");
 			System.out.println(responseBody);
-		} finally {
+		} catch(Exception e){
+			e.printStackTrace();
+		}finally {
 			httpclient.close();
 		}
 	}
@@ -62,12 +87,31 @@ public class SendRequest {
 	
 	public static void main(String[] args) {
 		try {
-			SendRequest.sendPost("00-01-01","ssd");
+			Map<String,Object> paramData=new HashMap<String, Object>();
+			paramData.put("name","hello");
+			
+			SendRequest.sendPost("00-01-01",paramData);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	@Test
+	public void TestRequest(){
+		try {
+			Map<String,Object> paramData=new HashMap<String, Object>();
+			paramData.put("name","hello");
+			
+			SendRequest.sendPost("00-01-01",paramData);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
+	@Test
+	public void TestAesEncipty() throws Exception{
+		String str=	AES.Encrypt("{name:hello}", "1234567890abcDEF");
+		System.out.println(str);
+	}
 
 }
