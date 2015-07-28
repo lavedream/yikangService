@@ -18,7 +18,7 @@ public class SeniorAccountServiceTest {
 	 * @desc 测试00-01-01 接口保存患者信息
 	 * */
 	@Test
-	public void TestRequest(){
+	public void TestSaveSeniroAccount(){
 		try {
 			Map<String,Object> paramData=new HashMap<String, Object>();
 			paramData.put("name","hello");

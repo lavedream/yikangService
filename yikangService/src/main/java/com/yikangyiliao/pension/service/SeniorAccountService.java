@@ -1,5 +1,7 @@
 package com.yikangyiliao.pension.service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.yikangyiliao.pension.common.constants.YKConstants;
+import com.yikangyiliao.pension.dao.OperateServiceLogDao;
 import com.yikangyiliao.pension.dao.SeniorAccountDao;
+import com.yikangyiliao.pension.entity.OperateServiceLog;
 import com.yikangyiliao.pension.entity.SeniorAccount;
 
 /**
@@ -25,6 +30,9 @@ public class SeniorAccountService {
 
 	@Autowired
 	private SeniorAccountDao seniorAccountDao;
+	
+	@Autowired
+	private OperateServiceLogDao operateServiceLogDao;
 
 	/**
 	 * @author liushuaic
@@ -40,6 +48,9 @@ public class SeniorAccountService {
 			SeniorAccount seniroAccount = new SeniorAccount();
 
 			try {
+				
+				Date currentDateTime=Calendar.getInstance().getTime();
+				
 				String name = paramData.get("name").toString();
 				String sex = paramData.get("sex").toString();
 				String birthday = paramData.get("birthday").toString();
@@ -83,8 +94,21 @@ public class SeniorAccountService {
 					seniroAccount.setRoomOrientation(Byte
 							.valueOf(roomOrientation));
 					seniroAccount.setOutWindow(outWindow == "0" ? false : true);
-
+					seniroAccount.setCreateTime(currentDateTime.getTime());
+					seniroAccount.setUpdateTime(currentDateTime.getTime());
+					
+					
 					seniorAccountDao.insertSelective(seniroAccount);
+					
+					
+					OperateServiceLog operateServiceLog=new OperateServiceLog();
+					operateServiceLog.setCreateTime(currentDateTime.getTime());
+					operateServiceLog.setUpdateTime(currentDateTime.getTime());
+					operateServiceLog.setOperateType(YKConstants.OperateType.insert.getValue().byteValue());
+					
+					
+					operateServiceLogDao.insertSelective(operateServiceLog);
+					
 					rtnData.put("status", "000000");
 					rtnData.put("message", "保存成功！");
 				} else {
