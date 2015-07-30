@@ -22,6 +22,7 @@ public class SeniorAccountServiceTest {
 		try {
 			Map<String,Object> paramData=new HashMap<String, Object>();
 			paramData.put("name","hello");
+			paramData.put("sex",1);
 			
 			SendRequest.sendPost("00-01-01",paramData);
 		} catch (IOException e) {

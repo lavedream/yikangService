@@ -16,15 +16,13 @@
     <result column="payment_type" property="paymentType" jdbcType="TINYINT" />
     <result column="income_sources" property="incomeSources" jdbcType="TINYINT" />
     <result column="phone_no" property="phoneNo" jdbcType="VARCHAR" />
-    <result column="room_orientation" property="roomOrientation" jdbcType="TINYINT" />
-    <result column="out_window" property="outWindow" jdbcType="BIT" />
     <result column="create_time" property="createTime" jdbcType="BIGINT" />
     <result column="update_time" property="updateTime" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Base_Column_List" >
     senior_id, name, sex, birthday, birth_year, card_number, card_type, social_security, 
-    race, faith, living_conditions, payment_type, income_sources, phone_no, room_orientation, 
-    out_window, create_time, update_time
+    race, faith, living_conditions, payment_type, income_sources, phone_no, create_time, 
+    update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -41,16 +39,14 @@
       birthday, birth_year, card_number, 
       card_type, social_security, race, 
       faith, living_conditions, payment_type, 
-      income_sources, phone_no, room_orientation, 
-      out_window, create_time, update_time
-      )
+      income_sources, phone_no, create_time, 
+      update_time)
     values (#{seniorId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, 
       #{birthday,jdbcType=BIGINT}, #{birthYear,jdbcType=INTEGER}, #{cardNumber,jdbcType=VARCHAR}, 
       #{cardType,jdbcType=TINYINT}, #{socialSecurity,jdbcType=VARCHAR}, #{race,jdbcType=BIT}, 
       #{faith,jdbcType=TINYINT}, #{livingConditions,jdbcType=TINYINT}, #{paymentType,jdbcType=TINYINT}, 
-      #{incomeSources,jdbcType=TINYINT}, #{phoneNo,jdbcType=VARCHAR}, #{roomOrientation,jdbcType=TINYINT}, 
-      #{outWindow,jdbcType=BIT}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}
-      )
+      #{incomeSources,jdbcType=TINYINT}, #{phoneNo,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.yikangyiliao.pension.entity.SeniorAccount" >
     insert into senior_account
@@ -96,12 +92,6 @@
       </if>
       <if test="phoneNo != null" >
         phone_no,
-      </if>
-      <if test="roomOrientation != null" >
-        room_orientation,
-      </if>
-      <if test="outWindow != null" >
-        out_window,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -153,12 +143,6 @@
       <if test="phoneNo != null" >
         #{phoneNo,jdbcType=VARCHAR},
       </if>
-      <if test="roomOrientation != null" >
-        #{roomOrientation,jdbcType=TINYINT},
-      </if>
-      <if test="outWindow != null" >
-        #{outWindow,jdbcType=BIT},
-      </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=BIGINT},
       </if>
@@ -209,12 +193,6 @@
       <if test="phoneNo != null" >
         phone_no = #{phoneNo,jdbcType=VARCHAR},
       </if>
-      <if test="roomOrientation != null" >
-        room_orientation = #{roomOrientation,jdbcType=TINYINT},
-      </if>
-      <if test="outWindow != null" >
-        out_window = #{outWindow,jdbcType=BIT},
-      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=BIGINT},
       </if>
@@ -239,8 +217,6 @@
       payment_type = #{paymentType,jdbcType=TINYINT},
       income_sources = #{incomeSources,jdbcType=TINYINT},
       phone_no = #{phoneNo,jdbcType=VARCHAR},
-      room_orientation = #{roomOrientation,jdbcType=TINYINT},
-      out_window = #{outWindow,jdbcType=BIT},
       create_time = #{createTime,jdbcType=BIGINT},
       update_time = #{updateTime,jdbcType=BIGINT}
     where senior_id = #{seniorId,jdbcType=BIGINT}

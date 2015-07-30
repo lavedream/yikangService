@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yikangyiliao.pension.dao.DeviceDao" >
+  <resultMap id="BaseResultMap" type="com.yikangyiliao.pension.entity.Device" >
+    <id column="device_id" property="device_id" jdbcType="BIGINT" />
+    <result column="device_type" property="device_type" jdbcType="TINYINT" />
+    <result column="device_code" property="device_code" jdbcType="VARCHAR" />
+    <result column="code_type" property="code_type" jdbcType="VARCHAR" />
+    <result column="create_time" property="create_time" jdbcType="BIGINT" />
+    <result column="update_time" property="update_time" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    device_id, device_type, device_code, code_type, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from devices
+    where device_id = #{device_id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from devices
+    where device_id = #{device_id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yikangyiliao.pension.entity.Device" >
+    insert into devices (device_id, device_type, device_code, 
+      code_type, create_time, update_time
+      )
+    values (#{device_id,jdbcType=BIGINT}, #{device_type,jdbcType=TINYINT}, #{device_code,jdbcType=VARCHAR}, 
+      #{code_type,jdbcType=VARCHAR}, #{create_time,jdbcType=BIGINT}, #{update_time,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yikangyiliao.pension.entity.Device" >
+    insert into devices
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="device_id != null" >
+        device_id,
+      </if>
+      <if test="device_type != null" >
+        device_type,
+      </if>
+      <if test="device_code != null" >
+        device_code,
+      </if>
+      <if test="code_type != null" >
+        code_type,
+      </if>
+      <if test="create_time != null" >
+        create_time,
+      </if>
+      <if test="update_time != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="device_id != null" >
+        #{device_id,jdbcType=BIGINT},
+      </if>
+      <if test="device_type != null" >
+        #{device_type,jdbcType=TINYINT},
+      </if>
+      <if test="device_code != null" >
+        #{device_code,jdbcType=VARCHAR},
+      </if>
+      <if test="code_type != null" >
+        #{code_type,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null" >
+        #{create_time,jdbcType=BIGINT},
+      </if>
+      <if test="update_time != null" >
+        #{update_time,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yikangyiliao.pension.entity.Device" >
+    update devices
+    <set >
+      <if test="device_type != null" >
+        device_type = #{device_type,jdbcType=TINYINT},
+      </if>
+      <if test="device_code != null" >
+        device_code = #{device_code,jdbcType=VARCHAR},
+      </if>
+      <if test="code_type != null" >
+        code_type = #{code_type,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null" >
+        create_time = #{create_time,jdbcType=BIGINT},
+      </if>
+      <if test="update_time != null" >
+        update_time = #{update_time,jdbcType=BIGINT},
+      </if>
+    </set>
+    where device_id = #{device_id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yikangyiliao.pension.entity.Device" >
+    update devices
+    set device_type = #{device_type,jdbcType=TINYINT},
+      device_code = #{device_code,jdbcType=VARCHAR},
+      code_type = #{code_type,jdbcType=VARCHAR},
+      create_time = #{create_time,jdbcType=BIGINT},
+      update_time = #{update_time,jdbcType=BIGINT}
+    where device_id = #{device_id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -18,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yikangyiliao.base.encryption.AES;
+import com.yikangyiliao.base.utils.ApplicationContextUtil;
+import com.yikangyiliao.base.utils.InterfaceUtil;
 
 
 
@@ -25,15 +30,14 @@ import com.yikangyiliao.base.encryption.AES;
 public class ServiceController {
 
 	private ObjectMapper objectMapper = new ObjectMapper();
+	
+	private Logger logger=Logger.getLogger(ServiceController.class);
 
 	@RequestMapping(value = "/service/{serverviceCode}")
 	@ResponseBody
-	public Map<String,Object> doMethod(@PathVariable String serverviceCode, String paramData) {
-		// String code="test";
-
+	public Map<String,Object> doMethod(@PathVariable String serverviceCode,String appId,String accessTiket, String paramData,HttpServletRequest request) throws JsonGenerationException, JsonMappingException, IOException {
+		Map<String, Object> rtnMap = new HashMap<String, Object>();
 		if (null != serverviceCode) {
-
-			Map<String, Object> rtnMap = new HashMap<String, Object>();
 
 			String beanName = InterfaceUtil.getBeanNameByServiceCode(serverviceCode);
 
@@ -51,6 +55,7 @@ public class ServiceController {
 						Map<String, Object> paramMap = new HashMap<String, Object>();
 						if(null != paramData && paramData.length()>0){
 							paramData=AES.Decrypt(paramData, "1234567890abcDEF");
+							logger.debug("serviceController --> 接收到的paramData数据："+paramData);
 							paramMap=objectMapper.readValue(paramData, Map.class);
 						}
 					
@@ -62,12 +67,8 @@ public class ServiceController {
 
 							String jsonStr = objectMapper.writeValueAsString(data);
 							String enStr = AES.Encrypt(jsonStr, "1234567890abcDEF");
-
 							rtnMap.put("data", enStr);
 						}
-
-
-						//return objectMapper.writeValueAsString(rtnMap);
 						return rtnMap;
 
 					} catch (IllegalAccessException e) {
@@ -101,10 +102,13 @@ public class ServiceController {
 
 				}
 			}
-			//return "{status:'999999',message:'没有对应的服务！',data:''}";
+			rtnMap.put("status","999999");
+			rtnMap.put("message", "没有对应服务！");
+			return rtnMap;
 		}
-		//return "{status:'999999',message:'易康现在有点忙！',data:''}";
-		return null;
+		rtnMap.put("status","999999");
+		rtnMap.put("message", "易康现在有点忙！");
+		return rtnMap;
 	}
 
 	@RequestMapping(value = "/test")

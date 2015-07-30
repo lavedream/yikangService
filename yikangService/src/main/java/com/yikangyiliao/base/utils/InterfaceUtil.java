@@ -1,4 +1,4 @@
-package com.yikangyiliao.base;
+package com.yikangyiliao.base.utils;
 
 import java.io.InputStream;
 import java.util.HashMap;

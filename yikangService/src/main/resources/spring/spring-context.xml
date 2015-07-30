@@ -46,6 +46,6 @@
 		</property>
 	</bean>
 	
-	<bean class="com.yikangyiliao.base.ApplicationContextUtil" lazy-init="false"></bean>
+	<bean class="com.yikangyiliao.base.utils.ApplicationContextUtil" lazy-init="false"></bean>
 
 </beans>

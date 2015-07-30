@@ -10,11 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.yikangyiliao.base.utils.DateUtils;
 import com.yikangyiliao.pension.common.constants.YKConstants;
 import com.yikangyiliao.pension.dao.OperateServiceLogDao;
 import com.yikangyiliao.pension.dao.SeniorAccountDao;
+import com.yikangyiliao.pension.dao.SeniorLivingConditionDao;
 import com.yikangyiliao.pension.entity.OperateServiceLog;
 import com.yikangyiliao.pension.entity.SeniorAccount;
+import com.yikangyiliao.pension.entity.SeniorLivingCondition;
 
 /**
  * @author liushuaic
@@ -33,6 +36,9 @@ public class SeniorAccountService {
 	
 	@Autowired
 	private OperateServiceLogDao operateServiceLogDao;
+	
+	@Autowired
+	private SeniorLivingConditionDao seniorLivingConditionDao;
 
 	/**
 	 * @author liushuaic
@@ -67,9 +73,20 @@ public class SeniorAccountService {
 				String incomeSources = paramData.get("incomeSources")
 						.toString();
 				String phoneNo = paramData.get("phoneNo").toString();
-				String roomOrientation = paramData.get("roomOrientation")
-						.toString();
+				
+				
+				
+				String city = paramData.get("city").toString();
+				String district = paramData.get("district").toString();
+				String floor = paramData.get("floor").toString();
+				String liveWith = paramData.get("liveWith").toString();
 				String outWindow = paramData.get("outWindow").toString();
+				String residentialQuarter = paramData.get("residentialQuarter").toString();
+				String roomOrientation = paramData.get("roomOrientation").toString();
+				String unit = paramData.get("unit").toString();
+				
+				
+				
 				if (null != name && null != sex && null != birthday
 						&& null != birthYear && null != cardNumber
 						&& null != cardType && null != socialSecurity
@@ -79,7 +96,7 @@ public class SeniorAccountService {
 						&& null != roomOrientation && null != outWindow) {
 					seniroAccount.setName(name);
 					seniroAccount.setSex(Byte.valueOf(sex));
-					seniroAccount.setBirthday(Long.parseLong(birthday));
+					seniroAccount.setBirthday(DateUtils.getＭillisecond(birthday));
 					seniroAccount.setBirthYear(Integer.parseInt(birthYear));
 					seniroAccount.setCardNumber(cardNumber);
 					seniroAccount.setCardType(Byte.valueOf(cardType));
@@ -91,9 +108,6 @@ public class SeniorAccountService {
 					seniroAccount.setPaymentType(Byte.valueOf(paymentType));
 					seniroAccount.setIncomeSources(Byte.valueOf(incomeSources));
 					seniroAccount.setPhoneNo(phoneNo);
-					seniroAccount.setRoomOrientation(Byte
-							.valueOf(roomOrientation));
-					seniroAccount.setOutWindow(outWindow == "0" ? false : true);
 					seniroAccount.setCreateTime(currentDateTime.getTime());
 					seniroAccount.setUpdateTime(currentDateTime.getTime());
 					
@@ -108,6 +122,20 @@ public class SeniorAccountService {
 					
 					
 					operateServiceLogDao.insertSelective(operateServiceLog);
+					
+					SeniorLivingCondition seniorLivingCondition=new SeniorLivingCondition();
+					
+					seniorLivingCondition.setCity(city);
+					seniorLivingCondition.setDistrict(district);
+					seniorLivingCondition.setFloor(Integer.parseInt(floor));
+					seniorLivingCondition.setLiveWith(Byte.parseByte(liveWith));
+					seniorLivingCondition.setOutWindow(outWindow=="0"?false:true);
+					seniorLivingCondition.setResidentialQuarter(residentialQuarter);
+					seniorLivingCondition.setRoomOrientation(Byte.parseByte(roomOrientation));
+					seniorLivingCondition.setSeniorId(seniroAccount.getSeniorId());
+					seniorLivingCondition.setUnit(Integer.parseInt(unit));
+					
+					seniorLivingConditionDao.insertSelective(seniorLivingCondition);
 					
 					rtnData.put("status", "000000");
 					rtnData.put("message", "保存成功！");

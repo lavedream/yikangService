@@ -29,10 +29,6 @@ public class SeniorAccount {
 
     private String phoneNo;
 
-    private Byte roomOrientation;
-
-    private Boolean outWindow;
-
     private Long createTime;
 
     private Long updateTime;
@@ -147,22 +143,6 @@ public class SeniorAccount {
 
     public void setPhoneNo(String phoneNo) {
         this.phoneNo = phoneNo == null ? null : phoneNo.trim();
-    }
-
-    public Byte getRoomOrientation() {
-        return roomOrientation;
-    }
-
-    public void setRoomOrientation(Byte roomOrientation) {
-        this.roomOrientation = roomOrientation;
-    }
-
-    public Boolean getOutWindow() {
-        return outWindow;
-    }
-
-    public void setOutWindow(Boolean outWindow) {
-        this.outWindow = outWindow;
     }
 
     public Long getCreateTime() {

@@ -3,8 +3,8 @@ package com.yikangyiliao.pension.common.utils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.redis.hash.JacksonHashMapper;
 
-import com.yikangyiliao.base.ApplicationContextUtil;
 import com.yikangyiliao.base.cache.RedisExample;
+import com.yikangyiliao.base.utils.ApplicationContextUtil;
 import com.yikangyiliao.pension.entity.User;
 
 
