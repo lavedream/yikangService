@@ -3,9 +3,11 @@ package com.yikangyiliao.pension.service;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -30,6 +32,8 @@ public class SeniorAccountService {
 
 	private static final Logger logger = Logger
 			.getLogger(SeniorAccountService.class);
+	
+	private ObjectMapper objectMapper=new ObjectMapper();
 
 	@Autowired
 	private SeniorAccountDao seniorAccountDao;
@@ -60,18 +64,14 @@ public class SeniorAccountService {
 				String name = paramData.get("name").toString();
 				String sex = paramData.get("sex").toString();
 				String birthday = paramData.get("birthday").toString();
-				String birthYear = paramData.get("birthYear").toString();
+				String birthYear = birthday.substring(0,birthday.indexOf("-"));
 				String cardNumber = paramData.get("cardNumber").toString();
 				String cardType = paramData.get("cardType").toString();
-				String socialSecurity = paramData.get("socialSecurity")
-						.toString();
+				String socialSecurity = paramData.get("socialSecurity").toString();
 				String race = paramData.get("race").toString();
 				String faith = paramData.get("faith").toString();
-				String livingConditions = paramData.get("livingConditions")
-						.toString();
 				String paymentType = paramData.get("paymentType").toString();
-				String incomeSources = paramData.get("incomeSources")
-						.toString();
+				String incomeSources = paramData.get("incomeSources").toString();
 				String phoneNo = paramData.get("phoneNo").toString();
 				
 				
@@ -84,6 +84,8 @@ public class SeniorAccountService {
 				String residentialQuarter = paramData.get("residentialQuarter").toString();
 				String roomOrientation = paramData.get("roomOrientation").toString();
 				String unit = paramData.get("unit").toString();
+				String longitude = paramData.get("longitude").toString();
+				String latitude = paramData.get("latitude").toString();
 				
 				
 				
@@ -91,7 +93,7 @@ public class SeniorAccountService {
 						&& null != birthYear && null != cardNumber
 						&& null != cardType && null != socialSecurity
 						&& null != race && null != faith
-						&& null != livingConditions && null != paymentType
+						&& null != paymentType
 						&& null != incomeSources && null != phoneNo
 						&& null != roomOrientation && null != outWindow) {
 					seniroAccount.setName(name);
@@ -103,8 +105,6 @@ public class SeniorAccountService {
 					seniroAccount.setSocialSecurity(socialSecurity);
 					seniroAccount.setRace(race == "0" ? false : true);
 					seniroAccount.setFaith(Byte.valueOf(faith));
-					seniroAccount.setLivingConditions(Byte
-							.valueOf(livingConditions));
 					seniroAccount.setPaymentType(Byte.valueOf(paymentType));
 					seniroAccount.setIncomeSources(Byte.valueOf(incomeSources));
 					seniroAccount.setPhoneNo(phoneNo);
@@ -119,8 +119,9 @@ public class SeniorAccountService {
 					operateServiceLog.setCreateTime(currentDateTime.getTime());
 					operateServiceLog.setUpdateTime(currentDateTime.getTime());
 					operateServiceLog.setOperateType(YKConstants.OperateType.insert.getValue().byteValue());
-					
-					
+					operateServiceLog.setTableName("senior_account");
+					operateServiceLog.setCreateUserId(-1l);
+					operateServiceLog.setOpreateContent(objectMapper.writeValueAsString(paramData));
 					operateServiceLogDao.insertSelective(operateServiceLog);
 					
 					SeniorLivingCondition seniorLivingCondition=new SeniorLivingCondition();
@@ -134,6 +135,8 @@ public class SeniorAccountService {
 					seniorLivingCondition.setRoomOrientation(Byte.parseByte(roomOrientation));
 					seniorLivingCondition.setSeniorId(seniroAccount.getSeniorId());
 					seniorLivingCondition.setUnit(Integer.parseInt(unit));
+					seniorLivingCondition.setLongitude(Double.parseDouble(longitude));
+					seniorLivingCondition.setLatitude(Double.parseDouble(latitude));
 					
 					seniorLivingConditionDao.insertSelective(seniorLivingCondition);
 					
@@ -271,5 +274,35 @@ public class SeniorAccountService {
 
 		return rtnData;
 	}
+	
+    
+    /**
+     * @author liushuaic
+     * @date 2015/07/30 18:50
+     * @desc 查询某一个用户下的所有的 老人信息
+     * 
+     * */
+	public  Map<String,Object> getSeniorAccountByUserId(Map<String,Object> paramData){
+		Map<String, Object> rtnData = new HashMap<String, Object>();
+		
 
+		try {
+			if(null != paramData.get("userId").toString()){
+				String userId=paramData.get("userId").toString();
+				seniorAccountDao.getSeniorAccountByUserId(Long.parseLong(userId));
+				rtnData.put("status","000000");
+				rtnData.put("message","操作成功！");
+			}else {
+				rtnData.put("status","999999");
+				rtnData.put("message","操作失败！");
+			}
+			
+		}catch(Exception e){
+			logger.error(e.getMessage());
+			rtnData.put("status","999999");
+			rtnData.put("message","操作失败！");
+			e.printStackTrace();
+		}
+    	return rtnData;
+    }
 }

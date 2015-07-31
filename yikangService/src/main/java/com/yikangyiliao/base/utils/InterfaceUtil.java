@@ -32,6 +32,10 @@ public class InterfaceUtil {
 		mathodClassPath.put("00-01-01","saveSeniorAccount");
 		mathodClassPath.put("00-01-02","getSeniorAccountById");
 		
+//		量表
+		serviceClassName.put("00-02", "scaleService");
+		mathodClassPath.put("00-02-01", "");
+		
 	}
 	
 	public void loadConfigInterface(String filePath){

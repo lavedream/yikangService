@@ -17,7 +17,7 @@
 
 
 	<bean id="myDataSource" class="org.apache.commons.dbcp2.BasicDataSource">
-		<property name="url" value="jdbc:mysql://yikangtest.cippshngizwx.ap-southeast-1.rds.amazonaws.com:3306/yikangtest"></property>
+		<property name="url" value="jdbc:mysql://yikangtest.cippshngizwx.ap-southeast-1.rds.amazonaws.com:3306/yikangtest?useUnicode=yes&amp;characterEncoding=UTF8"></property>
 		<property name="username" value="yikang"></property>
 		<property name="password" value="yikang9988"></property>
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>

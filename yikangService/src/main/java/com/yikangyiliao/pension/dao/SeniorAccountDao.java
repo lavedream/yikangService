@@ -1,5 +1,7 @@
 package com.yikangyiliao.pension.dao;
 
+import java.util.List;
+
 import com.yikangyiliao.pension.entity.SeniorAccount;
 
 public interface SeniorAccountDao {
@@ -14,4 +16,13 @@ public interface SeniorAccountDao {
     int updateByPrimaryKeySelective(SeniorAccount record);
 
     int updateByPrimaryKey(SeniorAccount record);
+    
+    
+    /**
+     * @author liushuaic
+     * @date 2015/07/30 18:50
+     * @desc 查询某一个用户下的所有的 老人信息
+     * 
+     * */
+    List<SeniorAccount> getSeniorAccountByUserId(Long userId);
 }

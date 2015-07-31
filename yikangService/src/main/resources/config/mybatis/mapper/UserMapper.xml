@@ -126,4 +126,14 @@
       login_time = #{loginTime,jdbcType=BIGINT}
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
+  
+<!--   根据用户名称查询某一个用户信息 -->
+  <select id="getUserByUserName" parameterType="string">
+  	select <include refid="Base_Column_List"></include> 
+  	from users
+  	<where>
+  		user_name=#{userName}
+  	</where>
+  </select>
+  
 </mapper>

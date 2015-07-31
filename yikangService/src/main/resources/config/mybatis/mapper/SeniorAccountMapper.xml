@@ -221,4 +221,16 @@
       update_time = #{updateTime,jdbcType=BIGINT}
     where senior_id = #{seniorId,jdbcType=BIGINT}
   </update>
+  
+  
+<!--   查询某一个用户下的所有的老人信息 -->
+  <select id="getSeniorAccountByUserId" parameterType="long" resultMap="BaseResultMap">
+  	select senior_id,name from senior_account
+  	<where>
+  		<if test="null != userId">
+  			userId=#{userId}
+  		</if>
+  	</where>
+  </select>
+  	
 </mapper>
