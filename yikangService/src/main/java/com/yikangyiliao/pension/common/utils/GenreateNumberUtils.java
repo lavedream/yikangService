@@ -1,8 +1,13 @@
 package com.yikangyiliao.pension.common.utils;
 
+import java.util.Calendar;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.yikangyiliao.pension.dao.GenerateNumberDao;
+import com.yikangyiliao.pension.entity.Assessment;
+import com.yikangyiliao.pension.entity.GenerateNumber;
 
 
 
@@ -14,8 +19,8 @@ import com.yikangyiliao.pension.dao.GenerateNumberDao;
 @Repository
 public class GenreateNumberUtils {
 	
-	
-	
+
+	@Autowired
 	private GenerateNumberDao generateNumberDao;
 	
 	/**
@@ -25,10 +30,21 @@ public class GenreateNumberUtils {
 	 * 
 	 * ***/
 	public String generateAssessmentNumber(String accountString,String scaleName){
+		Integer maxNumber=generateNumberDao.selectMaxOrderNumberByGenerateTable("assessments");
 		
+		if(null == maxNumber){
+			maxNumber=0;
+		}
+		maxNumber=maxNumber+1;
+		Long currentDateTime=Calendar.getInstance().getTime().getTime();
+		GenerateNumber generateNumber=new GenerateNumber(); 
 		
+		generateNumber.setCreateTime(currentDateTime);
+		generateNumber.setGenerateTable("assessments");
+		generateNumber.setOrderNumber(maxNumber.longValue());
 		
-		return "";
+		generateNumberDao.insert(generateNumber);
+		return  accountString+"-"+scaleName+"-"+maxNumber;
 	}
 	
 	

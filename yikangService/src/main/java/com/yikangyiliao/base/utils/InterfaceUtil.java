@@ -32,9 +32,14 @@ public class InterfaceUtil {
 		mathodClassPath.put("00-01-01","saveSeniorAccount");
 		mathodClassPath.put("00-01-02","getSeniorAccountById");
 		
-//		量表
+		//量表
 		serviceClassName.put("00-02", "scaleService");
-		mathodClassPath.put("00-02-01", "");
+		//档案袋
+		mathodClassPath.put("00-02-01", "saveAssessment");
+		//感知与沟通 
+		mathodClassPath.put("00-02-02", "savePerceptionCommunications");
+		//社会参与
+		mathodClassPath.put("00-02-03", "savePerceptionCommunications");
 		
 	}
 	

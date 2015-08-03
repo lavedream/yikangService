@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yikangyiliao.pension.dao.UserDao;
+import com.yikangyiliao.pension.entity.User;
 
 
 
@@ -45,6 +46,7 @@ public class LoginService {
 			String userName=paramData.get("userName").toString();
 			String passWord=paramData.get("password").toString();
 			if(null != userName && null != passWord){
+				User User=userDao.getUserByUserName(userName);
 				
 			}
 			
