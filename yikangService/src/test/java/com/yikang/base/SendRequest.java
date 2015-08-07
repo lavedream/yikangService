@@ -75,6 +75,10 @@ public class SendRequest {
 			String responseBody = httpclient.execute(httpget, responseHandler);
 			System.out.println("----------------------------------------");
 			System.out.println(responseBody);
+			Map<String,Object> data=new HashMap<String, Object>();
+			data=objectMapper.readValue(responseBody, Map.class);
+			String dataStr=data.get("data").toString();
+			System.out.println(AES.Decrypt(dataStr, "1234567890abcDEF"));
 		} catch(Exception e){
 			e.printStackTrace();
 		}finally {

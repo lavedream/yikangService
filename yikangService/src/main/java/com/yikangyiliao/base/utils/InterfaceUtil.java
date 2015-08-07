@@ -39,7 +39,24 @@ public class InterfaceUtil {
 		//感知与沟通 
 		mathodClassPath.put("00-02-02", "savePerceptionCommunications");
 		//社会参与
-		mathodClassPath.put("00-02-03", "savePerceptionCommunications");
+		mathodClassPath.put("00-02-03", "saveSocialParticipation");
+		//日常生活
+		mathodClassPath.put("00-02-04", "saveDailyIndexe");
+		//精神状态
+		mathodClassPath.put("00-02-05", "saveMentalIndexes");
+		
+		
+		
+		/**
+		 * 生活护理评估
+		 * */
+		serviceClassName.put("00-03", "lifeNurseAssessmentService");
+		mathodClassPath.put("00-03-01", "getQuestionCrosswiseByTableName");
+		mathodClassPath.put("00-03-02", "getQuestionUnitAnswerMapByQuetionCrosswiseId");
+		
+		
+		serviceClassName.put("00-04", "answerService");
+		mathodClassPath.put("00-04-01", "saveAnswer");
 		
 	}
 	

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yikangyiliao.pension.dao.SurveyTableDao" >
+  <resultMap id="BaseResultMap" type="com.yikangyiliao.pension.entity.SurveyTable" >
+    <id column="survey_table_id" property="surveyTableId" jdbcType="BIGINT" />
+    <result column="table_name" property="tableName" jdbcType="VARCHAR" />
+    <result column="table_type" property="tableType" jdbcType="INTEGER" />
+    <result column="is_delete" property="isDelete" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+    <result column="surevey_talbe_number" property="sureveyTalbeNumber" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    survey_table_id, table_name, table_type, is_delete, create_time, update_time, surevey_talbe_number
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from survey_tables
+    where survey_table_id = #{surveyTableId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from survey_tables
+    where survey_table_id = #{surveyTableId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yikangyiliao.pension.entity.SurveyTable" >
+    insert into survey_tables (survey_table_id, table_name, table_type, 
+      is_delete, create_time, update_time, 
+      surevey_talbe_number)
+    values (#{surveyTableId,jdbcType=BIGINT}, #{tableName,jdbcType=VARCHAR}, #{tableType,jdbcType=INTEGER}, 
+      #{isDelete,jdbcType=TINYINT}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, 
+      #{sureveyTalbeNumber,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yikangyiliao.pension.entity.SurveyTable" >
+    insert into survey_tables
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="surveyTableId != null" >
+        survey_table_id,
+      </if>
+      <if test="tableName != null" >
+        table_name,
+      </if>
+      <if test="tableType != null" >
+        table_type,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="sureveyTalbeNumber != null" >
+        surevey_talbe_number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="surveyTableId != null" >
+        #{surveyTableId,jdbcType=BIGINT},
+      </if>
+      <if test="tableName != null" >
+        #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="tableType != null" >
+        #{tableType,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="sureveyTalbeNumber != null" >
+        #{sureveyTalbeNumber,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yikangyiliao.pension.entity.SurveyTable" >
+    update survey_tables
+    <set >
+      <if test="tableName != null" >
+        table_name = #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="tableType != null" >
+        table_type = #{tableType,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="sureveyTalbeNumber != null" >
+        surevey_talbe_number = #{sureveyTalbeNumber,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where survey_table_id = #{surveyTableId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yikangyiliao.pension.entity.SurveyTable" >
+    update survey_tables
+    set table_name = #{tableName,jdbcType=VARCHAR},
+      table_type = #{tableType,jdbcType=INTEGER},
+      is_delete = #{isDelete,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      surevey_talbe_number = #{sureveyTalbeNumber,jdbcType=VARCHAR}
+    where survey_table_id = #{surveyTableId,jdbcType=BIGINT}
+  </update>
+  
+  <resultMap type="map" id="getQuestionCrosswiseByTableNameMap">
+  	<result column="table_name" property="tableName"/>
+  	<result column="survey_table_id" property="surveyTableId"/>
+  	<collection property="questions" ofType="map" javaType="list">
+  		<result column="question_crosswise_id" property="questionCrosswiseId"/>
+  		<result column="question_crosswise_name" property="questionCrosswiseName"/>
+  	</collection>
+  </resultMap>
+  <select id="getQuestionCrosswiseByTableName" resultMap="getQuestionCrosswiseByTableNameMap"  parameterType="string">
+  	select 
+		st.table_name,
+		st.survey_table_id ,
+	    qc.question_crosswise_id,
+		qc.question_crosswise_name
+    from survey_tables st 
+	inner join question_crosswises qc
+	on st.survey_table_id = st.survey_table_id
+	where st.table_name=#{tableName}
+  </select>
+  
+</mapper>

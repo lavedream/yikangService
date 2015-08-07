@@ -1,10 +1,10 @@
 package com.yikangyiliao.pension.service;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,10 +35,12 @@ public class LoginService {
 	 * solt  加密 
 	 * password=加密（加密（password)+加密（solt）)
 	 * */
+	@SuppressWarnings("unused")
 	public Map<String,Object> login(Map<String,Object> paramData){
 		
 		
 		Map<String,Object> rtnData=new HashMap<String, Object>();
+		
 		
 
 		if(paramData.containsKey("userName") && paramData.containsKey("password")){
@@ -46,13 +48,45 @@ public class LoginService {
 			String userName=paramData.get("userName").toString();
 			String passWord=paramData.get("password").toString();
 			if(null != userName && null != passWord){
-				User User=userDao.getUserByUserName(userName);
 				
+				
+				User user=userDao.getUserByUserName(userName);
+				if(null != user){
+					
+					String passwordStr=user.getLoginPassword();
+					if(passWord.equals(passwordStr)){
+						
+						/**
+						 * 
+						 * 随机数+ip+logintime
+						 * 验证方式，与 redis 中的内容对比 
+						 * 对登陆时间
+						 * 找出用户信息
+						 * **/
+						
+						String accessTiket=user.getAccessTiket();
+						Long currentDateTime=Calendar.getInstance().getTime().getTime();
+						
+						
+						
+						rtnData.put("accessTiket","");
+						
+						
+					}
+				
+				}
 			}
-			
 		}
+		/**
+		 * 
+		 * 随机数+ip+logintime
+		 * 验证方式，与 redis 中的内容对比 
+		 * 
+		 * 
+		 * 对登陆时间
+		 * 找出用户信息
+		 * **/
 		
-		rtnData.put("accessTiket","");
 		return rtnData;
 		
 	}

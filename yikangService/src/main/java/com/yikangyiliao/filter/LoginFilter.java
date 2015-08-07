@@ -10,6 +10,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import com.yikangyiliao.base.utils.NetworkUtil;
+
 
 public class LoginFilter implements Filter {
 
@@ -36,6 +38,18 @@ public class LoginFilter implements Filter {
 //			}
 //		}
 
+//		paramMap.put("appId", appId);
+//		paramMap.put("accessTiket", accessTiket);
+		
+		String appId=hsr.getParameter("appId");
+		
+		String accessTiket=hsr.getParameter("accessTiket");
+		
+		
+		
+		String hostIp=NetworkUtil.getIpAddress(hsr);
+		//String host=request.getre
+		
 		
 		arg2.doFilter(arg0, arg1);
 		

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yikangyiliao.base.encryption.AES;
 import com.yikangyiliao.base.utils.ApplicationContextUtil;
 import com.yikangyiliao.base.utils.InterfaceUtil;
+import com.yikangyiliao.base.utils.NetworkUtil;
 
 
 
