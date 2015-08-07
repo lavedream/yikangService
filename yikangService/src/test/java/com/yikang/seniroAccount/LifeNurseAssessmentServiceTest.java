@@ -37,4 +37,19 @@ public class LifeNurseAssessmentServiceTest {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
+	@Test
+	public void testGetOldMan(){
+		try {
+			Map<String, Object> paramData = new HashMap<String, Object>();
+			//paramData.put("assessmentName", "hello");
+			paramData.put("questionCrosswiseId", 1);
+
+			SendRequest.sendPost("00-05-01", paramData);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

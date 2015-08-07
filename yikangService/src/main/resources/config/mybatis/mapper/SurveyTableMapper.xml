@@ -135,4 +135,27 @@
 	where st.table_name=#{tableName}
   </select>
   
+  <resultMap type="map" id="getQuestionCrosswiseByTableNameTwoMap">
+  	<result column="table_name" property="tableName"/>
+  	<result column="survey_table_id" property="surveyTableId"/>
+  	<collection property="questionGrooup" ofType="map" javaType="list">
+  		<result column="question_crosswise_id" property="questionCrosswiseId"/>
+  		<result column="question_crosswise_name" property="questionCrosswiseName"/>
+		<collection property="questions"  fetchType="eager" column="question_crosswise_id" select="com.yikangyiliao.pension.dao.QuestionUnitDao.getQuestionUnitAnswerMapByQuetionCrosswiseId"></collection>
+<!-- 		<collection property="questions"  fetchType="eager" select="com.yikangyiliao.pension.dao.QuestionUnitDao.getQuestionUnitAnswerMapByQuetionCrosswiseId"></collection> -->
+  	</collection>
+  </resultMap>
+  
+    <select id="getQuestionCrosswiseByTableNameTwo" resultMap="getQuestionCrosswiseByTableNameTwoMap"  parameterType="string">
+  	select 
+		st.table_name,
+		st.survey_table_id ,
+	    qc.question_crosswise_id,
+		qc.question_crosswise_name
+    from survey_tables st 
+	inner join question_crosswises qc
+	on st.survey_table_id = qc.survey_table_id
+	where st.table_name=#{tableName}
+  </select>
+  
 </mapper>

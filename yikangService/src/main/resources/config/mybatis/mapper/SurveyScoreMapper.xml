@@ -11,7 +11,7 @@
     <result column="data_source" property="dataSource" jdbcType="TINYINT" />
     <result column="survey_table_id" property="surveyTableId" jdbcType="BIGINT" />
     <result column="assessment_id" property="assessmentId" jdbcType="BIGINT" />
-    <result column="assessment_number" property="assessmentNumber" jdbcType="BIGINT" />
+    <result column="assessment_number" property="assessmentNumber" jdbcType="VARCHAR" />
     <result column="is_delete" property="isDelete" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List" >
@@ -36,7 +36,7 @@
     values (#{sureyScoreId,jdbcType=BIGINT}, #{senorId,jdbcType=BIGINT}, #{total,jdbcType=INTEGER}, 
       #{assessorUserId,jdbcType=BIGINT}, #{conclusion,jdbcType=VARCHAR}, #{conclusionUserId,jdbcType=BIGINT}, 
       #{dataSource,jdbcType=TINYINT}, #{surveyTableId,jdbcType=BIGINT}, #{assessmentId,jdbcType=BIGINT}, 
-      #{assessmentNumber,jdbcType=BIGINT}, #{isDelete,jdbcType=TINYINT})
+      #{assessmentNumber,jdbcType=VARCHAR}, #{isDelete,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.yikangyiliao.pension.entity.SurveyScore" >
     insert into survey_scores
@@ -104,7 +104,7 @@
         #{assessmentId,jdbcType=BIGINT},
       </if>
       <if test="assessmentNumber != null" >
-        #{assessmentNumber,jdbcType=BIGINT},
+        #{assessmentNumber,jdbcType=VARCHAR},
       </if>
       <if test="isDelete != null" >
         #{isDelete,jdbcType=TINYINT},
@@ -139,7 +139,7 @@
         assessment_id = #{assessmentId,jdbcType=BIGINT},
       </if>
       <if test="assessmentNumber != null" >
-        assessment_number = #{assessmentNumber,jdbcType=BIGINT},
+        assessment_number = #{assessmentNumber,jdbcType=VARCHAR},
       </if>
       <if test="isDelete != null" >
         is_delete = #{isDelete,jdbcType=TINYINT},
@@ -157,7 +157,7 @@
       data_source = #{dataSource,jdbcType=TINYINT},
       survey_table_id = #{surveyTableId,jdbcType=BIGINT},
       assessment_id = #{assessmentId,jdbcType=BIGINT},
-      assessment_number = #{assessmentNumber,jdbcType=BIGINT},
+      assessment_number = #{assessmentNumber,jdbcType=VARCHAR},
       is_delete = #{isDelete,jdbcType=TINYINT}
     where surey_score_id = #{sureyScoreId,jdbcType=BIGINT}
   </update>
@@ -165,11 +165,11 @@
   
   
     <!-- 根据 档案袋id 与 查询表id， 查询出某一个表的总评分 -->
-  <select id="getSureyScoreByAssessmentIdAndSureyTableId" resultType="com.yikangyiliao.pension.entity.SurveyScore"
+  <select id="getSureyScoreByAssessmentIdAndSureyTableId" resultMap="BaseResultMap"
   parameterType="map">
   	select
   	 <include refid="Base_Column_List"></include>
-  	from surey_scores
+  	from survey_scores
 	where 
 		assessment_id=#{assessmentId}
 	and survey_table_id=#{surveyTableId}

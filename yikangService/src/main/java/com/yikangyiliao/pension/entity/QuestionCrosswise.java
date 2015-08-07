@@ -1,5 +1,8 @@
 package com.yikangyiliao.pension.entity;
 
+import java.util.List;
+import java.util.Map;
+
 public class QuestionCrosswise {
     private Long questionCrosswiseId;
 
@@ -16,6 +19,8 @@ public class QuestionCrosswise {
     private Long surveyTableId;
 
     private Byte answerType;
+    
+    private List<Map<String,Object>> questions;
 
     public Long getQuestionCrosswiseId() {
         return questionCrosswiseId;
@@ -80,4 +85,12 @@ public class QuestionCrosswise {
     public void setAnswerType(Byte answerType) {
         this.answerType = answerType;
     }
+
+	public List<Map<String, Object>> getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(List<Map<String, Object>> questions) {
+		this.questions = questions;
+	}
 }

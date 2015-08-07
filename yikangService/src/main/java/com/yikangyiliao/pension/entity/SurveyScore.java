@@ -19,7 +19,7 @@ public class SurveyScore {
 
     private Long assessmentId;
 
-    private Long assessmentNumber;
+    private String assessmentNumber;
 
     private Byte isDelete;
 
@@ -95,11 +95,11 @@ public class SurveyScore {
         this.assessmentId = assessmentId;
     }
 
-    public Long getAssessmentNumber() {
+    public String getAssessmentNumber() {
         return assessmentNumber;
     }
 
-    public void setAssessmentNumber(Long assessmentNumber) {
+    public void setAssessmentNumber(String assessmentNumber) {
         this.assessmentNumber = assessmentNumber;
     }
 

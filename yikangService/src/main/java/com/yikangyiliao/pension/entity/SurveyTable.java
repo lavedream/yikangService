@@ -1,5 +1,7 @@
 package com.yikangyiliao.pension.entity;
 
+import java.util.List;
+
 public class SurveyTable {
     private Long surveyTableId;
 
@@ -14,6 +16,8 @@ public class SurveyTable {
     private Long updateTime;
 
     private String sureveyTalbeNumber;
+    
+    private List<QuestionCrosswise> questionGrooup;
 
     public Long getSurveyTableId() {
         return surveyTableId;

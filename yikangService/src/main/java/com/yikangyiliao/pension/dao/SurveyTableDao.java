@@ -25,4 +25,12 @@ public interface SurveyTableDao {
      * 
      * **/
     List<Map<String,Object>> getQuestionCrosswiseByTableName(String tableName);
+    
+    
+    /**
+     * @author liushuaic
+     * @date 2015/08/06
+     * 
+     * **/
+    Map<String,Object> getQuestionCrosswiseByTableNameTwo(String tableName);
 }

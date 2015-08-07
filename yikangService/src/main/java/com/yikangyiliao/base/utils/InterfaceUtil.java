@@ -58,6 +58,13 @@ public class InterfaceUtil {
 		serviceClassName.put("00-04", "answerService");
 		mathodClassPath.put("00-04-01", "saveAnswer");
 		
+		
+		serviceClassName.put("00-05", "oldManTumbleService");
+		mathodClassPath.put("00-05-01", "getTable");
+		
+		serviceClassName.put("00-06", "sicknessAssessmentService");
+		mathodClassPath.put("00-06-01", "getTable");
+		
 	}
 	
 	public void loadConfigInterface(String filePath){
