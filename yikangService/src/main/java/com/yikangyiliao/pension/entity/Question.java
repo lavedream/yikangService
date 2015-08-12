@@ -17,6 +17,8 @@ public class Question {
 
     private Byte answerType;
 
+    private String description;
+
     public Long getQuestionId() {
         return questionId;
     }
@@ -79,5 +81,13 @@ public class Question {
 
     public void setAnswerType(Byte answerType) {
         this.answerType = answerType;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
     }
 }

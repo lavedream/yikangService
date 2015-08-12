@@ -39,6 +39,9 @@
       #{assessmentNumber,jdbcType=VARCHAR}, #{isDelete,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.yikangyiliao.pension.entity.SurveyScore" >
+  	<selectKey resultType="Long" keyProperty="sureyScoreId" order="AFTER">
+		SELECT LAST_INSERT_ID()
+	</selectKey>
     insert into survey_scores
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="sureyScoreId != null" >

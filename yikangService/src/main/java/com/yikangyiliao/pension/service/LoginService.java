@@ -22,6 +22,7 @@ import com.yikangyiliao.pension.entity.User;
 public class LoginService {
 	
 	
+	@SuppressWarnings("unused")
 	private static Logger logger=Logger.getLogger(LoginService.class);
 	
 	@Autowired

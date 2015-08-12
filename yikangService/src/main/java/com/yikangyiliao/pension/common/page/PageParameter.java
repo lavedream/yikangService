@@ -12,7 +12,8 @@ public class PageParameter {
     private int currentPage;
     private int prePage;
     private int nextPage;
-    private int totalPage;
+    @SuppressWarnings("unused")
+	private int totalPage;
     private int totalCount;
 
     public PageParameter() {

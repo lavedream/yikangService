@@ -5,7 +5,7 @@
     <id column="survey_score_detail_id" property="surveyScoreDetailId" jdbcType="BIGINT" />
     <result column="survey_id" property="surveyId" jdbcType="BIGINT" />
     <result column="question_id" property="questionId" jdbcType="BIGINT" />
-    <result column="score" property="score" jdbcType="INTEGER" />
+    <result column="score" property="score" jdbcType="FLOAT" />
     <result column="answer_id" property="answerId" jdbcType="BIGINT" />
     <result column="is_delete" property="isDelete" jdbcType="TINYINT" />
     <result column="survey_score_id" property="surveyScoreId" jdbcType="BIGINT" />
@@ -67,7 +67,7 @@
         #{questionId,jdbcType=BIGINT},
       </if>
       <if test="score != null" >
-        #{score,jdbcType=INTEGER},
+        #{score,jdbcType=FLOAT},
       </if>
       <if test="answerId != null" >
         #{answerId,jdbcType=BIGINT},
@@ -90,7 +90,7 @@
         question_id = #{questionId,jdbcType=BIGINT},
       </if>
       <if test="score != null" >
-        score = #{score,jdbcType=INTEGER},
+        score = #{score,jdbcType=FLOAT},
       </if>
       <if test="answerId != null" >
         answer_id = #{answerId,jdbcType=BIGINT},
@@ -108,7 +108,7 @@
     update survey_score_details
     set survey_id = #{surveyId,jdbcType=BIGINT},
       question_id = #{questionId,jdbcType=BIGINT},
-      score = #{score,jdbcType=INTEGER},
+      score = #{score,jdbcType=FLOAT},
       answer_id = #{answerId,jdbcType=BIGINT},
       is_delete = #{isDelete,jdbcType=TINYINT},
       survey_score_id = #{surveyScoreId,jdbcType=BIGINT}

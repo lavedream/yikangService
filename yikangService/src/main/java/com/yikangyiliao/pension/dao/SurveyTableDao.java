@@ -33,4 +33,13 @@ public interface SurveyTableDao {
      * 
      * **/
     Map<String,Object> getQuestionCrosswiseByTableNameTwo(String tableName);
+    
+    
+    
+    /**
+     * @author liushuaic
+     * @date	2015/08/12 11:47
+     * @desc 根据某一个表，查询出所有的问题及答案
+     * */
+    Map<String,Object> getQuestionsAndAnswersByTableName(String tableName);
 }

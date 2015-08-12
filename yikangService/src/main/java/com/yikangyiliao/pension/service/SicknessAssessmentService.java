@@ -1,6 +1,7 @@
 package com.yikangyiliao.pension.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -35,7 +36,7 @@ public class SicknessAssessmentService {
 		Map<String, Object> rtnData = new HashMap<String, Object>();
 		try {
 			
-			Map<String,Object> data=sicknessAssessmentManager.getSicknessAssessment();
+			List<Map<String,Object>> data=sicknessAssessmentManager.getQuestionCrosswiseByTableName();
 			System.out.println(new ObjectMapper().writeValueAsString(data));
 			rtnData.put("data", data);
 			rtnData.put("status",

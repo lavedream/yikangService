@@ -1,7 +1,5 @@
 package com.yikangyiliao.pension.common.error;
 
-import java.util.HashMap;
-import java.util.Map;
 
 
 
@@ -16,11 +14,34 @@ import java.util.Map;
  * 3，4位，方法 代码
  * 5，6位 ，错误
  * **/
-public class ExceptionInfo {
+public class ExceptionInfo extends Exception{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -901352075010858921L;
 	
 	
-	private Map<String,String> errorMessages=new HashMap<String,String>();
+	private String  errorCode;
+	private String  message;
 	
+	public ExceptionInfo(String errorCode,String message){
+		this.errorCode=errorCode;
+		this.message=message;
+	}
+	
+	public String getErrorCode() {
+		return errorCode;
+	}
+	public void setErrorCode(String errorCode) {
+		this.errorCode = errorCode;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message; 
+	}
 	
 	
 }

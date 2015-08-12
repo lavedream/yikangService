@@ -10,10 +10,11 @@
     <result column="update_time" property="updateTime" jdbcType="BIGINT" />
     <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
     <result column="answer_type" property="answerType" jdbcType="TINYINT" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     question_id, question_text, order, is_delete, create_time, update_time, create_user_id, 
-    answer_type
+    answer_type, description
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -28,10 +29,12 @@
   <insert id="insert" parameterType="com.yikangyiliao.pension.entity.Question" >
     insert into questions (question_id, question_text, order, 
       is_delete, create_time, update_time, 
-      create_user_id, answer_type)
+      create_user_id, answer_type, description
+      )
     values (#{questionId,jdbcType=BIGINT}, #{questionText,jdbcType=VARCHAR}, #{order,jdbcType=INTEGER}, 
       #{isDelete,jdbcType=TINYINT}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, 
-      #{createUserId,jdbcType=BIGINT}, #{answerType,jdbcType=TINYINT})
+      #{createUserId,jdbcType=BIGINT}, #{answerType,jdbcType=TINYINT}, #{description,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.yikangyiliao.pension.entity.Question" >
     insert into questions
@@ -60,6 +63,9 @@
       <if test="answerType != null" >
         answer_type,
       </if>
+      <if test="description != null" >
+        description,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="questionId != null" >
@@ -85,6 +91,9 @@
       </if>
       <if test="answerType != null" >
         #{answerType,jdbcType=TINYINT},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -112,6 +121,9 @@
       <if test="answerType != null" >
         answer_type = #{answerType,jdbcType=TINYINT},
       </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
     </set>
     where question_id = #{questionId,jdbcType=BIGINT}
   </update>
@@ -123,7 +135,8 @@
       create_time = #{createTime,jdbcType=BIGINT},
       update_time = #{updateTime,jdbcType=BIGINT},
       create_user_id = #{createUserId,jdbcType=BIGINT},
-      answer_type = #{answerType,jdbcType=TINYINT}
+      answer_type = #{answerType,jdbcType=TINYINT},
+      description = #{description,jdbcType=VARCHAR}
     where question_id = #{questionId,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import com.yikangyiliao.pension.dao.SurveyScoreDao;
 import com.yikangyiliao.pension.entity.SurveyScore;
-import com.yikangyiliao.pension.entity.SurveyTable;
 
 
 @Component

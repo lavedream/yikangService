@@ -23,6 +23,7 @@ public abstract class BasePaginationPlugin implements Interceptor {
 	// 该方法中会执行 StatementHandler的prepear方法得到 statement 然后为statement填充数据
 	// 最后 由StatementHandler.query()得到最总结果
 	// 拦截prepear方法 我们可以使用一个connection连接，其他属性 根据反射帮助类得到（要看源码，知道字段名）
+	@SuppressWarnings("unchecked")
 	public Object intercept(Invocation inv) throws Throwable {
 		// 查看org.apache.ibatis.executor.statement.RoutingStatementHandler源码
 		// 该类起到路由功能 对不同的需求 分配不同的 hanler类,而这些类都继承BaseStatementHandler
@@ -37,10 +38,10 @@ public abstract class BasePaginationPlugin implements Interceptor {
 			Object parameterObject = boundSql.getParameterObject();
 			// 如果参数是map 而且 map中有一个page对象 说明是分页
 			if (parameterObject != null && parameterObject instanceof Map
-					&& ((Map) parameterObject).containsKey("page") && pageSqlId.matches(sqlIdRegex)) {
+					&& ((Map<String,Object>) parameterObject).containsKey("page") && pageSqlId.matches(sqlIdRegex)) {
 				String sql = boundSql.getSql();
 				Connection conn = (Connection) inv.getArgs()[0];
-				PageParameter page = (PageParameter) ((Map) parameterObject).get("page");
+				PageParameter page = (PageParameter) ((Map<String,Object>) parameterObject).get("page");
 				String countSql = getCountSql(sql);// 汇总语句
 				PreparedStatement ps = conn.prepareStatement(countSql);// 获得statement
 				// 获得 参数绑定对象

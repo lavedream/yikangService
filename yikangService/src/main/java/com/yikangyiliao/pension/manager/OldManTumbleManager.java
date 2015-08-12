@@ -1,6 +1,5 @@
 package com.yikangyiliao.pension.manager;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import com.yikangyiliao.pension.dao.QuestionUnitDao;
 import com.yikangyiliao.pension.dao.SurveyTableDao;
-import com.yikangyiliao.pension.entity.SurveyTable;
 
 @Component
 public class OldManTumbleManager {

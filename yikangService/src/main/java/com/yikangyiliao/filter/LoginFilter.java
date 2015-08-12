@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.yikangyiliao.base.utils.NetworkUtil;
 
 
+@SuppressWarnings("unused")
 public class LoginFilter implements Filter {
 
 	private String strTokit="helloworld";

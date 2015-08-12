@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,8 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yikangyiliao.base.encryption.AES;
 import com.yikangyiliao.base.utils.ApplicationContextUtil;
 import com.yikangyiliao.base.utils.InterfaceUtil;
-import com.yikangyiliao.base.utils.NetworkUtil;
-
 
 
 @Controller
@@ -34,9 +30,10 @@ public class ServiceController {
 	
 	private Logger logger=Logger.getLogger(ServiceController.class);
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/service/{serverviceCode}")
 	@ResponseBody
-	public Map<String,Object> doMethod(@PathVariable String serverviceCode,String appId,String accessTiket, String paramData,HttpServletRequest request) throws JsonGenerationException, JsonMappingException, IOException {
+	public Map<String,Object> doMethod(@PathVariable String serverviceCode,String appId,String accessTicket, String paramData,HttpServletRequest request) throws JsonGenerationException, JsonMappingException, IOException {
 		Map<String, Object> rtnMap = new HashMap<String, Object>();
 		if (null != serverviceCode) {
 
@@ -50,8 +47,7 @@ public class ServiceController {
 					Object invokObject = ApplicationContextUtil.applicationContext.getBean(beanName);
 
 					try {
-						Method returnMethod = invokObject.getClass().getMethod(
-								methodName, Map.class);
+						Method returnMethod = invokObject.getClass().getMethod(methodName, Map.class);
 
 						Map<String, Object> paramMap = new HashMap<String, Object>();
 						if(null != paramData && paramData.length()>0){
@@ -59,9 +55,18 @@ public class ServiceController {
 							logger.debug("serviceController --> 接收到的paramData数据："+paramData);
 							paramMap=objectMapper.readValue(paramData, Map.class);
 						}
-					
-						rtnMap = (Map<String, Object>) returnMethod.invoke(invokObject, paramMap);
+						try{
+							rtnMap = (Map<String, Object>) returnMethod.invoke(invokObject, paramMap);
 
+						}catch(Exception e){
+							logger.error(e.getMessage());
+							e.printStackTrace();
+							//ExceptionInfo e2=(ExceptionInfo)e;
+							rtnMap.put("code","999999");
+							rtnMap.put("message","000000");
+						}
+						
+						
 						// 获取返回
 						if(null != rtnMap.get("data")){
 							Object data = rtnMap.get("data");
@@ -71,7 +76,6 @@ public class ServiceController {
 							rtnMap.put("data", enStr);
 						}
 						return rtnMap;
-
 					} catch (IllegalAccessException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

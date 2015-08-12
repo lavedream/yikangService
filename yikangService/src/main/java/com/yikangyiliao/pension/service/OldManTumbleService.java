@@ -1,7 +1,6 @@
 package com.yikangyiliao.pension.service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -10,9 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yikangyiliao.pension.common.error.ExceptionConstants;
-import com.yikangyiliao.pension.entity.SurveyTable;
 import com.yikangyiliao.pension.manager.OldManTumbleManager;
 
+
+/**
+ * 
+ * @author liushuaic
+ * @date 2015/08/12 17:09 
+ * 老年人跌倒风险评估
+ * 
+ * **/
 @Service(value = "oldManTumbleService")
 public class OldManTumbleService {
 

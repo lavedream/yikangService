@@ -156,6 +156,7 @@
   	<result column="question_portrait_id" property="questionPortraitId"></result>
   	<result column="question_portrait_name" property="questionPortraitName"></result>
   	<result column="answer_type"  property="answerType"/>
+  	<result column="weight_value"  property="weightVal"/>
   	<collection property="answers" ofType="map" javaType="list">
   		<result column="answer_id" 		property="answerId"/>
   		<result column="answer_text" 	property="answerText"/>
@@ -169,11 +170,13 @@
 	        answers.answer_id,
 	        answers.answer_text,
 	        answers.answer_val,
-	        qcpa.answer_type
+	        qcpa.answer_type,
+            quw.weight_value
 	from question_units qp 
 	left join question_unit_answer_maps qcpa
 	on qp.question_portrait_id=qcpa.question_portrait_group
 	left join answers on qcpa.answer_id=answers.answer_id
+    left join question_unit_weights quw on qp.question_portrait_id=quw.question_portrait_id
 	where qp.question_crosswise_id=#{questionCrosswiseId}
   </select>
   

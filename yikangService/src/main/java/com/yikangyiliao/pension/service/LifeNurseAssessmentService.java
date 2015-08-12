@@ -1,6 +1,5 @@
 package com.yikangyiliao.pension.service;
 
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yikangyiliao.pension.common.error.ExceptionConstants;
-import com.yikangyiliao.pension.entity.MentalIndexes;
 import com.yikangyiliao.pension.manager.LifeNurseAssessmentManager;
 
 /**

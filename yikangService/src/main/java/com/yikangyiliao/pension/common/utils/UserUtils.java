@@ -1,7 +1,6 @@
 package com.yikangyiliao.pension.common.utils;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.data.redis.hash.JacksonHashMapper;
 
 import com.yikangyiliao.base.cache.RedisExample;
 import com.yikangyiliao.base.utils.ApplicationContextUtil;
@@ -14,8 +13,10 @@ import com.yikangyiliao.pension.entity.User;
  * @date 2015/07/28 19:48
  * @desc 用户操作类
  * **/
+@SuppressWarnings("unused")
 public class UserUtils {
 
+	
 	private static ApplicationContext applicationContext=ApplicationContextUtil.applicationContext;
 	
 	private static RedisExample redisExample= ApplicationContextUtil.applicationContext.getBean(RedisExample.class);

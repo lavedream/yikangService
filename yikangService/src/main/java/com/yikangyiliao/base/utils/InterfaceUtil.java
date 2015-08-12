@@ -15,6 +15,7 @@ import org.xml.sax.SAXException;
  * @author liushuaic
  * @date 2015/07/24 12:19
  * */
+@SuppressWarnings("unused")
 public class InterfaceUtil {
 	
 	
@@ -36,15 +37,6 @@ public class InterfaceUtil {
 		serviceClassName.put("00-02", "scaleService");
 		//档案袋
 		mathodClassPath.put("00-02-01", "saveAssessment");
-		//感知与沟通 
-		mathodClassPath.put("00-02-02", "savePerceptionCommunications");
-		//社会参与
-		mathodClassPath.put("00-02-03", "saveSocialParticipation");
-		//日常生活
-		mathodClassPath.put("00-02-04", "saveDailyIndexe");
-		//精神状态
-		mathodClassPath.put("00-02-05", "saveMentalIndexes");
-		
 		
 		
 		/**
@@ -55,15 +47,77 @@ public class InterfaceUtil {
 		mathodClassPath.put("00-03-02", "getQuestionUnitAnswerMapByQuetionCrosswiseId");
 		
 		
+		/**
+		 * 数据保存
+		 * */
 		serviceClassName.put("00-04", "answerService");
 		mathodClassPath.put("00-04-01", "saveAnswer");
+		mathodClassPath.put("00-04-02", "saveAnswerForQuestion");
 		
-		
+		/**
+		 * 老年人跌倒风险评估
+		 * */
 		serviceClassName.put("00-05", "oldManTumbleService");
 		mathodClassPath.put("00-05-01", "getTable");
 		
+		
+		/**
+		 * 疾病评估
+		 * */
 		serviceClassName.put("00-06", "sicknessAssessmentService");
 		mathodClassPath.put("00-06-01", "getTable");
+		
+		/**
+		 * 抑郁评估
+		 * **/
+		serviceClassName.put("00-07", "depressionAssessmentService");
+		mathodClassPath.put("00-07-01", "getTable");
+		
+		
+		/**
+		 * 抑郁自测
+		 * **/
+		serviceClassName.put("00-08", "depressionSelfTestingService");
+		mathodClassPath.put("00-08-01", "getTable");
+		
+		
+		/**
+		 * 老年人常见问题
+		 * **/
+		serviceClassName.put("00-09", "oldManCommonQuestionService");
+		mathodClassPath.put("00-09-01", "getTable");
+		
+		
+		/**
+		 * 感知与沟通
+		 * */ 
+		serviceClassName.put("00-10", "pserceptionCommunicationsService");
+		mathodClassPath.put("00-10-01", "getTable");
+		
+		/**
+		 * 社会参与
+		 * */
+		serviceClassName.put("00-11", "socialParticipationService");
+		mathodClassPath.put("00-11-01", "getTable");
+		
+		/**
+		 * 日常生活
+		 * */
+		serviceClassName.put("00-12", "dailyIndexesService");
+		mathodClassPath.put("00-12-01", "getTable");
+		
+		/**
+		 * 精神状态
+		 */
+		serviceClassName.put("00-13", "mentalIndexesService");
+		mathodClassPath.put("00-13-01", "getTable");
+		
+		/**
+		 * 长谷川
+		 * **/
+		serviceClassName.put("00-14", "alzheimerDiseaseService");
+		mathodClassPath.put("00-14-01", "getTable");
+		
 		
 	}
 	
@@ -71,8 +125,7 @@ public class InterfaceUtil {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         try {
 			SAXParser saxParser = factory.newSAXParser();
-	        InputStream is = InterfaceUtil.class.getClassLoader()
-	                .getResourceAsStream("student.xml");
+	        InputStream is = InterfaceUtil.class.getClassLoader().getResourceAsStream("student.xml");
 	        //saxParser.parse(is);
 	        // TODO 后期添加本功能
 		} catch (ParserConfigurationException e) {

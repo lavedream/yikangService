@@ -14,8 +14,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
-import org.junit.internal.runners.JUnit4ClassRunner;
-import org.junit.runner.RunWith;
 
 import com.yikangyiliao.base.encryption.AES;
 
@@ -26,13 +24,13 @@ import com.yikangyiliao.base.encryption.AES;
  * @发送请求工具类
  * **/
 
-@RunWith(JUnit4ClassRunner.class)
 public class SendRequest {
 
 	private static String REQUEST_URL = "http://127.0.0.1:8088/service/";
 	
 	private static ObjectMapper objectMapper = new ObjectMapper();
 
+	@SuppressWarnings("unchecked")
 	public static void sendPost(String serviceCode,Map<String,Object>  paramData) throws IOException {
 		
 		
