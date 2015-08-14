@@ -29,9 +29,23 @@ public class InterfaceUtil {
 		serviceClassName.put("0-0","test");
 		mathodClassPath.put("0-0-1","test");
 		
+		/**
+		 * 老人管理
+		 * */
 		serviceClassName.put("00-01", "seniorAccountService");
+		/**
+		 * 保存老人信息
+		 * */
 		mathodClassPath.put("00-01-01","saveSeniorAccount");
+		/**
+		 * @author liushuaic
+		 * 获取某一个老人的信息
+		 * */
 		mathodClassPath.put("00-01-02","getSeniorAccountById");
+		/**
+		 * 查询某一个用户下的所有人
+		 * */
+		mathodClassPath.put("00-01-03","getSeniorAccountByUserId");
 		
 		//量表
 		serviceClassName.put("00-02", "scaleService");
@@ -117,6 +131,16 @@ public class InterfaceUtil {
 		 * **/
 		serviceClassName.put("00-14", "alzheimerDiseaseService");
 		mathodClassPath.put("00-14-01", "getTable");
+		
+		
+		/**
+		 * 档案袋管理
+		 * 
+		 * */
+		
+		serviceClassName.put("00-15", "assessmentService");
+		mathodClassPath.put("00-15-01", "saveAssessment");
+		mathodClassPath.put("00-15-02", "getAssessmentBySeniorId");
 		
 		
 	}

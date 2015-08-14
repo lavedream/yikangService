@@ -30,7 +30,7 @@ public class DepressionAssessmentService {
 		Map<String,Object> data=depressionAssessmentManager.getQuestionsAndAnswersByTableName();
 
 		rtnMap.put("data", data);
-		rtnMap.put("code", ExceptionConstants.responseSuccess.responseSuccess.code);
+		rtnMap.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
 		rtnMap.put("message", ExceptionConstants.responseSuccess.responseSuccess.message);
 		
 		return rtnMap;

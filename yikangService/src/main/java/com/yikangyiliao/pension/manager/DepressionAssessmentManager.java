@@ -23,7 +23,7 @@ public class DepressionAssessmentManager {
 	 * 抑郁评估
 	 * */
 	public Map<String,Object> getQuestionsAndAnswersByTableName(){
-		return surveyTableDao.getQuestionsAndAnswersByTableName("抑郁评估");
+		return surveyTableDao.getQuestionsAndAnswersByTableName("抑郁评估表");
 	}
 
 }

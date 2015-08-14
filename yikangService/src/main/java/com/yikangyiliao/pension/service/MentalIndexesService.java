@@ -32,7 +32,7 @@ public class MentalIndexesService {
 		Map<String,Object> data=mentalIndexesManager.getQuestionsAndAnswersByTableName();
 
 		rtnMap.put("data", data);
-		rtnMap.put("code", ExceptionConstants.responseSuccess.responseSuccess.code);
+		rtnMap.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
 		rtnMap.put("message", ExceptionConstants.responseSuccess.responseSuccess.message);
 		
 		return rtnMap;

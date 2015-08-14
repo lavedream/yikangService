@@ -21,10 +21,28 @@ public class SeniorAccountServiceTest {
 	public void TestSaveSeniroAccount(){
 		try {
 			Map<String,Object> paramData=new HashMap<String, Object>();
-			paramData.put("name","hello");
-			paramData.put("sex",1);
+			paramData.put("userId",1);
 			
-			SendRequest.sendPost("00-01-01",paramData);
+			SendRequest.sendPost("00-01-03",paramData);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * @author liushuaic
+	 * @date 2015/07/28 12:15
+	 * @desc 测试00-01-03 查询某一个用户下的所有人
+	 * getSeniorAccountByUserId
+	 * */
+	@Test
+	public void TestGetSeniorAccountByUserId(){
+		try {
+			Map<String,Object> paramData=new HashMap<String, Object>();
+			paramData.put("userId",1);
+			
+			SendRequest.sendPost("00-01-03",paramData);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -3,6 +3,7 @@ package com.yikangyiliao.pension.service;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -72,6 +73,7 @@ public class SeniorAccountService {
 				String paymentType = paramData.get("paymentType").toString();
 				String incomeSources = paramData.get("incomeSources").toString();
 				String phoneNo = paramData.get("phoneNo").toString();
+				String userId=paramData.get("userId").toString();
 				
 				
 				
@@ -109,7 +111,7 @@ public class SeniorAccountService {
 					seniroAccount.setPhoneNo(phoneNo);
 					seniroAccount.setCreateTime(currentDateTime.getTime());
 					seniroAccount.setUpdateTime(currentDateTime.getTime());
-					
+					seniroAccount.setCreateUserId(Long.valueOf(userId));
 					
 					seniorAccountDao.insertSelective(seniroAccount);
 					
@@ -138,7 +140,9 @@ public class SeniorAccountService {
 					seniorLivingCondition.setLatitude(Double.parseDouble(latitude));
 					
 					seniorLivingConditionDao.insertSelective(seniorLivingCondition);
-					
+					Map<String,Object> data=new HashMap<String,Object>();
+					data.put("seniorId",  seniroAccount.getSeniorId());
+					rtnData.put("data",data);
 					rtnData.put("status", "000000");
 					rtnData.put("message", "保存成功！");
 				} else {
@@ -288,7 +292,8 @@ public class SeniorAccountService {
 		try {
 			if(null != paramData.get("userId").toString()){
 				String userId=paramData.get("userId").toString();
-				seniorAccountDao.getSeniorAccountByUserId(Long.parseLong(userId));
+				List<SeniorAccount> data=seniorAccountDao.getSeniorAccountByUserId(Long.parseLong(userId));
+				rtnData.put("data",data);
 				rtnData.put("status","000000");
 				rtnData.put("message","操作成功！");
 			}else {

@@ -114,4 +114,11 @@
       survey_score_id = #{surveyScoreId,jdbcType=BIGINT}
     where survey_score_detail_id = #{surveyScoreDetailId,jdbcType=BIGINT}
   </update>
+  
+  <delete id="deleteSurveyScoreDetailBySurveyScoreId" parameterType="long">
+  	delete from survey_score_details
+ 	where survey_score_details.survey_score_id=#{surveyScoreId}
+  </delete>
+  
+  
 </mapper>

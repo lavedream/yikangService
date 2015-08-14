@@ -16,6 +16,7 @@ import com.yikangyiliao.pension.entity.SurveyScore;
 import com.yikangyiliao.pension.entity.SurveyScoreDetail;
 import com.yikangyiliao.pension.manager.AnswerManager;
 import com.yikangyiliao.pension.manager.AssessmentManager;
+import com.yikangyiliao.pension.manager.SurveyScoreDetailManager;
 import com.yikangyiliao.pension.manager.SurveyScoreManager;
 
 
@@ -38,6 +39,9 @@ public class AnswerService {
 	
 	@Autowired
 	private SurveyScoreDetailDao surveyScoreDetailDao;
+	
+	@Autowired
+	private SurveyScoreDetailManager  surveyScoreDetailManager;
 	
 	
 	/**
@@ -93,6 +97,9 @@ public class AnswerService {
 						
 						surveyScoreManager.insertSelective(sureyScore);
 					}
+					
+					//删除某一个表下的所有答案
+					surveyScoreDetailManager.deleteSurveyScoreDetailBySurveyScoreId(sureyScore.getSureyScoreId());
 						
 					
 					//[{questionId:1,answers:[{answerId:1,answerVal:1},{answerId:2,answerVal:1}]},{{questionId:2,answers:[{answerId:3,answerVal:1},{answerId:4,answerVal:1}]}}]
@@ -120,12 +127,18 @@ public class AnswerService {
 						
 					}
 					surveyScoreManager.updateTotalBySurveyScoreId(sureyScore.getSureyScoreId());
-					
+					rtnData.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
+					rtnData.put("message", ExceptionConstants.responseSuccess.responseSuccess.message);
+				}else{
+					rtnData.put("status", ExceptionConstants.parameterException.parameterException.errorCode);
+					rtnData.put("message", ExceptionConstants.parameterException.parameterException.errorMessage);
 				}
+			}else{
+				rtnData.put("status", ExceptionConstants.systemException.systemException.errorCode);
+				rtnData.put("message", ExceptionConstants.systemException.systemException.errorMessage);
 			}
 			
-			rtnData.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
-			rtnData.put("message", ExceptionConstants.responseSuccess.responseSuccess.message);
+		
 		 
 		return rtnData;
 		
@@ -186,6 +199,9 @@ public class AnswerService {
 						
 						surveyScoreManager.insertSelective(sureyScore);
 					}
+					
+					
+					surveyScoreDetailManager.deleteSurveyScoreDetailBySurveyScoreId(sureyScore.getSureyScoreId());
 						
 					for(int i=0;i<questions.size();i++){
 						Map<String,Object> question=questions.get(i);

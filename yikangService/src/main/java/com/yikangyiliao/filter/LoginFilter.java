@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import com.yikangyiliao.base.utils.NetworkUtil;
 
 
-@SuppressWarnings("unused")
 public class LoginFilter implements Filter {
 
 	private String strTokit="helloworld";
@@ -22,14 +21,11 @@ public class LoginFilter implements Filter {
 	
 	public void destroy() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public void doFilter(ServletRequest arg0, ServletResponse arg1,
 			FilterChain arg2) throws IOException, ServletException {
-		// TODO Auto-generated method stub
 		HttpServletRequest hsr=(HttpServletRequest)arg0;
-		String requestURI=hsr.getRequestURI();
 //		if(null != requestURI && !requestURI.equals("login.html")){
 //			HttpSession session=hsr.getSession();
 //			if(null == session.getAttribute("sessionToket")){
@@ -43,13 +39,8 @@ public class LoginFilter implements Filter {
 //		paramMap.put("accessTiket", accessTiket);
 		
 		String appId=hsr.getParameter("appId");
-		
 		String accessTiket=hsr.getParameter("accessTiket");
-		
-		
-		
 		String hostIp=NetworkUtil.getIpAddress(hsr);
-		//String host=request.getre
 		
 		
 		arg2.doFilter(arg0, arg1);

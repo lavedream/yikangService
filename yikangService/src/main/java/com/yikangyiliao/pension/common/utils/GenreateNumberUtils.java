@@ -26,7 +26,8 @@ public class GenreateNumberUtils {
 	 * @author liushuaic
 	 * @date 2015/07/31 19:50
 	 * @desc 生成检查袋编号
-	 * 
+	 * @param accountString  患者名称
+	 * @param scaleName		 评估人名称
 	 * ***/
 	public String generateAssessmentNumber(String accountString,String scaleName){
 		Integer maxNumber=generateNumberDao.selectMaxOrderNumberByGenerateTable("assessments");

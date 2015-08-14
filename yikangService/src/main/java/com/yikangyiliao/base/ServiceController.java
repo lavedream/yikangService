@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yikangyiliao.base.encryption.AES;
 import com.yikangyiliao.base.utils.ApplicationContextUtil;
 import com.yikangyiliao.base.utils.InterfaceUtil;
+import com.yikangyiliao.pension.common.error.ExceptionConstants;
 
 
 @Controller
@@ -62,8 +63,8 @@ public class ServiceController {
 							logger.error(e.getMessage());
 							e.printStackTrace();
 							//ExceptionInfo e2=(ExceptionInfo)e;
-							rtnMap.put("code","999999");
-							rtnMap.put("message","000000");
+							rtnMap.put("status",ExceptionConstants.systemException.systemException.errorCode);
+							rtnMap.put("message",ExceptionConstants.systemException.systemException.errorMessage);
 						}
 						
 						

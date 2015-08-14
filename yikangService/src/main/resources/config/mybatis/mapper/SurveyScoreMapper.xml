@@ -182,8 +182,17 @@
   <!-- 修改某一个问卷的总得分 -->
   <update id="updateTotalBySurveyScoreId" parameterType="long">
   	update survey_scores set total=(
-		select sum(ssd.score) from 
-		survey_score_details ssd where ssd.survey_score_id=#{surveyScoreId}
+		select 
+			 sum(
+				case 
+					when quw.weight_value is not null then ssd.score*quw.weight_value
+					else ssd.score
+		        end
+			 )
+		from
+		 survey_score_details ssd left join question_unit_weights quw
+		on ssd.question_id= quw.question_portrait_id
+		where ssd.survey_score_id=#{surveyScoreId}
 	)
 	where survey_scores.surey_score_id=#{surveyScoreId}
   </update>

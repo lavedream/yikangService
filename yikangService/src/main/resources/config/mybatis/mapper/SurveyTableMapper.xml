@@ -166,7 +166,7 @@
   	<collection property="questions" ofType="map" javaType="list">
   		<result column="question_id" 	property="questionId"/>
   		<result column="question_text" 	property="questionText"/>
-  		<result column="description" 	property="description"/>
+  		<result column="description" 	property="descriptions"/>
   		<collection property="answers"  ofType="map" javaType="list">
   			<result column="answer_id" 		property="answerId"/>
   			<result column="answer_text" 	property="answerText"/>

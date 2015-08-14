@@ -21,7 +21,7 @@ public class DepressionSelfTestingManager {
 	 * 抑郁自测
 	 * */
 	public Map<String,Object> getQuestionsAndAnswersByTableName(){
-		return surveyTableDao.getQuestionsAndAnswersByTableName("抑郁自测");
+		return surveyTableDao.getQuestionsAndAnswersByTableName("抑郁自测评估表");
 	}
 	
 }

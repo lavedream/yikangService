@@ -2,6 +2,8 @@ package com.yikangyiliao.pension.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.yikangyiliao.pension.entity.SeniorAccount;
 
 public interface SeniorAccountDao {
@@ -24,5 +26,5 @@ public interface SeniorAccountDao {
      * @desc 查询某一个用户下的所有的 老人信息
      * 
      * */
-    List<SeniorAccount> getSeniorAccountByUserId(Long userId);
+    List<SeniorAccount> getSeniorAccountByUserId(@Param("userId") Long userId);
 }

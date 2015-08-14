@@ -33,6 +33,8 @@ public class SeniorAccount {
 
     private Long updateTime;
 
+    private Long createUserId;
+
     public Long getSeniorId() {
         return seniorId;
     }
@@ -159,5 +161,13 @@ public class SeniorAccount {
 
     public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Long getCreateUserId() {
+        return createUserId;
+    }
+
+    public void setCreateUserId(Long createUserId) {
+        this.createUserId = createUserId;
     }
 }

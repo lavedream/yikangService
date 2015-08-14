@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.yikangyiliao</groupId>
-	<artifactId>yikangyiliaopersion</artifactId>
+	<artifactId>yikangService</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>persion</name>
@@ -55,12 +55,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 			<version>${spring.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-asm</artifactId>
-			<version>3.1.4.RELEASE</version>
 		</dependency>
 
 		<dependency>
@@ -196,7 +190,7 @@
 
 
 	<build>
-		<finalName>supermarket</finalName>
+		<finalName>yikangservice</finalName>
 
 		<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
 		<plugins>

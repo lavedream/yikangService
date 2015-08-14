@@ -14,4 +14,11 @@ public interface SurveyScoreDetailDao {
     int updateByPrimaryKeySelective(SurveyScoreDetail record);
 
     int updateByPrimaryKey(SurveyScoreDetail record);
+    
+    
+    /**
+     * @author liushuaic
+     * @date 2015/08/14 15:49 
+     * */
+    int deleteSurveyScoreDetailBySurveyScoreId(Long surveyScoreId);
 }
