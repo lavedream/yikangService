@@ -191,5 +191,96 @@
 	where st.table_name =#{tableName}
   </select>
   
+  <!--获取某一个表中的某一个老人 评估状态  -->
+  <select id="getTableListByAssessmentId" parameterType="long" resultType="map">
+  	select 
+		st.survey_table_id 	as surveyTableId,
+	    st.table_name 		as tableName,
+	    case 
+			when ss.surey_score_id is null then 0
+			else 1
+	    end as isTest
+	from survey_tables st left join survey_scores ss 
+		on (st.survey_table_id=ss.survey_table_id and ss.assessment_id=#{assessmentId})
+  </select>
+  
+  
+  
+  <resultMap type="map" id="getQuestionsAndAnswersIsCheckMap">
+  	<result column="surveyId" property="surveyId"/>
+  	<collection property="questions" ofType="map" javaType="list">
+  		<result column="question_id" property="questionId"/>
+  		<result column="question_text" property="questionText"/>
+  		<collection property="answers" ofType="map" javaType="list">
+  			<result column="answer_id" property="answerId"/>
+  			<result column="answer_text" property="answerText"/>
+  			<result column="checked" property="checked"/>
+  		</collection>
+  	</collection>
+  </resultMap>
+  <!-- 获取某一表的问题及答案，及答案是否选中 -->
+  <select id="getQuestionsAndAnswersIsCheck" resultMap="getQuestionsAndAnswersIsCheckMap"  parameterType="map">
+	select 
+		qsm.survey_id 		,
+		que.question_id 	,
+		que.question_text 	,
+	    ans.answer_id		,
+	    ans.answer_text 	,
+		case 
+			when ssd.answer_id is not null then '1'
+	        else '0'
+		end 				as 		'checked'
+	from questions que
+	inner join question_survey_maps qsm on que.question_id=qsm.question_id
+	inner join question_answer_maps qam on que.question_id=qam.question_id
+	inner join answers ans on ans.answer_id=qam.answer_id
+	left join survey_scores ss 
+	on ( qsm.survey_id=ss.survey_table_id and  ss.assessment_id=#{assessmentId} and ss.survey_table_id=#{surveyTableId})
+	left join survey_score_details ssd 
+	on (
+		ans.answer_id=ssd.answer_id
+		and ssd.survey_score_id=ss.surey_score_id
+	)
+  </select>
+  
+  <resultMap type="map" id="getQuestionAndAnswersIsCheckTwoMap">
+  	<result column="question_crosswise_id" 		property="questionCrosswiseId"/>
+  	<result column="question_crosswise_name" 	property="questionCrosswiseName"/>
+  	<collection property="questions"	ofType="map" javaType="list">
+  		<result column="question_portrait_id" 	property="questionPortraitId"/>
+  		<result column="question_portrait_name" property="questionPortraitName"/>
+  		<collection property="answers" 	ofType="map" javaType="list">
+  			<result column="answer_id"   property="answerId"/>
+  			<result column="answer_text" property="answerText"/>
+  			<result column="answer_val"  property="answerVal"/>
+  			<result column="checked"     property="checked"/>
+  		</collection>
+  	</collection>
+  </resultMap>
+  
+  <!-- 查询二维表结构 答案及问题的数据 -->
+  <select id="getQuestionAndAnswersIsCheckTwo" resultMap="getQuestionAndAnswersIsCheckTwoMap" parameterType="map">
+	select 
+			qc.question_crosswise_id,
+		    qc.question_crosswise_name,
+		    qc.survey_table_id,
+			qu.question_portrait_id,
+			qu.question_portrait_name,
+			ans.answer_id,
+			ans.answer_text,
+			ans.answer_val,
+		    case 
+				when ssd.answer_id is not null then '1'
+		        else '0'
+			end  as  'checked'
+	from question_units qu
+		inner join question_unit_answer_maps quam on qu.question_portrait_id=quam.question_portrait_group
+		inner join question_crosswises qc 	on qu.question_crosswise_id=qc.question_crosswise_id
+		inner join answers ans 				on quam.answer_id=ans.answer_id
+		left  join survey_scores ss 		on (ss.survey_table_id=qu.survey_table_id and ss.assessment_id= #{assessmentId})
+		left  join survey_score_details ssd on (ss.surey_score_id=ssd.survey_score_id and ssd.answer_id=quam.answer_id)
+	where qc.survey_table_id=#{surveyTableId} and qc.question_crosswise_id=#{questionCrosswiseId}
+  </select>
+  
   
 </mapper>

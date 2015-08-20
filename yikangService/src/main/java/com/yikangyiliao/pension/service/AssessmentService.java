@@ -48,7 +48,7 @@ public class AssessmentService {
 				String seniorId=paramData.get("seniorId").toString();
 				String userId=paramData.get("userId").toString();
 				//String assessmentName=paramData.get("assessmentName").toString();
-				SimpleDateFormat  sdf=new SimpleDateFormat("yyyy-mm-dd hh:MM:ss");
+				SimpleDateFormat  sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 				String assessmentName=sdf.format(Calendar.getInstance().getTime());
 				
 				User user=userManager.selectByPrimaryKey(Long.parseLong(userId));
@@ -94,9 +94,9 @@ public class AssessmentService {
 	public Map<String,Object> getAssessmentBySeniorId(Map<String,Object> paramData){
 			 Map<String,Object> rtnMap=new HashMap<String, Object>();
 			 
-			if(null != paramData){
+			if(null != paramData &&  paramData.containsKey("seniorId")){
 				
-				String seniorId=paramData.get("paramData").toString();
+				String seniorId=paramData.get("seniorId").toString();
 				
 				
 				List<Assessment> data=assessmentManager.getAssessmentBySeniorId(Long.valueOf(seniorId));
@@ -112,7 +112,7 @@ public class AssessmentService {
 			return rtnMap;
 	}
 	public static void main(String[] args) {
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-mm-dd hh:MM:ss");
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		System.out.println(sdf.format(Calendar.getInstance().getTime()));
 	}
 

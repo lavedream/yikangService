@@ -143,6 +143,20 @@ public class InterfaceUtil {
 		mathodClassPath.put("00-15-02", "getAssessmentBySeniorId");
 		
 		
+		serviceClassName.put("/login", "login");
+		
+		
+		/**
+		 * @author liushuaic
+		 * @date 2015/08/18 18:03
+		 * 评估表管理
+		 * */
+		serviceClassName.put("00-16", "surveyTableService");
+		mathodClassPath.put("00-16-01", "getTableList");
+		mathodClassPath.put("00-16-02", "getQuestionsAndAnswersIsCheck");
+		mathodClassPath.put("00-16-03", "getQuestionAndAnswersIsCheckTwo");
+		
+		
 	}
 	
 	public void loadConfigInterface(String filePath){

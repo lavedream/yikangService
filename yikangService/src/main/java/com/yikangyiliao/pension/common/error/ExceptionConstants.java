@@ -28,7 +28,8 @@ public class ExceptionConstants {
 	 * @date	2015/07/30 15:18
 	 * */
 	public enum parameterException{
-		parameterException("000001","参数类型异常！");
+		parameterException("000001","参数类型异常！"),
+		accessTiketException("000002","accessTiket校验异常！");
 		public String errorCode;
 		public String errorMessage;
 		private parameterException(String errorCode,String errorMessage){

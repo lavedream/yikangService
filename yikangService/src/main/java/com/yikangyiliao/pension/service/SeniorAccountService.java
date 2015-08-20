@@ -57,65 +57,112 @@ public class SeniorAccountService {
 
 			SeniorAccount seniroAccount = new SeniorAccount();
 
+			SeniorLivingCondition seniorLivingCondition=new SeniorLivingCondition();
+			
 			try {
 				
 				Date currentDateTime=Calendar.getInstance().getTime();
-				
-				String name = paramData.get("name").toString();
-				String sex = paramData.get("sex").toString();
-				String birthday = paramData.get("birthday").toString();
-				String birthYear = birthday.substring(0,birthday.indexOf("-"));
-				String cardNumber = paramData.get("cardNumber").toString();
-				String cardType = paramData.get("cardType").toString();
-				String socialSecurity = paramData.get("socialSecurity").toString();
-				String race = paramData.get("race").toString();
-				String faith = paramData.get("faith").toString();
-				String paymentType = paramData.get("paymentType").toString();
-				String incomeSources = paramData.get("incomeSources").toString();
-				String phoneNo = paramData.get("phoneNo").toString();
+
 				String userId=paramData.get("userId").toString();
 				
 				
-				
-				String city = paramData.get("city").toString();
-				String district = paramData.get("district").toString();
-				String floor = paramData.get("floor").toString();
-				String liveWith = paramData.get("liveWith").toString();
-				String outWindow = paramData.get("outWindow").toString();
-				String residentialQuarter = paramData.get("residentialQuarter").toString();
-				String roomOrientation = paramData.get("roomOrientation").toString();
-				String unit = paramData.get("unit").toString();
-				String longitude = paramData.get("longitude").toString();
-				String latitude = paramData.get("latitude").toString();
-				
-				
-				
-				if (null != name && null != sex && null != birthday
-						&& null != birthYear && null != cardNumber
-						&& null != cardType && null != socialSecurity
-						&& null != race && null != faith
-						&& null != paymentType
-						&& null != incomeSources && null != phoneNo
-						&& null != roomOrientation && null != outWindow) {
-					seniroAccount.setName(name);
-					seniroAccount.setSex(Byte.valueOf(sex));
+				String name = paramData.get("name").toString();
+				String sex = paramData.get("sex").toString();
+				if(paramData.containsKey("birthday")){
+					
+					String birthday = paramData.get("birthday").toString();
+					String birthYear = birthday.substring(0,birthday.indexOf("-"));
 					seniroAccount.setBirthday(DateUtils.getＭillisecond(birthday));
 					seniroAccount.setBirthYear(Integer.parseInt(birthYear));
+				}
+				
+				if(paramData.containsKey("cardNumber")){
+					String cardNumber = paramData.get("cardNumber").toString();
+					String cardType = paramData.get("cardType").toString();
 					seniroAccount.setCardNumber(cardNumber);
 					seniroAccount.setCardType(Byte.valueOf(cardType));
+				}
+			
+				if(paramData.containsKey("socialSecurity")){
+					String socialSecurity = paramData.get("socialSecurity").toString();
 					seniroAccount.setSocialSecurity(socialSecurity);
+				}
+				if(paramData.containsKey("race")){
+					String race = paramData.get("race").toString();
 					seniroAccount.setRace(race == "0" ? false : true);
+				}
+				if(paramData.containsKey("faith")){
+					String faith = paramData.get("faith").toString();
 					seniroAccount.setFaith(Byte.valueOf(faith));
+				}
+				if(paramData.containsKey("paymentType")){
+					String paymentType = paramData.get("paymentType").toString();
 					seniroAccount.setPaymentType(Byte.valueOf(paymentType));
+				}
+				if(paramData.containsKey("incomeSources")){
+					String incomeSources = paramData.get("incomeSources").toString();
 					seniroAccount.setIncomeSources(Byte.valueOf(incomeSources));
+				}
+				if(paramData.containsKey("phoneNo")){
+					String phoneNo = paramData.get("phoneNo").toString();
 					seniroAccount.setPhoneNo(phoneNo);
+				}
+				
+				
+				if(paramData.containsKey("city")){
+					String city = paramData.get("city").toString();
+					seniorLivingCondition.setCity(city);
+				}
+				
+				
+				if(paramData.containsKey("district")){
+					String district = paramData.get("district").toString();
+					seniorLivingCondition.setDistrict(district);
+				}
+				if(paramData.containsKey("floor")){
+					String floor = paramData.get("floor").toString();
+					seniorLivingCondition.setFloor(Integer.parseInt(floor));
+				}
+				if(paramData.containsKey("liveWith")){
+					String liveWith = paramData.get("liveWith").toString();
+					seniorLivingCondition.setLiveWith(Byte.parseByte(liveWith));
+				}
+				if(paramData.containsKey("outWindow")){
+					String outWindow = paramData.get("outWindow").toString();
+					seniorLivingCondition.setOutWindow(outWindow=="0"?false:true);
+				}
+				
+				if(paramData.containsKey("residentialQuarter")){
+					String residentialQuarter = paramData.get("residentialQuarter").toString();
+					seniorLivingCondition.setResidentialQuarter(residentialQuarter);
+				}
+				
+				
+				if(paramData.containsKey("roomOrientation")){
+					String roomOrientation = paramData.get("roomOrientation").toString();
+					seniorLivingCondition.setRoomOrientation(Byte.parseByte(roomOrientation));
+				}
+				if(paramData.containsKey("unit")){
+					String unit = paramData.get("unit").toString();
+					seniorLivingCondition.setUnit(Integer.parseInt(unit));
+				}
+				if(paramData.containsKey("longitude")){
+					String longitude = paramData.get("longitude").toString();
+					seniorLivingCondition.setLongitude(Double.parseDouble(longitude));
+				}
+				if(paramData.containsKey("latitude")){
+					String latitude = paramData.get("latitude").toString();
+					seniorLivingCondition.setLatitude(Double.parseDouble(latitude));
+				}
+			
+					seniroAccount.setName(name);
+					seniroAccount.setSex(Byte.valueOf(sex));
 					seniroAccount.setCreateTime(currentDateTime.getTime());
 					seniroAccount.setUpdateTime(currentDateTime.getTime());
 					seniroAccount.setCreateUserId(Long.valueOf(userId));
 					
+					
 					seniorAccountDao.insertSelective(seniroAccount);
-					
-					
 					OperateServiceLog operateServiceLog=new OperateServiceLog();
 					operateServiceLog.setCreateTime(currentDateTime.getTime());
 					operateServiceLog.setUpdateTime(currentDateTime.getTime());
@@ -124,20 +171,10 @@ public class SeniorAccountService {
 					operateServiceLog.setCreateUserId(-1l);
 					operateServiceLog.setOpreateContent(objectMapper.writeValueAsString(paramData));
 					operateServiceLogDao.insertSelective(operateServiceLog);
+				
 					
-					SeniorLivingCondition seniorLivingCondition=new SeniorLivingCondition();
 					
-					seniorLivingCondition.setCity(city);
-					seniorLivingCondition.setDistrict(district);
-					seniorLivingCondition.setFloor(Integer.parseInt(floor));
-					seniorLivingCondition.setLiveWith(Byte.parseByte(liveWith));
-					seniorLivingCondition.setOutWindow(outWindow=="0"?false:true);
-					seniorLivingCondition.setResidentialQuarter(residentialQuarter);
-					seniorLivingCondition.setRoomOrientation(Byte.parseByte(roomOrientation));
 					seniorLivingCondition.setSeniorId(seniroAccount.getSeniorId());
-					seniorLivingCondition.setUnit(Integer.parseInt(unit));
-					seniorLivingCondition.setLongitude(Double.parseDouble(longitude));
-					seniorLivingCondition.setLatitude(Double.parseDouble(latitude));
 					
 					seniorLivingConditionDao.insertSelective(seniorLivingCondition);
 					Map<String,Object> data=new HashMap<String,Object>();
@@ -145,10 +182,7 @@ public class SeniorAccountService {
 					rtnData.put("data",data);
 					rtnData.put("status", "000000");
 					rtnData.put("message", "保存成功！");
-				} else {
-					rtnData.put("status", "999999");
-					rtnData.put("message", "数据不正确！");
-				}
+		
 
 			} catch (Exception e) {
 				e.printStackTrace();

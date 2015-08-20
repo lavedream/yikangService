@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yikangyiliao.base.encryption.AES;
+import com.yikangyiliao.base.utils.AccessTiketCheckout;
 import com.yikangyiliao.base.utils.ApplicationContextUtil;
 import com.yikangyiliao.base.utils.InterfaceUtil;
 import com.yikangyiliao.pension.common.error.ExceptionConstants;
@@ -55,6 +56,16 @@ public class ServiceController {
 							paramData=AES.Decrypt(paramData, "1234567890abcDEF");
 							logger.debug("serviceController --> 接收到的paramData数据："+paramData);
 							paramMap=objectMapper.readValue(paramData, Map.class);
+							String accessTiket=request.getParameter("accessTiket");
+//							String UD=AccessTiketCheckout.getAccessTiketUD(accessTiket);
+//							String LDT=AccessTiketCheckout.getAccessTiketLDT(accessTiket);
+//							String MC=AccessTiketCheckout.getAccessTiketMC(accessTiket);
+//							
+//							paramMap.put("UD",UD);
+//							paramMap.put("LDT",LDT);
+//							paramMap.put("MC",MC);
+							
+							
 						}
 						try{
 							rtnMap = (Map<String, Object>) returnMethod.invoke(invokObject, paramMap);

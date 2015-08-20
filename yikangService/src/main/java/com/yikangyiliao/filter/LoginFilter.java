@@ -10,23 +10,25 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
+import com.yikangyiliao.base.utils.AccessTiketCheckout;
 import com.yikangyiliao.base.utils.NetworkUtil;
 
 
 public class LoginFilter implements Filter {
 
-	private String strTokit="helloworld";
 	
-//	private Logger log=Logger.getLogger(LoginFilter.class);
+	private Logger log=Logger.getLogger(LoginFilter.class);
 	
 	public void destroy() {
-		// TODO Auto-generated method stub
 	}
 
 	public void doFilter(ServletRequest arg0, ServletResponse arg1,
 			FilterChain arg2) throws IOException, ServletException {
 		HttpServletRequest hsr=(HttpServletRequest)arg0;
-//		if(null != requestURI && !requestURI.equals("login.html")){
+		String requestURI=hsr.getRequestURI();
+//		if(null != requestURI && !requestURI.equals("/service/login")){
 //			HttpSession session=hsr.getSession();
 //			if(null == session.getAttribute("sessionToket")){
 //				session.setAttribute("sessionToket",this.strTokit);
@@ -40,10 +42,25 @@ public class LoginFilter implements Filter {
 		
 		String appId=hsr.getParameter("appId");
 		String accessTiket=hsr.getParameter("accessTiket");
-		String hostIp=NetworkUtil.getIpAddress(hsr);
+		//String hostIp=NetworkUtil.getIpAddress(hsr);
+//		if((null != appId && appId.length()>1 && null != accessTiket && accessTiket.length()>0) || requestURI.equals("/service/login") ){
+//			try {
+//				if(requestURI.equals("/service/login")){
+					arg2.doFilter(arg0, arg1);
+//				}else if(AccessTiketCheckout.checkAccessTiketLayout(accessTiket, hsr)){
+//					arg2.doFilter(arg0, arg1);
+//				}
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//		}else{
+//			arg1.setCharacterEncoding("utf-8");
+//			arg1.getWriter().println("{'status':'999999','message':'数据校验失败!'}");
+//		}
+
 		
-		
-		arg2.doFilter(arg0, arg1);
 		
 	}
 

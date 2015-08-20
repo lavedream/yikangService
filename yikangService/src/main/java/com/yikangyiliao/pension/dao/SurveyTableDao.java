@@ -42,4 +42,31 @@ public interface SurveyTableDao {
      * @desc 根据某一个表，查询出所有的问题及答案
      * */
     Map<String,Object> getQuestionsAndAnswersByTableName(String tableName);
+    
+    
+    /**
+     * @author liushuaic
+     * @date 2015/08/18 17:44
+     * @desc 获取某一个表中的某一个老人 评估状态 
+     * **/
+    List<Map<String,Object>> getTableListByAssessmentId(Long assessmentId);
+    
+    
+    /**
+     * @author liushuaic
+     * @date 2015/08/19 15:20
+     * @param assessmentId 档案袋id
+     * @param surveyTableId 表id
+｀     * */
+    List<Map<String,Object>> getQuestionsAndAnswersIsCheck(Map<String,Object> paramData);
+    
+    /**
+     * @author liushuaic
+     * @date 2015/08/20 14:20
+     * @param assessmentId 档案袋id
+     * @param surveyTableId 表id
+     * @param questionCrosswiseId 问题分类id
+｀     * */
+    List<Map<String,Object>> getQuestionAndAnswersIsCheckTwo(Map<String,Object> paramData);
+    
 }
