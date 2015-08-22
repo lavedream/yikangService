@@ -120,5 +120,10 @@
  	where survey_score_details.survey_score_id=#{surveyScoreId}
   </delete>
   
+    <delete id="deleteSurveyScoreDetailBySurveyScoreIdAndQuestionId" parameterType="map">
+  	delete from survey_score_details
+ 	where survey_score_details.survey_score_id=#{surveyScoreId}
+ 	and question_id=#{quetionId}
+  </delete>
   
 </mapper>

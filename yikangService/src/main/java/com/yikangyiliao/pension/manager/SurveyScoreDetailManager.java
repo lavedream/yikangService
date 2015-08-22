@@ -1,5 +1,7 @@
 package com.yikangyiliao.pension.manager;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,5 +25,17 @@ public class SurveyScoreDetailManager {
 	 * */
 	public int deleteSurveyScoreDetailBySurveyScoreId(Long surveyScoreId){
 	    return surveyScoreDetailDao.deleteSurveyScoreDetailBySurveyScoreId(surveyScoreId);
+	}
+	
+	/**
+	 * 
+	 * @author liushuaic
+	 * @date 2015/08/14 16:02
+	 * 删除某一个表评测表下的 某一个问题的所有答案详情
+	 *  @param surveyScoreId
+ 		@param quetionId
+	 * */
+	public int deleteSurveyScoreDetailBySurveyScoreIdAndQuestionId(Map<String,Object> paramData){
+	    return surveyScoreDetailDao.deleteSurveyScoreDetailBySurveyScoreIdAndQuestionId(paramData);
 	}
 }

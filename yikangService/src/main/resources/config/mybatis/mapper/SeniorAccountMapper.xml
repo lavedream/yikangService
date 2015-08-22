@@ -16,14 +16,15 @@
     <result column="payment_type" property="paymentType" jdbcType="TINYINT" />
     <result column="income_sources" property="incomeSources" jdbcType="TINYINT" />
     <result column="phone_no" property="phoneNo" jdbcType="VARCHAR" />
+    <result column="profession" property="profession" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="BIGINT" />
     <result column="update_time" property="updateTime" jdbcType="BIGINT" />
     <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Base_Column_List" >
     senior_id, name, sex, birthday, birth_year, card_number, card_type, social_security, 
-    race, faith, living_conditions, payment_type, income_sources, phone_no, create_time, 
-    update_time, create_user_id
+    race, faith, living_conditions, payment_type, income_sources, phone_no, profession, 
+    create_time, update_time, create_user_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -40,19 +41,18 @@
       birthday, birth_year, card_number, 
       card_type, social_security, race, 
       faith, living_conditions, payment_type, 
-      income_sources, phone_no, create_time, 
-      update_time, create_user_id)
+      income_sources, phone_no, profession, 
+      create_time, update_time, create_user_id
+      )
     values (#{seniorId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, 
       #{birthday,jdbcType=BIGINT}, #{birthYear,jdbcType=INTEGER}, #{cardNumber,jdbcType=VARCHAR}, 
       #{cardType,jdbcType=TINYINT}, #{socialSecurity,jdbcType=VARCHAR}, #{race,jdbcType=BIT}, 
       #{faith,jdbcType=TINYINT}, #{livingConditions,jdbcType=TINYINT}, #{paymentType,jdbcType=TINYINT}, 
-      #{incomeSources,jdbcType=TINYINT}, #{phoneNo,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, 
-      #{updateTime,jdbcType=BIGINT}, #{createUserId,jdbcType=BIGINT})
+      #{incomeSources,jdbcType=TINYINT}, #{phoneNo,jdbcType=VARCHAR}, #{profession,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, #{createUserId,jdbcType=BIGINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.yikangyiliao.pension.entity.SeniorAccount" >
-    <selectKey resultType="Long" keyProperty="seniorId" order="AFTER">
-		SELECT LAST_INSERT_ID()
-	</selectKey>
     insert into senior_account
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="seniorId != null" >
@@ -96,6 +96,9 @@
       </if>
       <if test="phoneNo != null" >
         phone_no,
+      </if>
+      <if test="profession != null" >
+        profession,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -150,6 +153,9 @@
       <if test="phoneNo != null" >
         #{phoneNo,jdbcType=VARCHAR},
       </if>
+      <if test="profession != null" >
+        #{profession,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=BIGINT},
       </if>
@@ -203,6 +209,9 @@
       <if test="phoneNo != null" >
         phone_no = #{phoneNo,jdbcType=VARCHAR},
       </if>
+      <if test="profession != null" >
+        profession = #{profession,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=BIGINT},
       </if>
@@ -230,6 +239,7 @@
       payment_type = #{paymentType,jdbcType=TINYINT},
       income_sources = #{incomeSources,jdbcType=TINYINT},
       phone_no = #{phoneNo,jdbcType=VARCHAR},
+      profession = #{profession,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=BIGINT},
       update_time = #{updateTime,jdbcType=BIGINT},
       create_user_id = #{createUserId,jdbcType=BIGINT}

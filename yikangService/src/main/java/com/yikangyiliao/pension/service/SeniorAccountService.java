@@ -107,6 +107,10 @@ public class SeniorAccountService {
 					String phoneNo = paramData.get("phoneNo").toString();
 					seniroAccount.setPhoneNo(phoneNo);
 				}
+				if(paramData.containsKey("profession")){
+					String profession = paramData.get("profession").toString();
+					seniroAccount.setProfession(profession);
+				}
 				
 				
 				if(paramData.containsKey("city")){
@@ -154,6 +158,8 @@ public class SeniorAccountService {
 					String latitude = paramData.get("latitude").toString();
 					seniorLivingCondition.setLatitude(Double.parseDouble(latitude));
 				}
+				
+				
 			
 					seniroAccount.setName(name);
 					seniroAccount.setSex(Byte.valueOf(sex));

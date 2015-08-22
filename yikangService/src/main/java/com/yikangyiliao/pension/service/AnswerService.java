@@ -184,29 +184,36 @@ public class AnswerService {
 					SurveyScore sureyScore=surveyScoreManager.getSureyScoreByAssessmentIdAndSureyTableId(paramData);
 					if(null == sureyScore){
 						sureyScore=new SurveyScore();
+						
 						sureyScore.setConclusionUserId(assessment.getAppraisersId());
-						sureyScore.setConclusion("初始化");
+						sureyScore.setConclusion(assessment.getAppraisersName());
+						
 						sureyScore.setAssessorUserId(assessment.getAppraisersId());
 						
-						sureyScore.setDataSource(Byte.valueOf("1"));
+						//sureyScore.setDataSource(Byte.valueOf("1"));
 						sureyScore.setIsDelete(Byte.valueOf("0"));
 						sureyScore.setSenorId(assessment.getSeniorId());
 						sureyScore.setSurveyTableId(Long.valueOf(surveyTableId));
 						sureyScore.setTotal(0);
 						sureyScore.setAssessmentId(Long.valueOf(assessmentId));
 						sureyScore.setAssessmentNumber("1ac_"+assessmentId);
-						sureyScore.setDataSource(Byte.valueOf("0"));
+						//sureyScore.setDataSource(Byte.valueOf("0"));
 						
 						surveyScoreManager.insertSelective(sureyScore);
 					}
 					
 					
-					surveyScoreDetailManager.deleteSurveyScoreDetailBySurveyScoreId(sureyScore.getSureyScoreId());
-						
+					//surveyScoreDetailManager.deleteSurveyScoreDetailBySurveyScoreId(sureyScore.getSureyScoreId());
+					 Map<String,Object> paramDatas=new HashMap<String, Object>();
+					 paramDatas.put("surveyScoreId", sureyScore.getSureyScoreId());
 					for(int i=0;i<questions.size();i++){
 						Map<String,Object> question=questions.get(i);
 						
 						String questionId=question.get("questionId").toString();
+						paramDatas.put("questionId",questionId);
+						
+						// 某一个问题的答案
+						surveyScoreDetailManager.deleteSurveyScoreDetailBySurveyScoreIdAndQuestionId(paramData);
 						List<Map<String,Object>> answers=(List<Map<String,Object>>)question.get("answers");
 						for(int j=0;j<answers.size();j++){
 							

@@ -143,8 +143,8 @@ public class InterfaceUtil {
 		mathodClassPath.put("00-15-02", "getAssessmentBySeniorId");
 		
 		
-		serviceClassName.put("/login", "login");
-		
+		serviceClassName.put("login", "login");
+		mathodClassPath.put("login", "login");
 		
 		/**
 		 * @author liushuaic
@@ -184,7 +184,9 @@ public class InterfaceUtil {
 	 *
 	 ***/
 	public static String getBeanNameByServiceCode(String serviceCode){
-		serviceCode=serviceCode.substring(0,serviceCode.lastIndexOf('-'));
+		if(serviceCode.indexOf('-')!=-1){
+			serviceCode=serviceCode.substring(0,serviceCode.lastIndexOf('-'));
+		}
 		return serviceClassName.get(serviceCode);
 	}
 

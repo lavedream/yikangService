@@ -58,7 +58,7 @@ public interface SurveyTableDao {
      * @param assessmentId 档案袋id
      * @param surveyTableId 表id
 ｀     * */
-    List<Map<String,Object>> getQuestionsAndAnswersIsCheck(Map<String,Object> paramData);
+    Map<String,Object> getQuestionsAndAnswersIsCheck(Map<String,Object> paramData);
     
     /**
      * @author liushuaic
@@ -67,6 +67,6 @@ public interface SurveyTableDao {
      * @param surveyTableId 表id
      * @param questionCrosswiseId 问题分类id
 ｀     * */
-    List<Map<String,Object>> getQuestionAndAnswersIsCheckTwo(Map<String,Object> paramData);
+    Map<String,Object> getQuestionAndAnswersIsCheckTwo(Map<String,Object> paramData);
     
 }

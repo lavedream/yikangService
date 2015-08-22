@@ -16,7 +16,7 @@ import com.yikangyiliao.pension.common.error.ExceptionInfo;
  * **/
 public class AccessTiketCheckout {
 
-	private static final String secretKey = "yi99kang88";
+	private static final String secretKey = "yi99kang88yi99ka";
 
 	private static Logger logger = Logger.getLogger(AccessTiketCheckout.class);
 
@@ -151,6 +151,14 @@ public class AccessTiketCheckout {
 			String machineCode) throws Exception {
 		return AES.Encrypt("UD" + loginId + "￥LDT" + loginDateTime + "￥MC"+machineCode,
 				secretKey);
+	}
+	public static void main(String[] args) {
+		try {
+			System.out.println(AES.Decrypt("b415bb0d4dd4a891e5724eeb20e3f477e8e97ec1054b4794c35045539bb050e8","yi99kang88yi99ka"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.yikangyiliao.pension.dao;
 
+import java.util.Map;
+
 import com.yikangyiliao.pension.entity.SurveyScoreDetail;
 
 public interface SurveyScoreDetailDao {
@@ -21,4 +23,10 @@ public interface SurveyScoreDetailDao {
      * @date 2015/08/14 15:49 
      * */
     int deleteSurveyScoreDetailBySurveyScoreId(Long surveyScoreId);
+    
+    /**
+     * @author liushuaic
+     * @date 2015/08/14 15:49 
+     * */
+    int deleteSurveyScoreDetailBySurveyScoreIdAndQuestionId(Map<String,Object> paramData);
 }

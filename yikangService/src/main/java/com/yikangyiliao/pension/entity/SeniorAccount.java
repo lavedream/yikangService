@@ -29,6 +29,8 @@ public class SeniorAccount {
 
     private String phoneNo;
 
+    private String profession;
+
     private Long createTime;
 
     private Long updateTime;
@@ -145,6 +147,14 @@ public class SeniorAccount {
 
     public void setPhoneNo(String phoneNo) {
         this.phoneNo = phoneNo == null ? null : phoneNo.trim();
+    }
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession == null ? null : profession.trim();
     }
 
     public Long getCreateTime() {

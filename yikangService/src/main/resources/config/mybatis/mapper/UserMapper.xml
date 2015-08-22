@@ -128,8 +128,9 @@
   </update>
   
 <!--   根据用户名称查询某一个用户信息 -->
-  <select id="getUserByUserName" parameterType="string">
-  	select <include refid="Base_Column_List"></include> 
+  <select id="getUserByUserName" parameterType="string" resultMap="BaseResultMap">
+  	select 
+  		<include refid="Base_Column_List"></include> 
   	from users
   	<where>
   		user_name=#{userName}

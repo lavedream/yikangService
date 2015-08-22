@@ -234,13 +234,14 @@
 	inner join question_survey_maps qsm on que.question_id=qsm.question_id
 	inner join question_answer_maps qam on que.question_id=qam.question_id
 	inner join answers ans on ans.answer_id=qam.answer_id
-	left join survey_scores ss 
+	inner join survey_scores ss 
 	on ( qsm.survey_id=ss.survey_table_id and  ss.assessment_id=#{assessmentId} and ss.survey_table_id=#{surveyTableId})
-	left join survey_score_details ssd 
+	inner join survey_score_details ssd 
 	on (
 		ans.answer_id=ssd.answer_id
 		and ssd.survey_score_id=ss.surey_score_id
 	)
+	order by qsm.survey_id asc, que.question_id asc
   </select>
   
   <resultMap type="map" id="getQuestionAndAnswersIsCheckTwoMap">
@@ -277,8 +278,8 @@
 		inner join question_unit_answer_maps quam on qu.question_portrait_id=quam.question_portrait_group
 		inner join question_crosswises qc 	on qu.question_crosswise_id=qc.question_crosswise_id
 		inner join answers ans 				on quam.answer_id=ans.answer_id
-		left  join survey_scores ss 		on (ss.survey_table_id=qu.survey_table_id and ss.assessment_id= #{assessmentId})
-		left  join survey_score_details ssd on (ss.surey_score_id=ssd.survey_score_id and ssd.answer_id=quam.answer_id)
+		inner  join survey_scores ss 		on (ss.survey_table_id=qu.survey_table_id and ss.assessment_id= #{assessmentId})
+		inner  join survey_score_details ssd on (ss.surey_score_id=ssd.survey_score_id and ssd.answer_id=quam.answer_id)
 	where qc.survey_table_id=#{surveyTableId} and qc.question_crosswise_id=#{questionCrosswiseId}
   </select>
   
