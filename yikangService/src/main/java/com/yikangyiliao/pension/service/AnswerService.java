@@ -57,11 +57,14 @@ public class AnswerService {
 				if(
 					paramData.containsKey("assessmentId")&&
 					paramData.containsKey("surveyTableId")&&
-					paramData.containsKey("questions")
+					paramData.containsKey("questions")&&
+					paramData.containsKey("dataSource")
 				){
 					
 					String assessmentId=paramData.get("assessmentId").toString();
 					String surveyTableId=paramData.get("surveyTableId").toString();
+					String dataSource=paramData.get("dataSource").toString();
+					
 					
 					
 					//获取传过来的问题数组
@@ -94,6 +97,7 @@ public class AnswerService {
 						sureyScore.setTotal(0);
 						sureyScore.setAssessmentId(Long.valueOf(assessmentId));
 						sureyScore.setAssessmentNumber("1ac_"+assessmentId);
+						sureyScore.setDataSource(Byte.valueOf(dataSource));
 						
 						surveyScoreManager.insertSelective(sureyScore);
 					}
