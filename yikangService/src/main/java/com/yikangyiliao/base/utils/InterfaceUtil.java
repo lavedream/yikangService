@@ -155,6 +155,7 @@ public class InterfaceUtil {
 		mathodClassPath.put("00-16-01", "getTableList");
 		mathodClassPath.put("00-16-02", "getQuestionsAndAnswersIsCheck");
 		mathodClassPath.put("00-16-03", "getQuestionAndAnswersIsCheckTwo");
+		mathodClassPath.put("00-16-04", "getQuestionAndAnswersIsCheckThree");
 		
 		
 	}

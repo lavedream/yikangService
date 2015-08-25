@@ -38,4 +38,15 @@ public class SurveyScoreDetailManager {
 	public int deleteSurveyScoreDetailBySurveyScoreIdAndQuestionId(Map<String,Object> paramData){
 	    return surveyScoreDetailDao.deleteSurveyScoreDetailBySurveyScoreIdAndQuestionId(paramData);
 	}
+	/**
+	 * 
+	 * @author liushuaic
+	 * @date 2015/08/14 16:02
+	 * 删除某一个表评测表下的 某一个问题的所有答案详情
+	 *  @param surveyScoreId
+ 		@param quetionId
+	 * */
+	public int deleteSurveyScoreDetailBySurveyScoreIdAndQuestionCrosswiseId(Map<String,Object> paramData){
+		return surveyScoreDetailDao.deleteSurveyScoreDetailBySurveyScoreIdAndQuestionCrosswiseId(paramData);
+	}
 }

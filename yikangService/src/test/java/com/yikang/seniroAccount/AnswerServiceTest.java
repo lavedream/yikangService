@@ -21,6 +21,7 @@ public class AnswerServiceTest {
 			//paramData.put("assessmentName", "hello");
 			paramData.put("assessmentId", 1);
 			paramData.put("surveyTableId", 1);
+			paramData.put("dataSource", 1);
 			
 			List<Map<String,Object>> questions=new ArrayList<Map<String,Object>>();
 			

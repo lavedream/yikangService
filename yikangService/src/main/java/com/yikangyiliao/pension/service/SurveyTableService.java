@@ -106,5 +106,35 @@ public class SurveyTableService {
 
 		return rtnMap;
 	}
+	
+	/**
+	 * @author liushuaic
+	 * @date 2015/08/18 18:29
+	 * @desc 查询某一个用户的， 某一个档案代的，某一个表的 所有问题，及答案，及 ，答案是否选中
+	 * @param assessmentId
+	 * @param surveyTableId
+	 * @param questionCrosswiseId 问题分类id
+	 * **/
+	public Map<String, Object> getQuestionAndAnswersIsCheckThree(Map<String, Object> paramData) {
+
+		Map<String, Object> rtnMap = new HashMap<String, Object>();
+
+		if (
+				paramData.containsKey("assessmentId")
+				&& paramData.containsKey("surveyTableId")
+			) {
+
+			Map<String, Object> data =surveyTableManager.getQuestionAndAnswersIsCheckThree(paramData);
+
+			rtnMap.put("data", data);
+			rtnMap.put("status",ExceptionConstants.responseSuccess.responseSuccess.code);
+			rtnMap.put("message",ExceptionConstants.responseSuccess.responseSuccess.message);
+		} else {
+			rtnMap.put( "status", ExceptionConstants.parameterException.parameterException.errorCode);
+			rtnMap.put( "message", ExceptionConstants.parameterException.parameterException.errorMessage);
+		}
+
+		return rtnMap;
+	}
 
 }

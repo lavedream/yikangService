@@ -29,4 +29,10 @@ public interface SurveyScoreDetailDao {
      * @date 2015/08/14 15:49 
      * */
     int deleteSurveyScoreDetailBySurveyScoreIdAndQuestionId(Map<String,Object> paramData);
+    
+    /**
+     * @author liushuaic
+     * @date 2015/08/24 18:13
+     * */
+    int deleteSurveyScoreDetailBySurveyScoreIdAndQuestionCrosswiseId(Map<String,Object> paramData);
 }

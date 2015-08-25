@@ -120,10 +120,22 @@
  	where survey_score_details.survey_score_id=#{surveyScoreId}
   </delete>
   
-    <delete id="deleteSurveyScoreDetailBySurveyScoreIdAndQuestionId" parameterType="map">
+  <delete id="deleteSurveyScoreDetailBySurveyScoreIdAndQuestionId" parameterType="map">
   	delete from survey_score_details
  	where survey_score_details.survey_score_id=#{surveyScoreId}
  	and question_id=#{quetionId}
   </delete>
+  
+  <delete id="deleteSurveyScoreDetailBySurveyScoreIdAndQuestionCrosswiseId" parameterType="map">
+    delete from survey_score_details
+	where survey_score_details.survey_score_id in (
+		select surey_score_id from survey_scores where survey_table_id=#{surveyTableId} and assessment_id=#{assessmentId}
+	)
+	and question_id in (
+		select question_portrait_id from question_units qc 
+		where qc.question_crosswise_id=#{questionCrosswiseId}
+	)
+  </delete>
+
   
 </mapper>

@@ -53,6 +53,11 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.yikangyiliao.pension.entity.SeniorAccount" >
+  	
+  	<selectKey resultType="long" order="AFTER" keyProperty="seniorId">
+	SELECT LAST_INSERT_ID()
+	</selectKey>
+  
     insert into senior_account
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="seniorId != null" >

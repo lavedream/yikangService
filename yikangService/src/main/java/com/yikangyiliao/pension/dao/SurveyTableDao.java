@@ -69,4 +69,13 @@ public interface SurveyTableDao {
 ｀     * */
     Map<String,Object> getQuestionAndAnswersIsCheckTwo(Map<String,Object> paramData);
     
+    /**
+     * @author liushuaic
+     * @date 2015/08/24 11:54
+     * @param assessmentId 档案袋id
+     * @param surveyTableId 表id
+     * 查询某一个表，所有问题， 所有答案
+     * */
+    Map<String,Object> getQuestionAndAnswersIsCheckThree(Map<String,Object> paramData);
+    
 }

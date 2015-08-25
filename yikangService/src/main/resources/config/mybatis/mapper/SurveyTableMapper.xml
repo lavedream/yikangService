@@ -221,6 +221,7 @@
   <!-- 获取某一表的问题及答案，及答案是否选中 -->
   <select id="getQuestionsAndAnswersIsCheck" resultMap="getQuestionsAndAnswersIsCheckMap"  parameterType="map">
 	select 
+		distinct
 		qsm.survey_id 		,
 		que.question_id 	,
 		que.question_text 	,
@@ -231,15 +232,16 @@
 	        else '0'
 		end 				as 		'checked'
 	from questions que
-	inner join question_survey_maps qsm on que.question_id=qsm.question_id
+	inner join question_survey_maps qsm on (que.question_id=qsm.question_id and  qsm.survey_id=#{surveyTableId})
 	inner join question_answer_maps qam on que.question_id=qam.question_id
 	inner join answers ans on ans.answer_id=qam.answer_id
 	inner join survey_scores ss 
-	on ( qsm.survey_id=ss.survey_table_id and  ss.assessment_id=#{assessmentId} and ss.survey_table_id=#{surveyTableId})
+	on ( qsm.survey_id=ss.survey_table_id and  ss.assessment_id=#{assessmentId} )
 	inner join survey_score_details ssd 
 	on (
 		ans.answer_id=ssd.answer_id
 		and ssd.survey_score_id=ss.surey_score_id
+		and que.question_id= ssd.question_id
 	)
 	order by qsm.survey_id asc, que.question_id asc
   </select>
@@ -264,7 +266,6 @@
 	select 
 			qc.question_crosswise_id,
 		    qc.question_crosswise_name,
-		    qc.survey_table_id,
 			qu.question_portrait_id,
 			qu.question_portrait_name,
 			ans.answer_id,
@@ -283,5 +284,52 @@
 	where qc.survey_table_id=#{surveyTableId} and qc.question_crosswise_id=#{questionCrosswiseId}
   </select>
   
+  
+  
+  <!-- 查询某一个表中的 -->
+    <resultMap type="map" id="getQuestionAndAnswersIsCheckThreeMap">
+    	<result column="survey_table_id" property="surveyTableId"/>
+    	<result column="table_name"		 property="tableName"/>
+		   	<collection property="questionGroups" ofType="map" javaType="list">
+			  	<result column="question_crosswise_id" 		property="questionCrosswiseId"/>
+			  	<result column="question_crosswise_name" 	property="questionCrosswiseName"/>
+			  	<collection property="questions"	ofType="map" javaType="list">
+			  		<result column="question_portrait_id" 	property="questionPortraitId"/>
+			  		<result column="question_portrait_name" property="questionPortraitName"/>
+			  		<collection property="answers" 	ofType="map" javaType="list">
+			  			<result column="answer_id"   property="answerId"/>
+			  			<result column="answer_text" property="answerText"/>
+			  			<result column="answer_val"  property="answerVal"/>
+			  			<result column="checked"     property="checked"/>
+			  		</collection>
+			  	</collection>
+		  	</collection>
+	</resultMap>
+  
+  <!-- 查询出某一个表的名称，及 所有问题，及问题答案  -->
+  <select id="getQuestionAndAnswersIsCheckThree" resultMap="getQuestionAndAnswersIsCheckThreeMap">
+	select
+		qc.survey_table_id,
+	    st.table_name,
+		qc.question_crosswise_id,
+	    qc.question_crosswise_name,
+		qu.question_portrait_id,
+		qu.question_portrait_name,
+		ans.answer_id,
+		ans.answer_text,
+		ans.answer_val,
+	    case 
+			when ssd.answer_id is not null then '1'
+	        else '0'
+		end  as  'checked'
+	from question_units qu
+	inner join question_unit_answer_maps quam on qu.question_portrait_id=quam.question_portrait_group
+	inner join question_crosswises qc 	on qu.question_crosswise_id=qc.question_crosswise_id
+	inner join survey_tables st 		on qc.survey_table_id=st.survey_table_id
+	inner join answers ans 				on quam.answer_id=ans.answer_id
+	inner  join survey_scores ss 		on (ss.survey_table_id=qu.survey_table_id and ss.assessment_id=#{assessmentId})
+	inner  join survey_score_details ssd on (ss.surey_score_id=ssd.survey_score_id and ssd.answer_id=quam.answer_id)
+	where qc.survey_table_id=#{surveyTableId}
+  </select>
   
 </mapper>
