@@ -21,9 +21,11 @@ public class SeniorAccountServiceTest {
 	public void TestSaveSeniroAccount(){
 		try {
 			Map<String,Object> paramData=new HashMap<String, Object>();
-			paramData.put("userId",1);
+			paramData.put("appId", "");
+			paramData.put("accessTiket", "ae7433528cdd54dc76e922c1d612c82dfcfc343a64e68012c34c1b74c4cd73dd5e4c7afd323d91954ba85f0a1bf9bb45");
+			paramData.put("machineCode","123123");
 			
-			SendRequest.sendPost("00-01-03",paramData);
+			SendRequest.sendPost("00-01-03?appId=00-01&machineCode=123123&accessTiket=ae7433528cdd54dc76e922c1d612c82dfcfc343a64e68012c34c1b74c4cd73dd5e4c7afd323d91954ba85f0a1bf9bb45",paramData);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -40,7 +42,7 @@ public class SeniorAccountServiceTest {
 	public void TestGetSeniorAccountByUserId(){
 		try {
 			Map<String,Object> paramData=new HashMap<String, Object>();
-			paramData.put("userId",1);
+			//paramData.put("userId",1);
 			
 			SendRequest.sendPost("00-01-03",paramData);
 		} catch (IOException e) {

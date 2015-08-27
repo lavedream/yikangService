@@ -16,6 +16,7 @@ import com.yikangyiliao.pension.entity.SeniorAccount;
 import com.yikangyiliao.pension.entity.User;
 import com.yikangyiliao.pension.manager.AssessmentManager;
 import com.yikangyiliao.pension.manager.SeniorAccountManager;
+import com.yikangyiliao.pension.manager.UserManager;
 
 
 @Service(value="assessmentService")
@@ -47,8 +48,7 @@ public class AssessmentService {
 				
 				String seniorId=paramData.get("seniorId").toString();
 				String userId=paramData.get("userId").toString();
-				//String assessmentName=paramData.get("assessmentName").toString();
-				SimpleDateFormat  sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				SimpleDateFormat  sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				String assessmentName=sdf.format(Calendar.getInstance().getTime());
 				
 				User user=userManager.selectByPrimaryKey(Long.parseLong(userId));
@@ -111,9 +111,5 @@ public class AssessmentService {
 			
 			return rtnMap;
 	}
-	public static void main(String[] args) {
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		System.out.println(sdf.format(Calendar.getInstance().getTime()));
-	}
-
+// ae7433528cdd54dc76e922c1d612c82d3ac401f2dcf94d01c3e66576d38dcfbb5e4c7afd323d91954ba85f0a1bf9bb45
 }

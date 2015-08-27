@@ -34,6 +34,11 @@
       #{createTime,jdbcType=BIGINT}, #{loginTime,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.yikangyiliao.pension.entity.User" >
+  
+  	<selectKey resultType="Long" keyProperty="userId" order="AFTER">
+		SELECT LAST_INSERT_ID()
+	</selectKey>
+  
     insert into users
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
@@ -128,12 +133,12 @@
   </update>
   
 <!--   根据用户名称查询某一个用户信息 -->
-  <select id="getUserByUserName" parameterType="string" resultMap="BaseResultMap">
+  <select id="getUserByLoginName" parameterType="string" resultMap="BaseResultMap">
   	select 
   		<include refid="Base_Column_List"></include> 
   	from users
   	<where>
-  		user_name=#{userName}
+  		login_name=#{userName}
   	</where>
   </select>
   

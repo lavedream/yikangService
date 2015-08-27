@@ -139,7 +139,7 @@ public class AccessTiketCheckout {
 	public static String getAccessTiketUD(String accessTiket) throws Exception{
 			String accessTik = AES.Decrypt(accessTiket, secretKey);
 			String[] strs=accessTik.split("￥LDT");
-			return strs[0];
+			return strs[0].substring(2);
 	}
 
 	/**
@@ -154,7 +154,7 @@ public class AccessTiketCheckout {
 	}
 	public static void main(String[] args) {
 		try {
-			System.out.println(AES.Decrypt("b415bb0d4dd4a891e5724eeb20e3f477e8e97ec1054b4794c35045539bb050e8","yi99kang88yi99ka"));
+			System.out.println(AES.Decrypt("ae7433528cdd54dc76e922c1d612c82dfcfc343a64e68012c34c1b74c4cd73dd5e4c7afd323d91954ba85f0a1bf9bb45","yi99kang88yi99ka"));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

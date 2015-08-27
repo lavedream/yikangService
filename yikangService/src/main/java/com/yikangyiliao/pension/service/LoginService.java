@@ -49,18 +49,18 @@ public class LoginService {
 		 * machineCode:机器码
 		 * **/
 		if(
-			paramData.containsKey("userName") && 
-			paramData.containsKey("password") &&
+			paramData.containsKey("loginName") && 
+			paramData.containsKey("passWord") &&
 			paramData.containsKey("machineCode")
 		   ){
 			
-			String userName=paramData.get("userName").toString();
-			String passWord=paramData.get("password").toString();
+			String loginName=paramData.get("loginName").toString();
+			String passWord=paramData.get("passWord").toString();
 			String machineCode=paramData.get("machineCode").toString();
-			if(null != userName && null != passWord && null != machineCode){
+			if(null != loginName && null != passWord && null != machineCode){
 				
 				
-				User user=userDao.getUserByUserName(userName);
+				User user=userDao.getUserByLoginName(loginName);
 				if(null != user){
 					
 					String passwordStr=user.getLoginPassword();

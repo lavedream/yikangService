@@ -291,6 +291,7 @@
     from 
     	assessments
     where senior_id=#{seniorId}
+    order by create_time desc
   </select>
   
   

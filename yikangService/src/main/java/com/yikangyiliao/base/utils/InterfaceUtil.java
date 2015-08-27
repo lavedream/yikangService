@@ -158,6 +158,23 @@ public class InterfaceUtil {
 		mathodClassPath.put("00-16-04", "getQuestionAndAnswersIsCheckThree");
 		
 		
+		/**
+		 * @author liushuaic
+		 * @date 2015/08/26 10:42
+		 * 用户管理
+		 * 
+		 * **/
+		
+		serviceClassName.put("regist", "userService");
+		mathodClassPath.put("regist", "registerUser");
+		
+		serviceClassName.put("00-17", "userService");
+		mathodClassPath.put("00-17-01", "registerUser");
+		mathodClassPath.put("00-17-02", "saveServiceUserInfo");
+		mathodClassPath.put("00-17-03", "registerUserAndSaveServiceInfo");
+		
+		
+		
 	}
 	
 	public void loadConfigInterface(String filePath){

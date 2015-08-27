@@ -56,15 +56,16 @@ public class ServiceController {
 							paramData=AES.Decrypt(paramData, "1234567890abcDEF");
 							logger.debug("serviceController --> 接收到的paramData数据："+paramData);
 							paramMap=objectMapper.readValue(paramData, Map.class);
-							String accessTiket=request.getParameter("accessTiket");
-//							String UD=AccessTiketCheckout.getAccessTiketUD(accessTiket);
-//							String LDT=AccessTiketCheckout.getAccessTiketLDT(accessTiket);
-//							String MC=AccessTiketCheckout.getAccessTiketMC(accessTiket);
-//							
-//							paramMap.put("UD",UD);
-//							paramMap.put("LDT",LDT);
-//							paramMap.put("MC",MC);
-							
+							if(!serverviceCode.equals("login")){
+								String accessTiket=request.getParameter("accessTiket");
+								String UD=AccessTiketCheckout.getAccessTiketUD(accessTiket);
+								String LDT=AccessTiketCheckout.getAccessTiketLDT(accessTiket);
+								String MC=AccessTiketCheckout.getAccessTiketMC(accessTiket);
+								
+								paramMap.put("userId",UD);
+								paramMap.put("loginDateTime",LDT);
+								paramMap.put("machineCode",MC);
+							}
 							
 						}
 						try{

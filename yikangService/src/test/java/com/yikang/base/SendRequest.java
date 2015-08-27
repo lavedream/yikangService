@@ -48,7 +48,7 @@ public class SendRequest {
 				e.printStackTrace();
 			}
 			
-			HttpGet httpget = new HttpGet(REQUEST_URL+serviceCode+"?paramData="+paramDataJsonString);
+			HttpGet httpget = new HttpGet(REQUEST_URL+serviceCode+"&paramData="+paramDataJsonString);
 
 			System.out.println("Executing request " + httpget.getRequestLine());
 

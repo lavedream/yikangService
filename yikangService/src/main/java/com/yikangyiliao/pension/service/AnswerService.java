@@ -105,13 +105,11 @@ public class AnswerService {
 					surveyScoreDetailManager.deleteSurveyScoreDetailBySurveyScoreIdAndQuestionCrosswiseId(paramData);
 					
 					
-					//[{questionId:1,answers:[{answerId:1,answerVal:1},{answerId:2,answerVal:1}]},{{questionId:2,answers:[{answerId:3,answerVal:1},{answerId:4,answerVal:1}]}}]
 					for(int i=0;i<questions.size();i++){
 						Map<String,Object> question=questions.get(i);
 						
 						String questionId=question.get("questionId").toString();
 						List<Map<String,Object>> answers=(List<Map<String,Object>>)question.get("answers");
-						//surveyScoreDetailManager.deleteSurveyScoreDetailBySurveyScoreIdAndQuestionId(paramData);
 						for(int j=0;j<answers.size();j++){
 							
 							Map<String,Object> answer=answers.get(j);

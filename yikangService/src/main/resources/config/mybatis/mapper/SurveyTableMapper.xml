@@ -214,11 +214,12 @@
   		<collection property="answers" ofType="map" javaType="list">
   			<result column="answer_id" property="answerId"/>
   			<result column="answer_text" property="answerText"/>
+  			<result column="answer_val" property="answerVal"/>
   			<result column="checked" property="checked"/>
   		</collection>
   	</collection>
   </resultMap>
-  <!-- 获取某一表的问题及答案，及答案是否选中 -->
+  <!-- 获取某一表的问题及答案，s及答案是否选中 -->
   <select id="getQuestionsAndAnswersIsCheck" resultMap="getQuestionsAndAnswersIsCheckMap"  parameterType="map">
 	select 
 		distinct
@@ -227,6 +228,7 @@
 		que.question_text 	,
 	    ans.answer_id		,
 	    ans.answer_text 	,
+	    ans.answer_val		,
 		case 
 			when ssd.answer_id is not null then '1'
 	        else '0'
@@ -252,6 +254,7 @@
   	<collection property="questions"	ofType="map" javaType="list">
   		<result column="question_portrait_id" 	property="questionPortraitId"/>
   		<result column="question_portrait_name" property="questionPortraitName"/>
+  		<result column="weight_value" 			property="weightVal"/>
   		<collection property="answers" 	ofType="map" javaType="list">
   			<result column="answer_id"   property="answerId"/>
   			<result column="answer_text" property="answerText"/>
@@ -274,13 +277,15 @@
 		    case 
 				when ssd.answer_id is not null then '1'
 		        else '0'
-			end  as  'checked'
+			end  as  'checked',
+			quw.weight_value
 	from question_units qu
 		inner join question_unit_answer_maps quam on qu.question_portrait_id=quam.question_portrait_group
 		inner join question_crosswises qc 	on qu.question_crosswise_id=qc.question_crosswise_id
 		inner join answers ans 				on quam.answer_id=ans.answer_id
 		inner  join survey_scores ss 		on (ss.survey_table_id=qu.survey_table_id and ss.assessment_id= #{assessmentId})
 		inner  join survey_score_details ssd on (ss.surey_score_id=ssd.survey_score_id and ssd.answer_id=quam.answer_id)
+		left   join  question_unit_weights quw on (qu.question_portrait_id=quw.question_portrait_id)
 	where qc.survey_table_id=#{surveyTableId} and qc.question_crosswise_id=#{questionCrosswiseId}
   </select>
   
@@ -296,6 +301,7 @@
 			  	<collection property="questions"	ofType="map" javaType="list">
 			  		<result column="question_portrait_id" 	property="questionPortraitId"/>
 			  		<result column="question_portrait_name" property="questionPortraitName"/>
+			  		<result column="weight_value" 			property="weightVal"/>
 			  		<collection property="answers" 	ofType="map" javaType="list">
 			  			<result column="answer_id"   property="answerId"/>
 			  			<result column="answer_text" property="answerText"/>
@@ -321,7 +327,8 @@
 	    case 
 			when ssd.answer_id is not null then '1'
 	        else '0'
-		end  as  'checked'
+		end  as  'checked',
+		quw.weight_value
 	from question_units qu
 	inner join question_unit_answer_maps quam on qu.question_portrait_id=quam.question_portrait_group
 	inner join question_crosswises qc 	on qu.question_crosswise_id=qc.question_crosswise_id
@@ -329,6 +336,7 @@
 	inner join answers ans 				on quam.answer_id=ans.answer_id
 	inner  join survey_scores ss 		on (ss.survey_table_id=qu.survey_table_id and ss.assessment_id=#{assessmentId})
 	inner  join survey_score_details ssd on (ss.surey_score_id=ssd.survey_score_id and ssd.answer_id=quam.answer_id)
+	left   join  question_unit_weights quw on (qu.question_portrait_id=quw.question_portrait_id)
 	where qc.survey_table_id=#{surveyTableId}
   </select>
   
