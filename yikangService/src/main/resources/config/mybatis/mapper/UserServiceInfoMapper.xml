@@ -13,11 +13,12 @@
     <result column="photo_url" property="photoUrl" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="BIGINT" />
     <result column="update_time" property="updateTime" jdbcType="BIGINT" />
-    <result column="is_delete" property="isDelete" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="TINYINT" />
+    <result column="user_service_name" property="userServiceName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     user_service_info_id, user_id, job_category, user_postion, provence_code, city_code, 
-    district_code, address_detail, photo_url, create_time, update_time, is_delete
+    district_code, address_detail, photo_url, create_time, update_time, is_delete, user_service_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -33,13 +34,13 @@
     insert into user_service_infos (user_service_info_id, user_id, job_category, 
       user_postion, provence_code, city_code, 
       district_code, address_detail, photo_url, 
-      create_time, update_time, is_delete
-      )
+      create_time, update_time, is_delete, 
+      user_service_name)
     values (#{userServiceInfoId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{jobCategory,jdbcType=BIGINT}, 
       #{userPostion,jdbcType=VARCHAR}, #{provenceCode,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, 
       #{districtCode,jdbcType=VARCHAR}, #{addressDetail,jdbcType=VARCHAR}, #{photoUrl,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, #{isDelete,jdbcType=VARCHAR}
-      )
+      #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, #{isDelete,jdbcType=TINYINT}, 
+      #{userServiceName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yikangyiliao.pension.entity.UserServiceInfo" >
     insert into user_service_infos
@@ -80,6 +81,9 @@
       <if test="isDelete != null" >
         is_delete,
       </if>
+      <if test="userServiceName != null" >
+        user_service_name,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userServiceInfoId != null" >
@@ -116,7 +120,10 @@
         #{updateTime,jdbcType=BIGINT},
       </if>
       <if test="isDelete != null" >
-        #{isDelete,jdbcType=VARCHAR},
+        #{isDelete,jdbcType=TINYINT},
+      </if>
+      <if test="userServiceName != null" >
+        #{userServiceName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -154,7 +161,10 @@
         update_time = #{updateTime,jdbcType=BIGINT},
       </if>
       <if test="isDelete != null" >
-        is_delete = #{isDelete,jdbcType=VARCHAR},
+        is_delete = #{isDelete,jdbcType=TINYINT},
+      </if>
+      <if test="userServiceName != null" >
+        user_service_name = #{userServiceName,jdbcType=VARCHAR},
       </if>
     </set>
     where user_service_info_id = #{userServiceInfoId,jdbcType=BIGINT}
@@ -171,10 +181,17 @@
       photo_url = #{photoUrl,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=BIGINT},
       update_time = #{updateTime,jdbcType=BIGINT},
-      is_delete = #{isDelete,jdbcType=VARCHAR}
+      is_delete = #{isDelete,jdbcType=TINYINT},
+      user_service_name = #{userServiceName,jdbcType=VARCHAR}
     where user_service_info_id = #{userServiceInfoId,jdbcType=BIGINT}
   </update>
   
-  
+  <!-- 查询某个服务人员的信息， 根据用户id -->
+  <select id="getUserServiceInfoByUserId" resultMap="BaseResultMap" parameterType="long">
+      select 
+    	<include refid="Base_Column_List" />
+	  from user_service_infos
+	  where user_id = #{userId,jdbcType=BIGINT}
+  </select>
   
 </mapper>

@@ -26,6 +26,8 @@ public class ExceptionConstants {
 	 * 参数异常枚举类
 	 * @author liushuaic
 	 * @date	2015/07/30 15:18
+	 * 
+	 * 00 开头
 	 * */
 	public enum parameterException{
 		parameterException("000001","参数类型异常！"),
@@ -37,6 +39,9 @@ public class ExceptionConstants {
 			this.errorMessage=errorMessage;
 		}
 	}
+	/**
+	 * 01开关
+	 * */
 	public enum systemException{
 		systemException("999999","系统异常！");
 		public String errorCode;
@@ -47,4 +52,19 @@ public class ExceptionConstants {
 		}
 	}
 	
+	/**
+	 * @author liushuaic
+	 * @date 2015/08/27 19:16
+	 * @desc 业务异常枚举类
+	 * 02开头
+	 * */
+	public enum operationException{
+		userDuplicateException("020001","用户重复！");
+		public String errorCode;
+		public String errorMessage;
+		private operationException(String errorCode,String errorMessage){
+			this.errorCode=errorCode;
+			this.errorMessage=errorMessage;
+		}
+	}
 }

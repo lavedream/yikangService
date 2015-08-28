@@ -21,7 +21,7 @@ public class LoginTest {
 			paramData.put("passWord","liushuai");
 			paramData.put("machineCode","123123");
 			
-			SendRequest.sendPost("login",paramData);
+			SendRequest.sendPost("login?loginName='liushaui'&passWord='liushuai'&machineCode='123123'",paramData);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

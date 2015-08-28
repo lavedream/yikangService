@@ -63,4 +63,24 @@ public class UserManager {
 		return userDao.updateByPrimaryKeySelective(user);
 	}
 
+	
+	/**
+	 * @author liushuaic
+	 * @date 2015/08/27 19:13 
+	 * 查询某一个用户
+	 * */
+	public User getUserByLoginName(String loginName){
+		return userDao.getUserByLoginName(loginName);
+	}
+	
+	 /**
+     * @author liushuaic
+     * @date 2015/08/28 11:59
+     * @dsec 查询某一个员工的信息，根据 用户id 
+     * */
+	public UserServiceInfo getUserServiceInfoByUserId(Long userId){
+		return userServiceInfoDao.getUserServiceInfoByUserId(userId);
+	}
+	
+	
 }

@@ -23,7 +23,9 @@ public class UserServiceInfo {
 
     private Long updateTime;
 
-    private String isDelete;
+    private Byte isDelete;
+
+    private String userServiceName;
 
     public Long getUserServiceInfoId() {
         return userServiceInfoId;
@@ -113,11 +115,19 @@ public class UserServiceInfo {
         this.updateTime = updateTime;
     }
 
-    public String getIsDelete() {
+    public Byte getIsDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(String isDelete) {
-        this.isDelete = isDelete == null ? null : isDelete.trim();
+    public void setIsDelete(Byte isDelete) {
+        this.isDelete = isDelete;
+    }
+
+    public String getUserServiceName() {
+        return userServiceName;
+    }
+
+    public void setUserServiceName(String userServiceName) {
+        this.userServiceName = userServiceName == null ? null : userServiceName.trim();
     }
 }

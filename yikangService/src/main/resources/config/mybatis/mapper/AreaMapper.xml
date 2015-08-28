@@ -125,4 +125,29 @@
       create_user_id = #{createUserId,jdbcType=BIGINT}
     where area_id = #{areaId,jdbcType=BIGINT}
   </update>
+  
+  
+  <resultMap type="map" id="getAreaCityDistrictMap">
+  	<result column="provenceId" property="provenceId"/>
+  	<result column="provenceName" property="provenceName"/>
+  	<collection property="citys" ofType="map" javaType="list">
+  		<result column="cityId" property="cityId"/>
+  		<result column="cityName" property="cityName"/>
+  		<collection property="districts" ofType="map" javaType="list">
+  			<result column="districtId" property="districtId"/>
+  			<result column="districtName" property="districtName"/>
+  		</collection>
+  	</collection>
+  </resultMap>
+  <select id="getAreaCityDistrict" resultMap="getAreaCityDistrictMap">
+  	select
+		a.area_id as provenceId,a.area_name as provenceName,
+		a2.area_id as cityId,a2.area_name as cityName,
+		a3.area_id as districtId,a3.area_name as districtName
+	 from areas a inner join 
+	areas a2 on a.area_id=a2.parent_id
+	inner join areas a3 on a2.area_id=a3.parent_id
+  </select>
+  
+  
 </mapper>

@@ -25,7 +25,7 @@ public class UserService {
 	 * @date 2015/08/25 17:44 
 	 * 注册用户及保存用户信息
 	 * **/
-	public Map<String,Object> registerUserAndSaveServiceInfo(Map<String,Object> paramData){
+	public Map<String,Object> saveRegisterUserAndSaveServiceInfo(Map<String,Object> paramData){
 		Map<String,Object> rtnData=new HashMap<String,Object>();
 		if(
 			paramData.containsKey("loginName")
@@ -39,45 +39,54 @@ public class UserService {
 			&&paramData.containsKey("addressDetail")
 			&&paramData.containsKey("photoUrl")
 			){
-			
-			Long currentDateTime=Calendar.getInstance().getTimeInMillis();
-			
 			String loginName=paramData.get("loginName").toString();
-			String passWord=paramData.get("passWord").toString();
-			String userName=paramData.get("userName").toString();
-			String userPostion=paramData.get("userPostion").toString();
-			String jobCategory=paramData.get("jobCategory").toString();
-			String provenceCode=paramData.get("provenceCode").toString();
-			String cityCode=paramData.get("cityCode").toString();
-			String districtCode=paramData.get("districtCode").toString();
-			String addressDetail=paramData.get("addressDetail").toString();
-			String photoUrl=paramData.get("photoUrl").toString();
-			
-			User user=new User();
-			user.setUserName(userName);
-			user.setLoginName(loginName);
-			user.setLoginPassword(passWord);
-			user.setCreateTime(currentDateTime);
-			user.setLoginTime(currentDateTime);
-			
-			userManager.insertUserSelective(user);
-			
-			UserServiceInfo userServiceInfo=new UserServiceInfo();
-			userServiceInfo.setUserId(user.getUserId());
-			userServiceInfo.setPhotoUrl(photoUrl);
-			userServiceInfo.setProvenceCode(provenceCode);
-			userServiceInfo.setCityCode(cityCode);
-			userServiceInfo.setAddressDetail(addressDetail);
-			userServiceInfo.setDistrictCode(districtCode);
-			userServiceInfo.setUserPostion(userPostion);
-			userServiceInfo.setJobCategory(Long.valueOf(jobCategory));
-			userServiceInfo.setCreateTime(currentDateTime);
-			userServiceInfo.setUpdateTime(currentDateTime);
-			
-			userManager.insertUserServiceSelective(userServiceInfo);
-			rtnData.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
-			rtnData.put("message", ExceptionConstants.responseSuccess.responseSuccess.message);
-			
+			User u=userManager.getUserByLoginName(loginName);
+			if(null == u){
+				
+				Long currentDateTime=Calendar.getInstance().getTimeInMillis();
+				
+				String passWord=paramData.get("passWord").toString();
+				String userName=paramData.get("userName").toString();
+				String userPostion=paramData.get("userPostion").toString();
+				String jobCategory=paramData.get("jobCategory").toString();
+				String provenceCode=paramData.get("provenceCode").toString();
+				String cityCode=paramData.get("cityCode").toString();
+				String districtCode=paramData.get("districtCode").toString();
+				String addressDetail=paramData.get("addressDetail").toString();
+				String photoUrl=paramData.get("photoUrl").toString();
+				
+				User user=new User();
+				user.setUserName(userName);
+				user.setLoginName(loginName);
+				user.setLoginPassword(passWord);
+				user.setCreateTime(currentDateTime);
+				user.setSalt("000000");
+				user.setLoginTime(currentDateTime);
+				
+				
+				userManager.insertUserSelective(user);
+				
+				UserServiceInfo userServiceInfo=new UserServiceInfo();
+				userServiceInfo.setUserId(user.getUserId());
+				userServiceInfo.setPhotoUrl(photoUrl);
+				userServiceInfo.setProvenceCode(provenceCode);
+				userServiceInfo.setCityCode(cityCode);
+				userServiceInfo.setAddressDetail(addressDetail);
+				userServiceInfo.setDistrictCode(districtCode);
+				userServiceInfo.setUserPostion(userPostion);
+				userServiceInfo.setJobCategory(Long.valueOf(jobCategory));
+				userServiceInfo.setCreateTime(currentDateTime);
+				userServiceInfo.setUpdateTime(currentDateTime);
+				userServiceInfo.setIsDelete(Byte.valueOf("0"));
+				userServiceInfo.setUserServiceName(userName);
+				
+				userManager.insertUserServiceSelective(userServiceInfo);
+				rtnData.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
+				rtnData.put("message", ExceptionConstants.responseSuccess.responseSuccess.message);
+			}else{
+				rtnData.put("status", ExceptionConstants.operationException.userDuplicateException.errorCode);
+				rtnData.put("message", ExceptionConstants.operationException.userDuplicateException.errorMessage);
+			}
 		}else{
 			rtnData.put("status", ExceptionConstants.parameterException.parameterException.errorCode);
 			rtnData.put("message", ExceptionConstants.parameterException.parameterException.errorMessage);
@@ -168,6 +177,7 @@ public class UserService {
 			userServiceInfo.setJobCategory(Long.valueOf(jobCategory));
 			userServiceInfo.setCreateTime(currentDateTime);
 			userServiceInfo.setUpdateTime(currentDateTime);
+			userServiceInfo.setUserServiceName(userName);
 			
 			User user=new User();
 			user.setUserId(Long.valueOf(userId));
@@ -218,6 +228,25 @@ public class UserService {
 			rtnData.put("message", ExceptionConstants.parameterException.parameterException.errorMessage);
 		}
 		return rtnData;
+	}
+	
+	
+	/**
+	 * @author liushuaic
+	 * @date 2015/08/25 17:44 
+	 * 修改用户信息
+	 * **/
+	public Map<String,Object> getUserServiceInfoByUserId(Map<String,Object> paramData){
+			
+			Map<String,Object> rtnData=new HashMap<String,Object>();
+			
+			String userId=paramData.get("userId").toString();
+			
+			UserServiceInfo userServiceInfo=userManager.getUserServiceInfoByUserId(Long.valueOf(userId));
+			rtnData.put("data", userServiceInfo);
+			rtnData.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
+			rtnData.put("message", ExceptionConstants.responseSuccess.responseSuccess.message);
+			return rtnData;
 	}
 	
 }

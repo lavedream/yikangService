@@ -168,10 +168,15 @@ public class InterfaceUtil {
 		serviceClassName.put("regist", "userService");
 		mathodClassPath.put("regist", "registerUser");
 		
+		serviceClassName.put("registerUserAndSaveServiceInfo", "userService");
+		mathodClassPath.put("registerUserAndSaveServiceInfo", "saveRegisterUserAndSaveServiceInfo");
+		
 		serviceClassName.put("00-17", "userService");
 		mathodClassPath.put("00-17-01", "registerUser");
 		mathodClassPath.put("00-17-02", "saveServiceUserInfo");
 		mathodClassPath.put("00-17-03", "registerUserAndSaveServiceInfo");
+		// 获取某一个服务人员信息 
+		mathodClassPath.put("00-17-04", "getUserServiceInfoByUserId");
 		
 		
 		

@@ -14,4 +14,11 @@ public interface UserServiceInfoDao {
     int updateByPrimaryKeySelective(UserServiceInfo record);
 
     int updateByPrimaryKey(UserServiceInfo record);
+    
+    /**
+     * @author liushuaic
+     * @date 2015/08/28 11:59
+     * @dsec 查询某一个员工的信息，根据 用户id 
+     * */
+    UserServiceInfo getUserServiceInfoByUserId(Long userIds);
 }
