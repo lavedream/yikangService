@@ -52,21 +52,24 @@ public class ServiceController {
 						Method returnMethod = invokObject.getClass().getMethod(methodName, Map.class);
 
 						Map<String, Object> paramMap = new HashMap<String, Object>();
-						if(null != paramData && paramData.length()>0){
-							paramData=AES.Decrypt(paramData, "1234567890abcDEF");
-							logger.debug("serviceController --> 接收到的paramData数据："+paramData);
-							paramMap=objectMapper.readValue(paramData, Map.class);
-							if(!serverviceCode.equals("login") && !serverviceCode.equals("registerUserAndSaveServiceInfo")){
-								String accessTiket=request.getParameter("accessTiket");
-								String UD =AccessTiketCheckout.getAccessTiketUD(accessTiket);
-								String LDT=AccessTiketCheckout.getAccessTiketLDT(accessTiket);
-								String MC =AccessTiketCheckout.getAccessTiketMC(accessTiket);
-								
-								paramMap.put("userId",UD);
-								paramMap.put("loginDateTime",LDT);
-								paramMap.put("machineCode",MC);
+						
+						if(null != paramData && paramData.length()>=0){
+							if(paramData.length()>5){
+								paramData=AES.Decrypt(paramData, "1234567890abcDEF");
+								logger.debug("serviceController --> 接收到的paramData数据："+paramData);
+								paramMap=objectMapper.readValue(paramData, Map.class);
 							}
+						}
+						
+						if(!serverviceCode.equals("login") && !serverviceCode.equals("registerUserAndSaveServiceInfo")){
+							String accessTiket=request.getParameter("accessTicket");
+							String UD =AccessTiketCheckout.getAccessTiketUD(accessTiket);
+							String LDT=AccessTiketCheckout.getAccessTiketLDT(accessTiket);
+							String MC =AccessTiketCheckout.getAccessTiketMC(accessTiket);
 							
+							paramMap.put("userId",UD);
+							paramMap.put("loginDateTime",LDT);
+							paramMap.put("machineCode",MC);
 						}
 						try{
 							rtnMap = (Map<String, Object>) returnMethod.invoke(invokObject, paramMap);
@@ -83,10 +86,16 @@ public class ServiceController {
 						// 获取返回
 						if(null != rtnMap.get("data")){
 							Object data = rtnMap.get("data");
-
-							String jsonStr = objectMapper.writeValueAsString(data);
+							String jsonStr="";
+							if(!serverviceCode.equals("login")){
+								 jsonStr = objectMapper.writeValueAsString(data);
+							}else{
+								jsonStr=data.toString();
+							}
+							
 							String enStr = AES.Encrypt(jsonStr, "1234567890abcDEF");
 							rtnMap.put("data", enStr);
+							//System.out.println(AES.Decrypt(enStr, "1234567890abcDEF"));
 						}
 						return rtnMap;
 					} catch (IllegalAccessException e) {

@@ -7,13 +7,13 @@ public class UserServiceInfo {
 
     private Long jobCategory;
 
-    private String userPostion;
+    private Long userPostion;
 
-    private String provenceCode;
+    private Long provenceCode;
 
-    private String cityCode;
+    private Long cityCode;
 
-    private String districtCode;
+    private Long districtCode;
 
     private String addressDetail;
 
@@ -51,36 +51,36 @@ public class UserServiceInfo {
         this.jobCategory = jobCategory;
     }
 
-    public String getUserPostion() {
+    public Long getUserPostion() {
         return userPostion;
     }
 
-    public void setUserPostion(String userPostion) {
-        this.userPostion = userPostion == null ? null : userPostion.trim();
+    public void setUserPostion(Long userPostion) {
+        this.userPostion = userPostion;
     }
 
-    public String getProvenceCode() {
+    public Long getProvenceCode() {
         return provenceCode;
     }
 
-    public void setProvenceCode(String provenceCode) {
-        this.provenceCode = provenceCode == null ? null : provenceCode.trim();
+    public void setProvenceCode(Long provenceCode) {
+        this.provenceCode = provenceCode;
     }
 
-    public String getCityCode() {
+    public Long getCityCode() {
         return cityCode;
     }
 
-    public void setCityCode(String cityCode) {
-        this.cityCode = cityCode == null ? null : cityCode.trim();
+    public void setCityCode(Long cityCode) {
+        this.cityCode = cityCode;
     }
 
-    public String getDistrictCode() {
+    public Long getDistrictCode() {
         return districtCode;
     }
 
-    public void setDistrictCode(String districtCode) {
-        this.districtCode = districtCode == null ? null : districtCode.trim();
+    public void setDistrictCode(Long districtCode) {
+        this.districtCode = districtCode;
     }
 
     public String getAddressDetail() {

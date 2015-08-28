@@ -1,5 +1,7 @@
 package com.yikangyiliao.pension.manager;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -78,7 +80,7 @@ public class UserManager {
      * @date 2015/08/28 11:59
      * @dsec 查询某一个员工的信息，根据 用户id 
      * */
-	public UserServiceInfo getUserServiceInfoByUserId(Long userId){
+	public Map<String,Object> getUserServiceInfoByUserId(Long userId){
 		return userServiceInfoDao.getUserServiceInfoByUserId(userId);
 	}
 	

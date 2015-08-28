@@ -67,4 +67,19 @@ public class ExceptionConstants {
 			this.errorMessage=errorMessage;
 		}
 	}
+	/**
+	 * @desc 登陆异常
+	 * 03
+	 * **/
+	public enum loginException{
+		userNameOrPasswordException("030001","用户名或密码错误！");
+		public String errorCode;
+		public String errorMessage;
+		private loginException(String errorCode,String errorMessage){
+			this.errorCode=errorCode;
+			this.errorMessage=errorMessage;
+		}
+	}
+	
+	
 }

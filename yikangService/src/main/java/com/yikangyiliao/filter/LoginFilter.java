@@ -41,18 +41,18 @@ public class LoginFilter implements Filter {
 //		paramMap.put("accessTiket", accessTiket);
 		
 		String appId=hsr.getParameter("appId");
-		String accessTiket=hsr.getParameter("accessTiket");
+		String accessTicket=hsr.getParameter("accessTicket");
 		String hostIp=NetworkUtil.getIpAddress(hsr);
 		log.debug("登陆ip-->"+hostIp);
 		
 		//在登陆时，对ip 做登陆限制
 		
 		
-		if((null != appId && appId.length()>1 && null != accessTiket && accessTiket.length()>0) || requestURI.equals("/service/login") || requestURI.equals("/service/registAndSaveServiceInfo") ){
+		if((null != appId && appId.length()>1 && null != accessTicket && accessTicket.length() >= 0) || requestURI.equals("/service/login") || requestURI.equals("/service/registAndSaveServiceInfo") ){
 			try {
 				if(requestURI.equals("/service/login") || requestURI.equals("/service/registerUserAndSaveServiceInfo")){
 					arg2.doFilter(arg0, arg1);
-				}else if(AccessTiketCheckout.checkAccessTiketLayout(accessTiket, hsr)){
+				}else if(null != accessTicket && AccessTiketCheckout.checkAccessTiketLayout(accessTicket, hsr)){
 					arg2.doFilter(arg0, arg1);
 				}
 			} catch (Exception e) {

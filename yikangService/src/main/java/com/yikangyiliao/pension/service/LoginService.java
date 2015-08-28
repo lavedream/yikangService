@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yikangyiliao.base.utils.AccessTiketCheckout;
+import com.yikangyiliao.pension.common.error.ExceptionConstants;
 import com.yikangyiliao.pension.dao.UserDao;
 import com.yikangyiliao.pension.entity.User;
 
@@ -81,18 +82,25 @@ public class LoginService {
 						
 						try {
 							
-							String accessTiket=AccessTiketCheckout.generateAccessTiket(user.getUserId().toString(), Calendar.getInstance().getTimeInMillis(), machineCode);
-							rtnData.put("accessTiket", accessTiket);
+							String accessTicket=AccessTiketCheckout.generateAccessTicket(user.getUserId().toString(), Calendar.getInstance().getTimeInMillis(), machineCode);
+							rtnData.put("data", accessTicket);
+							rtnData.put("status", "000000");
+							rtnData.put("message", "登陆成功！");
 						} catch (Exception e) {
 							rtnData.put("status", "999999");
-							rtnData.put("message", "登陆失败");
+							rtnData.put("message", "登陆失败！");
 							e.printStackTrace();
 						}
 						
+					}else{
+						rtnData.put("status", ExceptionConstants.loginException.userNameOrPasswordException.errorCode);
+						rtnData.put("message", ExceptionConstants.loginException.userNameOrPasswordException.errorMessage);
 					}
-				
 				}
 			}
+		}else{
+			rtnData.put("status", ExceptionConstants.parameterException.parameterException.errorCode);
+			rtnData.put("message", ExceptionConstants.parameterException.parameterException.errorMessage);
 		}
 		/**
 		 * 

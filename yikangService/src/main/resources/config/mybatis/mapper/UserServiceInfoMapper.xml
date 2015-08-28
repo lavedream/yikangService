@@ -5,10 +5,10 @@
     <id column="user_service_info_id" property="userServiceInfoId" jdbcType="BIGINT" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="job_category" property="jobCategory" jdbcType="BIGINT" />
-    <result column="user_postion" property="userPostion" jdbcType="VARCHAR" />
-    <result column="provence_code" property="provenceCode" jdbcType="VARCHAR" />
-    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
-    <result column="district_code" property="districtCode" jdbcType="VARCHAR" />
+    <result column="user_postion" property="userPostion" jdbcType="BIGINT" />
+    <result column="provence_code" property="provenceCode" jdbcType="BIGINT" />
+    <result column="city_code" property="cityCode" jdbcType="BIGINT" />
+    <result column="district_code" property="districtCode" jdbcType="BIGINT" />
     <result column="address_detail" property="addressDetail" jdbcType="VARCHAR" />
     <result column="photo_url" property="photoUrl" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="BIGINT" />
@@ -37,8 +37,8 @@
       create_time, update_time, is_delete, 
       user_service_name)
     values (#{userServiceInfoId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{jobCategory,jdbcType=BIGINT}, 
-      #{userPostion,jdbcType=VARCHAR}, #{provenceCode,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, 
-      #{districtCode,jdbcType=VARCHAR}, #{addressDetail,jdbcType=VARCHAR}, #{photoUrl,jdbcType=VARCHAR}, 
+      #{userPostion,jdbcType=BIGINT}, #{provenceCode,jdbcType=BIGINT}, #{cityCode,jdbcType=BIGINT}, 
+      #{districtCode,jdbcType=BIGINT}, #{addressDetail,jdbcType=VARCHAR}, #{photoUrl,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, #{isDelete,jdbcType=TINYINT}, 
       #{userServiceName,jdbcType=VARCHAR})
   </insert>
@@ -96,16 +96,16 @@
         #{jobCategory,jdbcType=BIGINT},
       </if>
       <if test="userPostion != null" >
-        #{userPostion,jdbcType=VARCHAR},
+        #{userPostion,jdbcType=BIGINT},
       </if>
       <if test="provenceCode != null" >
-        #{provenceCode,jdbcType=VARCHAR},
+        #{provenceCode,jdbcType=BIGINT},
       </if>
       <if test="cityCode != null" >
-        #{cityCode,jdbcType=VARCHAR},
+        #{cityCode,jdbcType=BIGINT},
       </if>
       <if test="districtCode != null" >
-        #{districtCode,jdbcType=VARCHAR},
+        #{districtCode,jdbcType=BIGINT},
       </if>
       <if test="addressDetail != null" >
         #{addressDetail,jdbcType=VARCHAR},
@@ -137,16 +137,16 @@
         job_category = #{jobCategory,jdbcType=BIGINT},
       </if>
       <if test="userPostion != null" >
-        user_postion = #{userPostion,jdbcType=VARCHAR},
+        user_postion = #{userPostion,jdbcType=BIGINT},
       </if>
       <if test="provenceCode != null" >
-        provence_code = #{provenceCode,jdbcType=VARCHAR},
+        provence_code = #{provenceCode,jdbcType=BIGINT},
       </if>
       <if test="cityCode != null" >
-        city_code = #{cityCode,jdbcType=VARCHAR},
+        city_code = #{cityCode,jdbcType=BIGINT},
       </if>
       <if test="districtCode != null" >
-        district_code = #{districtCode,jdbcType=VARCHAR},
+        district_code = #{districtCode,jdbcType=BIGINT},
       </if>
       <if test="addressDetail != null" >
         address_detail = #{addressDetail,jdbcType=VARCHAR},
@@ -173,10 +173,10 @@
     update user_service_infos
     set user_id = #{userId,jdbcType=BIGINT},
       job_category = #{jobCategory,jdbcType=BIGINT},
-      user_postion = #{userPostion,jdbcType=VARCHAR},
-      provence_code = #{provenceCode,jdbcType=VARCHAR},
-      city_code = #{cityCode,jdbcType=VARCHAR},
-      district_code = #{districtCode,jdbcType=VARCHAR},
+      user_postion = #{userPostion,jdbcType=BIGINT},
+      provence_code = #{provenceCode,jdbcType=BIGINT},
+      city_code = #{cityCode,jdbcType=BIGINT},
+      district_code = #{districtCode,jdbcType=BIGINT},
       address_detail = #{addressDetail,jdbcType=VARCHAR},
       photo_url = #{photoUrl,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=BIGINT},
@@ -187,11 +187,20 @@
   </update>
   
   <!-- 查询某个服务人员的信息， 根据用户id -->
-  <select id="getUserServiceInfoByUserId" resultMap="BaseResultMap" parameterType="long">
-      select 
-    	<include refid="Base_Column_List" />
-	  from user_service_infos
-	  where user_id = #{userId,jdbcType=BIGINT}
+  <select id="getUserServiceInfoByUserId" resultType="map" parameterType="long">
+	  select 
+			us.user_id		  as userId, 
+			us.job_category   as jobCategory, 
+			us.user_postion   as userPosition, 
+			us.city_code      as cityCode, 
+			us.district_code  as districtCode, 
+			us.address_detail as addressDetail, 
+			us.photo_url	as photoUrl, 
+			us.create_time	as createTime, 
+			us.update_time  as updateTime, 
+			us.user_service_name as userName,
+			count(sa.senior_id)  as nums
+		 from user_service_infos us left join senior_account sa  on us.user_id=sa.create_user_id
+		 where  us.user_id = #{userId,jdbcType=BIGINT}
   </select>
-  
 </mapper>

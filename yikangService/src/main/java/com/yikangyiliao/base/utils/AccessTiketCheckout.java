@@ -147,7 +147,7 @@ public class AccessTiketCheckout {
 	 * @date 2015/08/17 16:57
 	 * @desc 获取accessTiket
 	 * */
-	public static String generateAccessTiket(String loginId, Long loginDateTime,
+	public static String generateAccessTicket(String loginId, Long loginDateTime,
 			String machineCode) throws Exception {
 		return AES.Encrypt("UD" + loginId + "￥LDT" + loginDateTime + "￥MC"+machineCode,
 				secretKey);

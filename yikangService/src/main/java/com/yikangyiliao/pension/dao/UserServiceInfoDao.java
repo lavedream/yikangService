@@ -1,5 +1,7 @@
 package com.yikangyiliao.pension.dao;
 
+import java.util.Map;
+
 import com.yikangyiliao.pension.entity.UserServiceInfo;
 
 public interface UserServiceInfoDao {
@@ -20,5 +22,5 @@ public interface UserServiceInfoDao {
      * @date 2015/08/28 11:59
      * @dsec 查询某一个员工的信息，根据 用户id 
      * */
-    UserServiceInfo getUserServiceInfoByUserId(Long userIds);
+    Map<String,Object> getUserServiceInfoByUserId(Long userIds);
 }

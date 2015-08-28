@@ -31,9 +31,9 @@ public class UserService {
 			paramData.containsKey("loginName")
 			&&paramData.containsKey("passWord")
 			&&paramData.containsKey("userName")
-			&&paramData.containsKey("userPostion") //职位
+			&&paramData.containsKey("userPosition") //职位
 			&&paramData.containsKey("jobCategory") //全职，兼职
-			&&paramData.containsKey("provenceCode")
+//			&&paramData.containsKey("provenceCode")
 			&&paramData.containsKey("cityCode")
 			&&paramData.containsKey("districtCode")
 			&&paramData.containsKey("addressDetail")
@@ -47,9 +47,9 @@ public class UserService {
 				
 				String passWord=paramData.get("passWord").toString();
 				String userName=paramData.get("userName").toString();
-				String userPostion=paramData.get("userPostion").toString();
+				String userPosition=paramData.get("userPosition").toString();
 				String jobCategory=paramData.get("jobCategory").toString();
-				String provenceCode=paramData.get("provenceCode").toString();
+//				String provenceCode=paramData.get("provenceCode").toString();
 				String cityCode=paramData.get("cityCode").toString();
 				String districtCode=paramData.get("districtCode").toString();
 				String addressDetail=paramData.get("addressDetail").toString();
@@ -69,11 +69,11 @@ public class UserService {
 				UserServiceInfo userServiceInfo=new UserServiceInfo();
 				userServiceInfo.setUserId(user.getUserId());
 				userServiceInfo.setPhotoUrl(photoUrl);
-				userServiceInfo.setProvenceCode(provenceCode);
-				userServiceInfo.setCityCode(cityCode);
+				userServiceInfo.setProvenceCode(Long.valueOf("0"));
+				userServiceInfo.setCityCode(Long.valueOf(cityCode));
 				userServiceInfo.setAddressDetail(addressDetail);
-				userServiceInfo.setDistrictCode(districtCode);
-				userServiceInfo.setUserPostion(userPostion);
+				userServiceInfo.setDistrictCode(Long.valueOf(districtCode));
+				userServiceInfo.setUserPostion(Long.valueOf(userPosition));
 				userServiceInfo.setJobCategory(Long.valueOf(jobCategory));
 				userServiceInfo.setCreateTime(currentDateTime);
 				userServiceInfo.setUpdateTime(currentDateTime);
@@ -169,11 +169,11 @@ public class UserService {
 			UserServiceInfo userServiceInfo=new UserServiceInfo();
 			userServiceInfo.setUserId(Long.parseLong(userId));
 			userServiceInfo.setPhotoUrl(photoUrl);
-			userServiceInfo.setProvenceCode(provenceCode);
-			userServiceInfo.setCityCode(cityCode);
+			userServiceInfo.setProvenceCode(Long.valueOf("0"));
+			userServiceInfo.setCityCode(Long.valueOf(cityCode));
 			userServiceInfo.setAddressDetail(addressDetail);
-			userServiceInfo.setDistrictCode(districtCode);
-			userServiceInfo.setUserPostion(userPostion);
+			userServiceInfo.setDistrictCode(Long.valueOf(districtCode));
+			userServiceInfo.setUserPostion(Long.valueOf(userPostion));
 			userServiceInfo.setJobCategory(Long.valueOf(jobCategory));
 			userServiceInfo.setCreateTime(currentDateTime);
 			userServiceInfo.setUpdateTime(currentDateTime);
@@ -242,7 +242,7 @@ public class UserService {
 			
 			String userId=paramData.get("userId").toString();
 			
-			UserServiceInfo userServiceInfo=userManager.getUserServiceInfoByUserId(Long.valueOf(userId));
+			Map<String,Object> userServiceInfo=userManager.getUserServiceInfoByUserId(Long.valueOf(userId));
 			rtnData.put("data", userServiceInfo);
 			rtnData.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
 			rtnData.put("message", ExceptionConstants.responseSuccess.responseSuccess.message);
