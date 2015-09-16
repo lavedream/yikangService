@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yikangyiliao.pension.dao.ServiceScheduleDetailDao" >
+  <resultMap id="BaseResultMap" type="com.yikangyiliao.pension.entity.ServiceScheduleDetail" >
+    <id column="service_schedule_detail_id" property="serviceScheduleDetailId" jdbcType="BIGINT" />
+    <result column="service_scheule_id" property="serviceScheuleId" jdbcType="BIGINT" />
+    <result column="tie_quantum_id" property="tieQuantumId" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+    <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    service_schedule_detail_id, service_scheule_id, tie_quantum_id, create_time, update_time, 
+    create_user_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from service_schedule_details
+    where service_schedule_detail_id = #{serviceScheduleDetailId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from service_schedule_details
+    where service_schedule_detail_id = #{serviceScheduleDetailId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yikangyiliao.pension.entity.ServiceScheduleDetail" >
+    insert into service_schedule_details (service_schedule_detail_id, service_scheule_id, 
+      tie_quantum_id, create_time, update_time, 
+      create_user_id)
+    values (#{serviceScheduleDetailId,jdbcType=BIGINT}, #{serviceScheuleId,jdbcType=BIGINT}, 
+      #{tieQuantumId,jdbcType=TIMESTAMP}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, 
+      #{createUserId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yikangyiliao.pension.entity.ServiceScheduleDetail" >
+    insert into service_schedule_details
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="serviceScheduleDetailId != null" >
+        service_schedule_detail_id,
+      </if>
+      <if test="serviceScheuleId != null" >
+        service_scheule_id,
+      </if>
+      <if test="tieQuantumId != null" >
+        tie_quantum_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="serviceScheduleDetailId != null" >
+        #{serviceScheduleDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="serviceScheuleId != null" >
+        #{serviceScheuleId,jdbcType=BIGINT},
+      </if>
+      <if test="tieQuantumId != null" >
+        #{tieQuantumId,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yikangyiliao.pension.entity.ServiceScheduleDetail" >
+    update service_schedule_details
+    <set >
+      <if test="serviceScheuleId != null" >
+        service_scheule_id = #{serviceScheuleId,jdbcType=BIGINT},
+      </if>
+      <if test="tieQuantumId != null" >
+        tie_quantum_id = #{tieQuantumId,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where service_schedule_detail_id = #{serviceScheduleDetailId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yikangyiliao.pension.entity.ServiceScheduleDetail" >
+    update service_schedule_details
+    set service_scheule_id = #{serviceScheuleId,jdbcType=BIGINT},
+      tie_quantum_id = #{tieQuantumId,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      create_user_id = #{createUserId,jdbcType=BIGINT}
+    where service_schedule_detail_id = #{serviceScheduleDetailId,jdbcType=BIGINT}
+  </update>
+</mapper>
