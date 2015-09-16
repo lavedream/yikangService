@@ -4,15 +4,17 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.codec.digest.Md5Crypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yikangyiliao.base.utils.AliasFactory;
 import com.yikangyiliao.pension.common.error.ExceptionConstants;
 import com.yikangyiliao.pension.entity.Device;
 import com.yikangyiliao.pension.entity.User;
 import com.yikangyiliao.pension.entity.UserDeviceTab;
+import com.yikangyiliao.pension.entity.UserInfo;
 import com.yikangyiliao.pension.manager.DeviceManager;
+import com.yikangyiliao.pension.manager.UserManager;
 
 
 
@@ -22,6 +24,10 @@ public class DeviceService {
 	
 	@Autowired
 	private DeviceManager deviceManager;
+	
+	@Autowired
+	private UserManager userManager;
+	
 	
 	/**
 	 * @author liushuaic
@@ -76,5 +82,39 @@ public class DeviceService {
 		}
 		return rtnData;
 	}
+	
+	
+	
+	/**
+	 * @author liushuaic
+	 * @date 2015/09/16 10:49
+	 * @desc 获取用户的检测别名
+	 * **/
+	public Map<String,Object> getAliasByUser(Map<String,Object> paramData){
+		
+		Map<String,Object> rtnData=new HashMap<String,Object>();
+		
+		String userId=paramData.get("userId").toString();
+		
+		//UserInfo userInfo=userManager.getUserInfoByUserId(Long.valueOf(userId));
+		User user=userManager.selectByPrimaryKey(Long.valueOf(userId));
+		if(null != user){
+			//String alias=AliasFactory.generateAliasByUser(userInfo);
+			String alias=AliasFactory.generateAliasByUser(user);
+			Map<String,String> dataMap=new HashMap<String,String>();
+			dataMap.put("alias", alias);
+			rtnData.put("data", dataMap);
+			rtnData.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
+			rtnData.put("message", ExceptionConstants.responseSuccess.responseSuccess.message);
+		}else{
+			rtnData.put("status", ExceptionConstants.systemException.systemException.errorCode);
+			rtnData.put("message",ExceptionConstants.systemException.systemException.errorMessage);
+		}
+		
+		return rtnData;
+		
+	}
+	
+	
 	
 }

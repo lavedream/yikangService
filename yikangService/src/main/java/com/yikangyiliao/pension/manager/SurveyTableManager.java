@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.yikangyiliao.pension.dao.SurveyTableDao;
-import com.yikangyiliao.pension.entity.SurveyTable;
 
 
 @Component

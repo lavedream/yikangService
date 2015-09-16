@@ -19,7 +19,7 @@ public class AES {
         System.out.println("加密耗时：" + lUseTime + "毫秒");
         //解密
         lStart = System.currentTimeMillis();
-        String DeString = AES.Decrypt(enString, cKey);
+        String DeString = AES.Decrypt("c3b7ca73f10fea78b1e229f7d3cbaaf50d475cff07b40d4e8d43d0c5c1d73b540f2fc191e7af78754881a0883b79735f4fa2ea7035d100bbfd9cb0f63565c51674738e28115f66a5692b1b81f0ab09af9441252977cc6f6092425703add18993524f336806dabddd1ab89580872c533f", cKey);
         System.out.println("解密后的字串是：" + DeString);
         lUseTime = System.currentTimeMillis() - lStart;
         System.out.println("解密耗时：" + lUseTime + "毫秒");

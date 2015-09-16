@@ -179,6 +179,16 @@ public class InterfaceUtil {
 		mathodClassPath.put("00-17-04", "getUserServiceInfoByUserId");
 		
 		
+		/**
+		 * @author liushuaic
+		 * @date 2015/09/01 14:19
+		 * @desc 设备管理
+		 * **/
+		serviceClassName.put("00-18", "deviceService");
+		//保存设备
+		mathodClassPath.put("00-18-01", "saveDevice");
+		//获取别名
+		mathodClassPath.put("00-18-02", "getAliasByUser");
 		
 	}
 	

@@ -174,4 +174,17 @@
       user_infos_col = #{userInfosCol,jdbcType=VARCHAR}
     where user_info_id = #{userInfoId,jdbcType=BIGINT}
   </update>
+  
+  
+  <!-- 获取某一个用户信息，根据用户id -->
+  <select id="getUserInfoByUserId" resultMap="BaseResultMap" parameterType="long">
+  	select 
+  		<include refid="Base_Column_List" />
+  	from user_infos
+  	where user_id=#{userId}
+  	
+  </select>
+  
+  
+  
 </mapper>

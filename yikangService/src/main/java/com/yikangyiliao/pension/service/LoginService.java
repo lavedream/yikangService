@@ -96,7 +96,13 @@ public class LoginService {
 						rtnData.put("status", ExceptionConstants.loginException.userNameOrPasswordException.errorCode);
 						rtnData.put("message", ExceptionConstants.loginException.userNameOrPasswordException.errorMessage);
 					}
+				}else{
+					rtnData.put("status", ExceptionConstants.loginException.userNameOrPasswordException.errorCode);
+					rtnData.put("message", ExceptionConstants.loginException.userNameOrPasswordException.errorMessage);
 				}
+			}else{
+				rtnData.put("status", ExceptionConstants.loginException.userNameOrPasswordException.errorCode);
+				rtnData.put("message", ExceptionConstants.loginException.userNameOrPasswordException.errorMessage);
 			}
 		}else{
 			rtnData.put("status", ExceptionConstants.parameterException.parameterException.errorCode);

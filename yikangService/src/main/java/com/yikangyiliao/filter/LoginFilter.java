@@ -28,6 +28,7 @@ public class LoginFilter implements Filter {
 			FilterChain arg2) throws IOException, ServletException {
 		HttpServletRequest hsr=(HttpServletRequest)arg0;
 		String requestURI=hsr.getRequestURI();
+		String contextPath=hsr.getContextPath();
 //		if(null != requestURI && !requestURI.equals("/service/login")){
 //			HttpSession session=hsr.getSession();
 //			if(null == session.getAttribute("sessionToket")){
@@ -39,6 +40,11 @@ public class LoginFilter implements Filter {
 
 //		paramMap.put("appId", appId);
 //		paramMap.put("accessTiket", accessTiket);
+
+		if((!contextPath.equals("/") )&& (requestURI.indexOf(contextPath)>=0)){
+			requestURI=requestURI.substring(contextPath.length());
+		}
+		
 		
 		String appId=hsr.getParameter("appId");
 		String accessTicket=hsr.getParameter("accessTicket");
@@ -50,7 +56,10 @@ public class LoginFilter implements Filter {
 		
 		if((null != appId && appId.length()>1 && null != accessTicket && accessTicket.length() >= 0) || requestURI.equals("/service/login") || requestURI.equals("/service/registAndSaveServiceInfo") ){
 			try {
-				if(requestURI.equals("/service/login") || requestURI.equals("/service/registerUserAndSaveServiceInfo")){
+				if(		requestURI.equals("/service/login") 
+					|| requestURI.equals("/service/registerUserAndSaveServiceInfo")
+					|| requestURI.equals("/fileUpload/imgeFileUpload")	
+					){
 					arg2.doFilter(arg0, arg1);
 				}else if(null != accessTicket && AccessTiketCheckout.checkAccessTiketLayout(accessTicket, hsr)){
 					arg2.doFilter(arg0, arg1);
@@ -75,5 +84,5 @@ public class LoginFilter implements Filter {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 }

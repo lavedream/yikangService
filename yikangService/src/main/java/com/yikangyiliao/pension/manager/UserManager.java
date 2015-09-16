@@ -9,6 +9,7 @@ import com.yikangyiliao.pension.dao.UserDao;
 import com.yikangyiliao.pension.dao.UserInfoDao;
 import com.yikangyiliao.pension.dao.UserServiceInfoDao;
 import com.yikangyiliao.pension.entity.User;
+import com.yikangyiliao.pension.entity.UserInfo;
 import com.yikangyiliao.pension.entity.UserServiceInfo;
 
 
@@ -84,5 +85,22 @@ public class UserManager {
 		return userServiceInfoDao.getUserServiceInfoByUserId(userId);
 	}
 	
+	
+    /**
+     * @author liushuaic
+     * @date 2015/09/07 13:41
+     * @param userId 用户id
+     * 
+     * 获取某一个用户信息，根据用户id
+     * **/
+	public UserInfo getUserInfoByUserId(Long userId){
+		return userInfoDao.getUserInfoByUserId(userId);
+	}
+	
+	
+	public static void main(String[] args) {
+		StringBuffer sb=new StringBuffer();
+		System.out.println(5%5);
+	}
 	
 }

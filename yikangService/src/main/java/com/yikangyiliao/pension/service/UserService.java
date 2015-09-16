@@ -157,7 +157,7 @@ public class UserService {
 			String userId=paramData.get("userId").toString();
 			String userPostion=paramData.get("userPostion").toString();
 			String jobCategory=paramData.get("jobCategory").toString();
-			String provenceCode=paramData.get("provenceCode").toString();
+//			String provenceCode=paramData.get("provenceCode").toString();
 			String cityCode=paramData.get("cityCode").toString();
 			String districtCode=paramData.get("districtCode").toString();
 			String addressDetail=paramData.get("addressDetail").toString();
@@ -210,7 +210,7 @@ public class UserService {
 			&&paramData.containsKey("passWord")
 			){
 			
-			Long currentDateTime=Calendar.getInstance().getTimeInMillis();
+//			Long currentDateTime=Calendar.getInstance().getTimeInMillis();
 			
 			String loginName=paramData.get("loginName").toString();
 			String passWord=paramData.get("passWord").toString();
@@ -248,5 +248,8 @@ public class UserService {
 			rtnData.put("message", ExceptionConstants.responseSuccess.responseSuccess.message);
 			return rtnData;
 	}
+	
+	
+	
 	
 }
