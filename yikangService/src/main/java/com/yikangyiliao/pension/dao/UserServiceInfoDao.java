@@ -1,5 +1,6 @@
 package com.yikangyiliao.pension.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import com.yikangyiliao.pension.entity.UserServiceInfo;
@@ -23,4 +24,16 @@ public interface UserServiceInfoDao {
      * @dsec 查询某一个员工的信息，根据 用户id 
      * */
     Map<String,Object> getUserServiceInfoByUserId(Long userIds);
+    
+    
+    
+    /**
+     * 
+     * @author liushuaic
+     * @date 2015/09/17 14:46
+     * @desc 获取所有评估师
+     * */
+    List<UserServiceInfo> getPingGuServiceAll();
+    
+    
 }

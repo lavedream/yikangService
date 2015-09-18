@@ -38,6 +38,9 @@
       #{servcieDay,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.yikangyiliao.pension.entity.ServiceSchedule" >
+   	<selectKey resultType="Long" keyProperty="serviceScheduleId" order="AFTER">
+		SELECT LAST_INSERT_ID()
+	</selectKey>
     insert into service_schedules
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="serviceScheduleId != null" >
@@ -137,6 +140,8 @@
     </set>
     where service_schedule_id = #{serviceScheduleId,jdbcType=BIGINT}
   </update>
+  
+  
   <update id="updateByPrimaryKey" parameterType="com.yikangyiliao.pension.entity.ServiceSchedule" >
     update service_schedules
     set service_user_id = #{serviceUserId,jdbcType=BIGINT},
@@ -150,4 +155,38 @@
       servcie_day = #{servcieDay,jdbcType=INTEGER}
     where service_schedule_id = #{serviceScheduleId,jdbcType=BIGINT}
   </update>
+  
+  
+  
+  
+  <!-- 查询某一个服务人员是否，已经生成了某一天的，工作内容 -->
+  <select id="getServiceSchedule" parameterType="map" resultMap="BaseResultMap">
+ 	select 
+	<include refid="Base_Column_List"></include>
+ 	from service_schedules
+ 	where service_user_id=#{serviceUserId} and service_date=#{serviceDate}
+  </select>
+  
+  
+  <!-- 查询某一个人，某年某一个月的，所有工作时间计划 -->
+  <select id="getServiceScheduleByServiceYearAndServiceMonth" parameterType="map" resultMap="BaseResultMap">
+  	select 
+	<include refid="Base_Column_List"></include>
+	from service_schedules
+	where service_year=#{serviceYear}
+	and  service_month=#{serviceMonth}
+	and  service_user_id=#{userId}
+  </select>
+  
+  <!-- 修改某一天的，工作计划计划，是否已经选择 -->
+  <update id="updateIsCanSelected1ByServiceScheduleId" parameterType="map">
+  	update service_schedules set is_can_selected=1,update_time=#{updateTime} where service_schedule_id=#{serviceScheduleId}
+  </update>
+  
+  <!-- 修改一个服务人员的某一天，是否可以在操作 -->
+  <update id="updateIsCanSelected1ByServiceUserIdAndServiceDate" parameterType="long">
+  	update service_schedules set is_can_selected=1 
+  		where service_user_id=#{serviceUserId} and service_date=#{serviceDate}
+  </update>
+  
 </mapper>

@@ -1,5 +1,6 @@
 package com.yikangyiliao.pension.manager;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,11 +97,16 @@ public class UserManager {
 	public UserInfo getUserInfoByUserId(Long userId){
 		return userInfoDao.getUserInfoByUserId(userId);
 	}
-	
-	
-	public static void main(String[] args) {
-		StringBuffer sb=new StringBuffer();
-		System.out.println(5%5);
-	}
+
+
+	 /**
+     * 
+     * @author liushuaic
+     * @date 2015/09/17 14:46
+     * @desc 获取所有评估师
+     * */
+	public List<UserServiceInfo> getPingGuServiceAll(){
+    	return userServiceInfoDao.getPingGuServiceAll();
+    }
 	
 }

@@ -1,13 +1,11 @@
 package com.yikangyiliao.pension.entity;
 
-import java.util.Date;
-
 public class ServiceScheduleDetail {
     private Long serviceScheduleDetailId;
 
-    private Long serviceScheuleId;
+    private Long serviceScheduleId;
 
-    private Date tieQuantumId;
+    private Long timeQuantumId;
 
     private Long createTime;
 
@@ -23,20 +21,20 @@ public class ServiceScheduleDetail {
         this.serviceScheduleDetailId = serviceScheduleDetailId;
     }
 
-    public Long getServiceScheuleId() {
-        return serviceScheuleId;
+    public Long getServiceScheduleId() {
+        return serviceScheduleId;
     }
 
-    public void setServiceScheuleId(Long serviceScheuleId) {
-        this.serviceScheuleId = serviceScheuleId;
+    public void setServiceScheduleId(Long serviceScheduleId) {
+        this.serviceScheduleId = serviceScheduleId;
     }
 
-    public Date getTieQuantumId() {
-        return tieQuantumId;
+    public Long getTimeQuantumId() {
+        return timeQuantumId;
     }
 
-    public void setTieQuantumId(Date tieQuantumId) {
-        this.tieQuantumId = tieQuantumId;
+    public void setTimeQuantumId(Long timeQuantumId) {
+        this.timeQuantumId = timeQuantumId;
     }
 
     public Long getCreateTime() {

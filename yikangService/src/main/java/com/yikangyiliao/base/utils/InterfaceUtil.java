@@ -190,6 +190,19 @@ public class InterfaceUtil {
 		//获取别名
 		mathodClassPath.put("00-18-02", "getAliasByUser");
 		
+		
+		/**
+		 * 
+		 * @author liushuaic
+		 * @date 2015/09/18 11:58
+		 * @desc 服务人员日程管理
+		 * **/
+		
+		serviceClassName.put("00-19", "serviceScheduleService");
+		mathodClassPath.put("00-19-01", "getScheduleListByMonth");
+		mathodClassPath.put("00-19-02", "getServiceScheduleDetail");
+		mathodClassPath.put("00-19-03", "insertServiceScheduleDetail");
+		
 	}
 	
 	public void loadConfigInterface(String filePath){
