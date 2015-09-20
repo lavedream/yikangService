@@ -103,4 +103,11 @@
       is_delete = #{isDelete,jdbcType=TINYINT}
     where time_quantum_id = #{timeQuantumId,jdbcType=BIGINT}
   </update>
+  
+  <select id="getAllTimeQuantum" resultMap="BaseResultMap">
+  	select 
+  		<include refid="Base_Column_List"></include>
+  	from time_quantums
+  </select>
+  
 </mapper>

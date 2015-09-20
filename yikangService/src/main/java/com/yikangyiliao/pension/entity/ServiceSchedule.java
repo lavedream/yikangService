@@ -22,6 +22,8 @@ public class ServiceSchedule {
     private Integer serviceMonth;
 
     private Integer servcieDay;
+    
+    private String serviceDateStr;
 
     public Long getServiceScheduleId() {
         return serviceScheduleId;
@@ -102,4 +104,12 @@ public class ServiceSchedule {
     public void setServcieDay(Integer servcieDay) {
         this.servcieDay = servcieDay;
     }
+
+	public String getServiceDateStr() {
+		return serviceDateStr;
+	}
+
+	public void setServiceDateStr(String serviceDateStr) {
+		this.serviceDateStr = serviceDateStr;
+	}
 }

@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,10 +37,12 @@ public class ServiceScheduleService {
 		
 		Map<String,Object> rtnMap=new HashMap<String,Object>();
 		
+		
 		if(
 			null != param.get("year") &&  
 			null != param.get("month")	
 			){
+			SimpleDateFormat sdf=new  SimpleDateFormat("yyyy-MM-dd");
 			
 			String year=param.get("year").toString();
 			String month=param.get("month").toString();
@@ -72,11 +75,12 @@ public class ServiceScheduleService {
 					serviceSchedule=new ServiceSchedule();
 					cl.set(Calendar.DATE,i);
 					serviceSchedule.setServiceDate(cl.getTime());
+					serviceSchedule.setServiceDateStr(sdf.format(cl.getTime()));
 					serviceSchedule.setServcieDay(i);
 					serviceSchedule.setServiceMonth(monthInt);
 					serviceSchedule.setServiceYear(yearInt);
 					// 0 表示是可以选择的
-					serviceSchedule.setIsCanSelected(Byte.valueOf("0"));  
+					serviceSchedule.setIsCanSelected((byte)isCanSubmit(cl.getTime()));  
 					
 				}
 				serviceSchedules.add(serviceSchedule);
@@ -95,13 +99,15 @@ public class ServiceScheduleService {
 	
 	/**
 	 * @author liushuaic
+	 * @throws ParseException 
 	 * @date 2015/09/17 18:49
 	 * 获取某一天的具体工作内容
 	 * **/
-	public Map<String,Object> getServiceScheduleDetail(Map<String,Object> paramData){
+	public Map<String,Object> getServiceScheduleDetail(Map<String,Object> paramData) throws ParseException{
 		Map<String,Object> rtnMap=new HashMap<String,Object>();
 
-		
+		SimpleDateFormat sdf=new  SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+		System.out.println("接收到请求的时间："+sdf.format(new Date()));
 		if(
 			null != paramData.get("serviceDate") 
 			){
@@ -118,7 +124,7 @@ public class ServiceScheduleService {
 			
 			rtnData.put("data", data);
 			//TODO 业务方法判断是否可以 提交
-			rtnData.put("isCanSelected", 0);
+			rtnData.put("isCanSubmit", isCanSubmit(sdf.parse(serviceDate)));
 			rtnMap.put("data", data);
 			rtnMap.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
 			rtnMap.put("message",ExceptionConstants.responseSuccess.responseSuccess.message);
@@ -129,7 +135,7 @@ public class ServiceScheduleService {
 
 		
 
-		
+		System.out.println("查询并返回结果的时间的时间："+sdf.format(new Date()));
 		return rtnMap;
 	}
 	
@@ -174,8 +180,9 @@ public class ServiceScheduleService {
 				serviceSchedule.setUpdateTime(currentDateTime);
 				serviceSchedule.setIsCanSelected(Byte.valueOf("1"));
 				serviceSchedule.setCreateUserId(Long.valueOf(userId));
+				serviceSchedule.setServiceUserId(Long.valueOf(userId));
 				serviceSchedule.setServiceYear(cl.get(Calendar.YEAR));
-				serviceSchedule.setServiceMonth(cl.get(Calendar.MONTH));
+				serviceSchedule.setServiceMonth(cl.get(Calendar.MONTH)+1);
 				serviceSchedule.setServcieDay(cl.get(Calendar.DAY_OF_MONTH));
 				serviceSchedule.setServiceDate(sdf.parse(serviceDate));
 				serviceScheduleManager.insertServiceSchduleSelective(serviceSchedule);
@@ -200,5 +207,39 @@ public class ServiceScheduleService {
 		
 		
 	}
+	
+	
+	/**
+	 * @author liushuaic
+	 * @date  2015/09/18 17:58
+	 * 
+	 * 逻辑：
+	 * 1，2，3，4，5，6，7
+	 * 今天为4号
+	 * 1，2号做了选择 那么是不能在提交的
+	 * 3号没有做选择，也是不能提交的
+	 * 4，5，6，也是不能提交的 必选要大于 今天 3天时间
+	 * 7是可以修改的
+	 * 是否可以提交本次操作
+	 * @param  某个日期内的 工作日程数量
+	 * @param  某个日期的   创建时间
+	 * 
+	 * 在有前端，如果某一个时间段被选中，后台服务人员，也是不能选的。
+	 * 
+	 * 
+	 * **/
+	public int isCanSubmit(Date dataCreateDate){
+		
+		Date currentDateTime=Calendar.getInstance().getTime();
+		long diff = dataCreateDate.getTime() - currentDateTime.getTime();
+		long days = diff / (1000 * 60 * 60 * 24);
+		if(days>=0){
+			return 1;
+		}
+		
+		return 0;
+		
+	}
+	
  	
 }

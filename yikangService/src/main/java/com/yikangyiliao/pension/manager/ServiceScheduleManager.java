@@ -1,15 +1,12 @@
 package com.yikangyiliao.pension.manager;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
-
 import com.yikangyiliao.pension.dao.ServiceScheduleDao;
 import com.yikangyiliao.pension.dao.ServiceScheduleDetailDao;
 import com.yikangyiliao.pension.entity.ServiceSchedule;
@@ -70,8 +67,7 @@ public class ServiceScheduleManager {
      * @author liushuaic
      * @date 2015/09/17 18:36
      * 查询某一天的工作计划的内容
-     * @param serviceDate一
-     * @param serviceScheduleId
+     * @param serviceDate 
      * @param serviceUserId
      * **/
 	public List<Map<String,Object>> getServiceScheduleDetailByUserIdAndSelectDate(Map<String,Object> paramData){
@@ -79,7 +75,13 @@ public class ServiceScheduleManager {
     }
 	
 	
-	
+    /**
+     * @author liushuaic
+     * @date 2015/09/17 18:36
+     * 查询某一天的工作记录
+     * @param serviceDate 
+     * @param serviceUserId
+     * **/
 	public ServiceSchedule getServiceSchedule(Map<String,Object> param){
 		return serviceScheduleDao.getServiceSchedule(param);
 	}

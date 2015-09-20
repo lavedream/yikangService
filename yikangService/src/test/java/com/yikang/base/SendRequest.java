@@ -1,6 +1,8 @@
 package com.yikang.base;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +34,7 @@ public class SendRequest {
 
 	@SuppressWarnings("unchecked")
 	public static void sendPost(String serviceCode,Map<String,Object>  paramData) throws IOException {
-		
+		SimpleDateFormat sdf=new  SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		
@@ -74,8 +76,10 @@ public class SendRequest {
 			System.out.println("----------------------------------------");
 			System.out.println(responseBody);
 			Map<String,Object> data=new HashMap<String, Object>();
+			System.out.println("接收到请求时间"+sdf.format(new Date()));
 			data=objectMapper.readValue(responseBody, Map.class);
 			String dataStr=data.get("data").toString();
+			System.out.println("解析出请求时间"+sdf.format(new Date()));
 			System.out.println(AES.Decrypt(dataStr, "1234567890abcDEF"));
 		} catch(Exception e){
 			e.printStackTrace();
