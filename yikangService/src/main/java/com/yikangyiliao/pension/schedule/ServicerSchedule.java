@@ -81,7 +81,7 @@ public class ServicerSchedule {
 			serviceSchedule.setUpdateTime(currentDateTime.getTime());
 			serviceSchedule.setServiceDate(currentDate);
 			serviceSchedule.setServiceYear(year);
-			serviceSchedule.setServiceMonth(month);
+			serviceSchedule.setServiceMonth(month+1);
 			serviceSchedule.setServcieDay(date);
 			
 			// 工作日程详情
@@ -108,6 +108,7 @@ public class ServicerSchedule {
 					serviceSchedule.setServiceUserId(userId);
 					serviceSchedule.setIsCanSelected((byte)1);
 					serviceSchedule.setServiceScheduleId(null);// 设置id 为null 不然会插入上一次的。
+					serviceSchedule.setCreateUserId(-1l);
 					
 					serviceScheduleManager.insertServiceSchduleSelective(serviceSchedule);
 					serviceScheduleDetail.setServiceScheduleId(serviceSchedule.getServiceScheduleId());

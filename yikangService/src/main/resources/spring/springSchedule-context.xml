@@ -37,13 +37,13 @@
 	</bean>
 	   <!-- cron表达式 -->
 	  <!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序 -->
-     <bean id="startQuertz" autowire="byName" lazy-init="true"  class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-        <property name="triggers">
-           <list>
-                <ref bean="servicerScheudleTrriger" />
-           </list>
-        </property>
-     </bean>
+<!--      <bean id="startQuertz" autowire="byName" lazy-init="true"  class="org.springframework.scheduling.quartz.SchedulerFactoryBean"> -->
+<!--         <property name="triggers"> -->
+<!--            <list> -->
+<!--                 <ref bean="servicerScheudleTrriger" /> -->
+<!--            </list> -->
+<!--         </property> -->
+<!--      </bean> -->
 	
 
 </beans>

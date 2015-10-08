@@ -180,6 +180,7 @@ public class AnswerService {
 						assessment.setAssessmentNumber("test-test-2015101011");
 						assessment.setAssessmentId(-1l);
 						assessment.setSeniorId(0l);
+						
 					}
 					
 					

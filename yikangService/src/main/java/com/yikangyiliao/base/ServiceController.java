@@ -3,6 +3,8 @@ package com.yikangyiliao.base;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,6 +38,8 @@ public class ServiceController {
 	@RequestMapping(value = "/service/{serverviceCode}")
 	@ResponseBody
 	public Map<String,Object> doMethod(@PathVariable String serverviceCode,String appId,String accessTicket, String paramData,HttpServletRequest request) throws JsonGenerationException, JsonMappingException, IOException {
+		SimpleDateFormat sdf =new  SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+		System.out.println("controller 接收到请求  "+sdf.format(new Date()));
 		Map<String, Object> rtnMap = new HashMap<String, Object>();
 		if (null != serverviceCode) {
 

@@ -126,24 +126,41 @@
   
     <!--查询某个人员某一天的可工作时间  -->
   <select id="getServiceScheduleDetailByUserIdAndSelectDate" resultType="map" parameterType="map">
-  	  	select 
-		ssd.service_schedule_detail_id 	as serviceScheduleDetailId,
-		ssd.service_schedule_id 		as serviceScheduleDetailId,
-		ssd.time_quantum_id 			as timeQuantunId,
-		tq.start_time 					as startTime,
-		tq.end_time 					as endTime,
-		case 
-			when ssd.time_quantum_id=tq.time_quantum_id then 1
-		    else 0
-		end  as 'isChecked'
-		 from service_schedule_details ssd right join 
-		time_quantums tq on ssd.time_quantum_id=tq.time_quantum_id
-		left join service_schedules ss on 
-		(
-			ssd.service_schedule_id=ss.service_schedule_id 
-			and ss.service_date=#{serviceDate}
-			and ss.service_user_id =#{userId}
-		)
+<!--   	  	select  -->
+<!-- 		ssd.service_schedule_detail_id 	as serviceScheduleDetailId, -->
+<!-- 		ssd.service_schedule_id 		as serviceScheduleDetailId, -->
+<!-- 		ssd.time_quantum_id 			as timeQuantunId, -->
+<!-- 		tq.start_time 					as startTime, -->
+<!-- 		tq.end_time 					as endTime, -->
+<!-- 		case  -->
+<!-- 			when ssd.time_quantum_id=tq.time_quantum_id then 1 -->
+<!-- 		    else 0 -->
+<!-- 		end  as 'isChecked' -->
+<!-- 		 from service_schedule_details ssd right join  -->
+<!-- 		time_quantums tq on ssd.time_quantum_id=tq.time_quantum_id -->
+<!-- 		left join service_schedules ss on ssd.service_schedule_id=ss.service_schedule_id  -->
+<!-- 		where  ss.service_date=#{serviceDate} -->
+<!--  			and ss.service_user_id =#{userId} -->
+ 			
+ 			
+ 			select 
+				ssds.service_schedule_detail_id 	as serviceScheduleDetailId,
+				ssds.service_schedule_id 		as serviceScheduleId, 
+				ssds.time_quantum_id 			as timeQuantunId,
+				tq.start_time as startTime, tq.end_time as endTime,
+				 case when ssds.time_quantum_id=tq.time_quantum_id 
+					then 1 else 0 end 
+				 as 'isChecked',
+				tq.time_quantum_id  as timeQuantumId
+			from  time_quantums tq
+			left join(
+				select 
+			    ssd.service_schedule_detail_id,
+			    ssd.service_schedule_id,
+			    ssd.time_quantum_id from service_schedules ss inner join service_schedule_details ssd
+				on  ssd.service_schedule_id=ss.service_schedule_id 
+			    where ss.service_date=#{serviceDate} and ss.service_user_id =#{userId}
+			 ) as ssds on ssds.time_quantum_id=tq.time_quantum_id
 			
   </select>
   

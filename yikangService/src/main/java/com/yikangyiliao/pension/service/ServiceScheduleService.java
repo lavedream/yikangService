@@ -60,13 +60,15 @@ public class ServiceScheduleService {
 			
 			List<ServiceSchedule> serviceSchedules=new ArrayList<ServiceSchedule>();
 			
-			for(int i=0;i<d;i++){
+			for(int i=1;i<=d;i++){
 				ServiceSchedule serviceSchedule=null;
 				//查找出，那天的对象，跳出并在集合中移除，以减少循环次数
 				for(int j=0;j<scheduleList.size();j++){
 					int serviceDay=scheduleList.get(j).getServcieDay();
 					if(i==serviceDay){
 						serviceSchedule=scheduleList.get(j);
+						serviceSchedule.setIsCanSelected(Byte.valueOf("1"));
+						serviceSchedule.setServiceDateStr(sdf.format(serviceSchedule.getServiceDate()));
 						scheduleList.remove(j);
 						break;
 					}
@@ -106,8 +108,9 @@ public class ServiceScheduleService {
 	public Map<String,Object> getServiceScheduleDetail(Map<String,Object> paramData) throws ParseException{
 		Map<String,Object> rtnMap=new HashMap<String,Object>();
 
-		SimpleDateFormat sdf=new  SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-		System.out.println("接收到请求的时间："+sdf.format(new Date()));
+		SimpleDateFormat sdf=new  SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf2=new  SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+		System.out.println("接收到请求的时间："+sdf2.format(new Date()));
 		if(
 			null != paramData.get("serviceDate") 
 			){
@@ -123,9 +126,22 @@ public class ServiceScheduleService {
 			List<Map<String,Object>> data=serviceScheduleManager.getServiceScheduleDetailByUserIdAndSelectDate(queryParam);
 			
 			rtnData.put("data", data);
-			//TODO 业务方法判断是否可以 提交
-			rtnData.put("isCanSubmit", isCanSubmit(sdf.parse(serviceDate)));
-			rtnMap.put("data", data);
+			
+			//TODO 业务方法判断是否可以提交
+			boolean haveDetail=false;
+			for(Map<String,Object> detail:data){
+				if(detail.containsKey("serviceScheduleDetailId")){
+					haveDetail=true;
+					break;
+				}
+			}
+			if(haveDetail){
+				rtnData.put("isCanSubmit", 1);
+			}else{
+				rtnData.put("isCanSubmit", isCanSubmitForDetail(sdf.parse(serviceDate)));
+			}
+			
+			rtnMap.put("data", rtnData);
 			rtnMap.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
 			rtnMap.put("message",ExceptionConstants.responseSuccess.responseSuccess.message);
 		}else{
@@ -135,7 +151,7 @@ public class ServiceScheduleService {
 
 		
 
-		System.out.println("查询并返回结果的时间的时间："+sdf.format(new Date()));
+		System.out.println("查询并返回结果的时间的时间："+sdf2.format(new Date()));
 		return rtnMap;
 	}
 	
@@ -169,7 +185,12 @@ public class ServiceScheduleService {
 			Calendar cl=Calendar.getInstance();
 			Long currentDateTime=cl.getTimeInMillis();
 			
+			
+			
 			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+			Date submitDate=sdf.parse(serviceDate);
+			Calendar ca= Calendar.getInstance();
+			ca.setTime(submitDate);
 			
 			ServiceSchedule serviceSchedule=serviceScheduleManager.getServiceSchedule(paramData);
 			if(null != serviceSchedule){
@@ -181,9 +202,9 @@ public class ServiceScheduleService {
 				serviceSchedule.setIsCanSelected(Byte.valueOf("1"));
 				serviceSchedule.setCreateUserId(Long.valueOf(userId));
 				serviceSchedule.setServiceUserId(Long.valueOf(userId));
-				serviceSchedule.setServiceYear(cl.get(Calendar.YEAR));
-				serviceSchedule.setServiceMonth(cl.get(Calendar.MONTH)+1);
-				serviceSchedule.setServcieDay(cl.get(Calendar.DAY_OF_MONTH));
+				serviceSchedule.setServiceYear(ca.get(Calendar.YEAR));
+				serviceSchedule.setServiceMonth(ca.get(Calendar.MONTH)+1);
+				serviceSchedule.setServcieDay(ca.get(Calendar.DAY_OF_MONTH));
 				serviceSchedule.setServiceDate(sdf.parse(serviceDate));
 				serviceScheduleManager.insertServiceSchduleSelective(serviceSchedule);
 			}
@@ -197,6 +218,8 @@ public class ServiceScheduleService {
 				serviceScheduleManager.insertServiceScheduleDetail(serviceScheduleDetail);
 			}
 			
+			rtnMap.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
+			rtnMap.put("message",ExceptionConstants.responseSuccess.responseSuccess.message);
 		}else{
 			rtnMap.put( "status", ExceptionConstants.parameterException.parameterException.errorCode);
 			rtnMap.put( "message", ExceptionConstants.parameterException.parameterException.errorMessage);
@@ -225,21 +248,62 @@ public class ServiceScheduleService {
 	 * @param  某个日期的   创建时间
 	 * 
 	 * 在有前端，如果某一个时间段被选中，后台服务人员，也是不能选的。
-	 * 
+	 * 1443697809002
+	 * 1442920221106
 	 * 
 	 * **/
 	public int isCanSubmit(Date dataCreateDate){
 		
 		Date currentDateTime=Calendar.getInstance().getTime();
 		long diff = dataCreateDate.getTime() - currentDateTime.getTime();
-		long days = diff / (1000 * 60 * 60 * 24);
-		if(days>=0){
-			return 1;
+		//long days = diff / (1000 * 60 * 60 * 24);
+		if(diff<=0){
+			return 2;
 		}
 		
 		return 0;
 		
 	}
 	
+	
+	/**
+	 * @author liushuaic
+	 * @date 2015/09/22 19:35 
+	 * @desc 是否可以提交
+	 * */
+	public int isCanSubmitForDetail(Date dataCreateDate){
+		
+		Date currentDateTime=Calendar.getInstance().getTime();
+		long diff = dataCreateDate.getTime() - currentDateTime.getTime();
+	//	long days = diff / (1000 * 60 * 60 * 24);
+		if(diff<=0){
+			return 1;
+		}
+		
+		return 0;
+		
+	}
  	
+	/**
+	 * @author liushuaic
+	 * @date 2015/09/30 10:21
+	 * 查询某一天的，可用服务时间
+	 * 已经选择过的，不能在次选择
+	 * @param selectDate 选择的时间
+	 * @return 
+	 */
+	
+	public Map<String,Object> getServiceDateBySelectDate(Map<String,Object> paramData){
+		Map<String,Object> rtnMap=new HashMap<String, Object>();
+		if(null != paramData.get("selectDate")){
+			
+		}else{
+			rtnMap.put( "status", ExceptionConstants.parameterException.parameterException.errorCode);
+			rtnMap.put( "message", ExceptionConstants.parameterException.parameterException.errorMessage);
+		}
+		
+		return rtnMap;
+	}
+	
+	
 }

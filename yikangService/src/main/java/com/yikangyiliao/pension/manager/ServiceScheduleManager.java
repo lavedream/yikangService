@@ -98,7 +98,7 @@ public class ServiceScheduleManager {
 	public void updateServiceScheduleIsCanSelected1(Long serviceScheduleId){
 		Map<String,Object> param=new HashMap<String, Object>();
 		param.put("serviceScheduleId", serviceScheduleId);
-		param.put("updateTime", Calendar.getInstance().getTime());
+		param.put("updateTime", Calendar.getInstance().getTime().getTime());
 		serviceScheduleDao.updateIsCanSelected1ByServiceScheduleId(param);
 	}
 	
