@@ -1,6 +1,7 @@
 package com.yikangyiliao.pension.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.yikangyiliao.pension.entity.TimeQuantum;
 
@@ -27,4 +28,16 @@ public interface TimeQuantumDao {
      * 
      * **/
     List<TimeQuantum> getAllTimeQuantum();
+    
+    
+    /**
+     * 
+     * @author liushuaic
+     * @date 2015/10/09 14:53
+     * @desc 查询某一个服务时间内的，可用时间
+     * 
+     * */
+    List<Map<String,Object>> getTimeQuantumsForCustomer(Map<String,Object> param);
+    
+    
 }

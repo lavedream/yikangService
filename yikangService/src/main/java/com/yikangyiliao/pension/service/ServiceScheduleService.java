@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 import com.yikangyiliao.pension.common.error.ExceptionConstants;
 import com.yikangyiliao.pension.entity.ServiceSchedule;
 import com.yikangyiliao.pension.entity.ServiceScheduleDetail;
+import com.yikangyiliao.pension.entity.TimeQuantum;
 import com.yikangyiliao.pension.manager.ServiceScheduleManager;
+import com.yikangyiliao.pension.manager.TimeQuantumManager;
 
 @Service("serviceScheduleService")
 public class ServiceScheduleService {
@@ -23,6 +25,9 @@ public class ServiceScheduleService {
 	
 	@Autowired
 	private ServiceScheduleManager serviceScheduleManager;
+	
+	@Autowired
+	private TimeQuantumManager timeQuantumManager;
 	
 	/**
 	 * @author liushuaic
@@ -297,6 +302,13 @@ public class ServiceScheduleService {
 		Map<String,Object> rtnMap=new HashMap<String, Object>();
 		if(null != paramData.get("selectDate")){
 			
+			List<TimeQuantum> timeQuantums=timeQuantumManager.getAllTimeQuantum();
+			for(TimeQuantum TimeQuantum:timeQuantums){
+				
+			}
+			rtnMap.put("timeQuantums", timeQuantums);
+			rtnMap.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
+			rtnMap.put("message",ExceptionConstants.responseSuccess.responseSuccess.message);
 		}else{
 			rtnMap.put( "status", ExceptionConstants.parameterException.parameterException.errorCode);
 			rtnMap.put( "message", ExceptionConstants.parameterException.parameterException.errorMessage);
@@ -304,6 +316,8 @@ public class ServiceScheduleService {
 		
 		return rtnMap;
 	}
+	
+	
 	
 	
 }

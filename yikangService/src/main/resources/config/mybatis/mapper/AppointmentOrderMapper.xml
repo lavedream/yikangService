@@ -292,4 +292,27 @@
       data_group = #{dataGroup,jdbcType=TINYINT}
     where appointment_order_id = #{appointmentOrderId,jdbcType=BIGINT}
   </update>
+  
+  
+  
+  <!-- 修改定单状态 -->
+  <update id="updateAppointmentOrderStatus" parameterType="map">
+  	update appointment_orders set order_status=#{orderStatus}
+  	where appointment_order_id = #{appointmentOrderId,jdbcType=BIGINT}
+  </update>
+  
+  
+  <!-- 查询某一个订单的服务人员 -->
+  <select id="getUserServiceInfoByOrderId" parameterType="long" resultType="map">
+  	select 
+  		usi.* 
+  	from order_service_details ssd 
+	inner join user_service_infos usi on ssd.service_user_id=usi.user_id
+	where ssd.order_id=#{orderId}
+  </select>
+  
+  
+  
+  
+  
 </mapper>

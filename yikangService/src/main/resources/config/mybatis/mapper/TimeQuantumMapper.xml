@@ -110,4 +110,40 @@
   	from time_quantums
   </select>
   
+  
+  <!--  查询某一天中的，所有时间点，是否有可用时间-->
+  <!--  postion =0 是评估师 -->
+  <select id="getTimeQuantumsForCustomer" resultType="map" parameterType="map">
+  	select
+  	
+		timeQuantums.time_quantum_id,
+		timeQuantums.start_time,
+		timeQuantums.end_time,
+	case 
+		when timeQuantums.count >=us.userNumber then true
+	    else false
+	end 'disabled'
+	
+	from (
+		select 
+			count(ssd.time_quantum_id) 'count',
+			tq.time_quantum_id,
+			tq.start_time,
+			tq.end_time
+		from time_quantums tq 
+		left join order_service_details ssd on ssd.time_quantum_id=tq.time_quantum_id
+		 where ssd.service_date=#{serviceDate}
+		group by tq.time_quantum_id
+	) timeQuantums,
+	
+	(
+		select 
+			count(usi.user_id) as 'userNumber' 
+		from user_service_infos usi
+		where usi.user_postion=0
+	) us
+	
+  </select>
+  
+  
 </mapper>
