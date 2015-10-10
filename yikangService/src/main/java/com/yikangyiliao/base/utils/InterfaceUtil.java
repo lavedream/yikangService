@@ -203,6 +203,15 @@ public class InterfaceUtil {
 		mathodClassPath.put("00-19-02", "getServiceScheduleDetail");
 		mathodClassPath.put("00-19-03", "insertServiceScheduleDetail");
 		
+		/**
+		 * @author liushuaic
+		 * @date 2015/10/10 17:23
+		 * 预约日期查询
+		 * **/
+		serviceClassName.put("00-20", "timeQuantumService");
+		mathodClassPath.put("00-20-01", "getTimeQuantumsForCustomer");
+		
+		
 	}
 	
 	public void loadConfigInterface(String filePath){

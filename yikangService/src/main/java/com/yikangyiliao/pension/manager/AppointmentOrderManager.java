@@ -81,6 +81,15 @@ public class AppointmentOrderManager {
 		return appointmentOrderDao.getUserServiceInfoByOrderId(orderId);
 	}
 	
+	/**
+	 * @author liushuaic
+	 * @date 2015/10/10 14:13
+	 * 获取某一个定单的信息
+	 * */
+	public AppointmentOrder getAppointmentOrderByOrderId(Long appointmentOrderId){
+		return appointmentOrderDao.selectByPrimaryKey(appointmentOrderId);
+	}
+	
 	
 
 }

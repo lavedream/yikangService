@@ -150,4 +150,12 @@
       order_id = #{orderId,jdbcType=BIGINT}
     where order_service_detail_id = #{orderServiceDetailId,jdbcType=BIGINT}
   </update>
+  
+  <select id="getEstimateOrderServiceDetailByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+  	select 
+    	<include refid="Base_Column_List" />
+    from order_service_details
+    where order_id=#{orderId}
+  </select>
+  
 </mapper>

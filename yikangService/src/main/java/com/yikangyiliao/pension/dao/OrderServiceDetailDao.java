@@ -14,4 +14,6 @@ public interface OrderServiceDetailDao {
     int updateByPrimaryKeySelective(OrderServiceDetail record);
 
     int updateByPrimaryKey(OrderServiceDetail record);
+    
+    OrderServiceDetail getEstimateOrderServiceDetailByOrderId(Long orderId);
 }
