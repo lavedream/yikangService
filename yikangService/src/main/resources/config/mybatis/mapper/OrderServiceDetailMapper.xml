@@ -6,16 +6,19 @@
     <result column="service_user_id" property="serviceUserId" jdbcType="BIGINT" />
     <result column="service_type" property="serviceType" jdbcType="TINYINT" />
     <result column="service_date" property="serviceDate" jdbcType="TIMESTAMP" />
+    <result column="time_quantum_id" property="timeQuantumId" jdbcType="BIGINT" />
     <result column="appointment_date" property="appointmentDate" jdbcType="VARCHAR" />
     <result column="service_record" property="serviceRecord" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="BIGINT" />
     <result column="update_time" property="updateTime" jdbcType="BIGINT" />
-    <result column="service_detail_status" property="serviceDetailStatus" jdbcType="VARCHAR" />
+    <result column="service_detail_status" property="serviceDetailStatus" jdbcType="TINYINT" />
     <result column="order_id" property="orderId" jdbcType="BIGINT" />
+    <result column="certain_service_user_status" property="certainServiceUserStatus" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    order_service_detail_id, service_user_id, service_type, service_date, appointment_date, 
-    service_record, create_time, update_time, service_detail_status, order_id
+    order_service_detail_id, service_user_id, service_type, service_date, time_quantum_id, 
+    appointment_date, service_record, create_time, update_time, service_detail_status, 
+    order_id, certain_service_user_status
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -29,13 +32,15 @@
   </delete>
   <insert id="insert" parameterType="com.yikangyiliao.pension.entity.OrderServiceDetail" >
     insert into order_service_details (order_service_detail_id, service_user_id, 
-      service_type, service_date, appointment_date, 
-      service_record, create_time, update_time, 
-      service_detail_status, order_id)
+      service_type, service_date, time_quantum_id, 
+      appointment_date, service_record, create_time, 
+      update_time, service_detail_status, order_id, 
+      certain_service_user_status)
     values (#{orderServiceDetailId,jdbcType=BIGINT}, #{serviceUserId,jdbcType=BIGINT}, 
-      #{serviceType,jdbcType=TINYINT}, #{serviceDate,jdbcType=TIMESTAMP}, #{appointmentDate,jdbcType=VARCHAR}, 
-      #{serviceRecord,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, 
-      #{serviceDetailStatus,jdbcType=VARCHAR}, #{orderId,jdbcType=BIGINT})
+      #{serviceType,jdbcType=TINYINT}, #{serviceDate,jdbcType=TIMESTAMP}, #{timeQuantumId,jdbcType=BIGINT}, 
+      #{appointmentDate,jdbcType=VARCHAR}, #{serviceRecord,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=BIGINT}, #{serviceDetailStatus,jdbcType=TINYINT}, #{orderId,jdbcType=BIGINT}, 
+      #{certainServiceUserStatus,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.yikangyiliao.pension.entity.OrderServiceDetail" >
     insert into order_service_details
@@ -51,6 +56,9 @@
       </if>
       <if test="serviceDate != null" >
         service_date,
+      </if>
+      <if test="timeQuantumId != null" >
+        time_quantum_id,
       </if>
       <if test="appointmentDate != null" >
         appointment_date,
@@ -70,6 +78,9 @@
       <if test="orderId != null" >
         order_id,
       </if>
+      <if test="certainServiceUserStatus != null" >
+        certain_service_user_status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="orderServiceDetailId != null" >
@@ -84,6 +95,9 @@
       <if test="serviceDate != null" >
         #{serviceDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="timeQuantumId != null" >
+        #{timeQuantumId,jdbcType=BIGINT},
+      </if>
       <if test="appointmentDate != null" >
         #{appointmentDate,jdbcType=VARCHAR},
       </if>
@@ -97,10 +111,13 @@
         #{updateTime,jdbcType=BIGINT},
       </if>
       <if test="serviceDetailStatus != null" >
-        #{serviceDetailStatus,jdbcType=VARCHAR},
+        #{serviceDetailStatus,jdbcType=TINYINT},
       </if>
       <if test="orderId != null" >
         #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="certainServiceUserStatus != null" >
+        #{certainServiceUserStatus,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -116,6 +133,9 @@
       <if test="serviceDate != null" >
         service_date = #{serviceDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="timeQuantumId != null" >
+        time_quantum_id = #{timeQuantumId,jdbcType=BIGINT},
+      </if>
       <if test="appointmentDate != null" >
         appointment_date = #{appointmentDate,jdbcType=VARCHAR},
       </if>
@@ -129,10 +149,13 @@
         update_time = #{updateTime,jdbcType=BIGINT},
       </if>
       <if test="serviceDetailStatus != null" >
-        service_detail_status = #{serviceDetailStatus,jdbcType=VARCHAR},
+        service_detail_status = #{serviceDetailStatus,jdbcType=TINYINT},
       </if>
       <if test="orderId != null" >
         order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="certainServiceUserStatus != null" >
+        certain_service_user_status = #{certainServiceUserStatus,jdbcType=TINYINT},
       </if>
     </set>
     where order_service_detail_id = #{orderServiceDetailId,jdbcType=BIGINT}
@@ -142,20 +165,34 @@
     set service_user_id = #{serviceUserId,jdbcType=BIGINT},
       service_type = #{serviceType,jdbcType=TINYINT},
       service_date = #{serviceDate,jdbcType=TIMESTAMP},
+      time_quantum_id = #{timeQuantumId,jdbcType=BIGINT},
       appointment_date = #{appointmentDate,jdbcType=VARCHAR},
       service_record = #{serviceRecord,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=BIGINT},
       update_time = #{updateTime,jdbcType=BIGINT},
-      service_detail_status = #{serviceDetailStatus,jdbcType=VARCHAR},
-      order_id = #{orderId,jdbcType=BIGINT}
+      service_detail_status = #{serviceDetailStatus,jdbcType=TINYINT},
+      order_id = #{orderId,jdbcType=BIGINT},
+      certain_service_user_status = #{certainServiceUserStatus,jdbcType=TINYINT}
     where order_service_detail_id = #{orderServiceDetailId,jdbcType=BIGINT}
   </update>
   
+  
+  <!-- 获取某一个定单的， 评估人员 -->
   <select id="getEstimateOrderServiceDetailByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Long">
   	select 
     	<include refid="Base_Column_List" />
     from order_service_details
     where order_id=#{orderId}
+    and service_type=0
+  </select>
+  
+    <!-- 查询某一个订单的服务人员 -->
+  <select id="getUserServiceInfoByOrderId" parameterType="long" resultType="map">
+  	select 
+  		usi.* 
+  	from order_service_details ssd 
+	inner join user_service_infos usi on ssd.service_user_id=usi.user_id
+	where ssd.order_id=#{orderId}
   </select>
   
 </mapper>

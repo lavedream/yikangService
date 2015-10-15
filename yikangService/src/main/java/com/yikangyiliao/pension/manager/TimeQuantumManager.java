@@ -41,5 +41,13 @@ public class TimeQuantumManager {
     }
 	
 	
+	/**
+	 * @author liushuaic
+	 * @date 2015/10/13 16:19
+	 * 查询某一个时间段，根据id
+	 * **/
+	public TimeQuantum getTimeQuantumsById(Long timeQuantumId){
+		return timeQuantumDao.selectByPrimaryKey(timeQuantumId);
+	}
 	
 }

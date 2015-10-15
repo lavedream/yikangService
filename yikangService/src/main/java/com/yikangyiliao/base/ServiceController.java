@@ -66,6 +66,7 @@ public class ServiceController {
 						}
 						
 						if(!serverviceCode.equals("login") && !serverviceCode.equals("registerUserAndSaveServiceInfo")){
+//						if(null != request.getParameter("accessTicket")){
 							String accessTiket=request.getParameter("accessTicket");
 							String UD =AccessTiketCheckout.getAccessTiketUD(accessTiket);
 							String LDT=AccessTiketCheckout.getAccessTiketLDT(accessTiket);

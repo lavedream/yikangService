@@ -13,6 +13,10 @@ public class Device {
 
     private Long updateTime;
 
+    private String pushAlias;
+
+    private Byte isUsed;
+
     public Long getDeviceId() {
         return deviceId;
     }
@@ -59,5 +63,21 @@ public class Device {
 
     public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getPushAlias() {
+        return pushAlias;
+    }
+
+    public void setPushAlias(String pushAlias) {
+        this.pushAlias = pushAlias == null ? null : pushAlias.trim();
+    }
+
+    public Byte getIsUsed() {
+        return isUsed;
+    }
+
+    public void setIsUsed(Byte isUsed) {
+        this.isUsed = isUsed;
     }
 }

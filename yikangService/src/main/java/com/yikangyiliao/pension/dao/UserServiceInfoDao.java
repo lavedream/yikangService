@@ -36,4 +36,14 @@ public interface UserServiceInfoDao {
     List<UserServiceInfo> getPingGuServiceAll();
     
     
+    
+    /**
+     * @author liushuaic
+     * @date 2015/10/14 19:59
+     * @desc 获取评估师，根据评估师id
+     * **/
+    Map<String,Object> getPingGuServicerByUserId(Long userId);
+    
+    
+    
 }

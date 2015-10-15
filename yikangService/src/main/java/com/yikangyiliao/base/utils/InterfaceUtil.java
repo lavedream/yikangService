@@ -212,7 +212,31 @@ public class InterfaceUtil {
 		mathodClassPath.put("00-20-01", "getTimeQuantumsForCustomer");
 		
 		
+		
+		/**
+		 * @author liushuaic
+		 * @date 2015/10/12 15:11
+		 * 预约管理
+		 * **/
+		serviceClassName.put("00-21","appointmentOrderService");
+		mathodClassPath.put("00-21-01", "addPointmentOrder");
+		mathodClassPath.put("00-21-02", "getServiceUserByOrderId");
+		
+		
+		/**
+		 * @author liushuaic
+		 * @date 2015/10/14 20:18
+		 * 服务人员服务
+		 * */
+		serviceClassName.put("00-22","servicerService");
+		mathodClassPath.put("00-22-01","getAssessmentService");
+		
+		
+		
+		
 	}
+	
+	
 	
 	public void loadConfigInterface(String filePath){
         SAXParserFactory factory = SAXParserFactory.newInstance();

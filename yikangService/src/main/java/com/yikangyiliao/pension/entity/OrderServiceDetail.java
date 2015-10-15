@@ -11,6 +11,8 @@ public class OrderServiceDetail {
 
     private Date serviceDate;
 
+    private Long timeQuantumId;
+
     private String appointmentDate;
 
     private String serviceRecord;
@@ -19,9 +21,11 @@ public class OrderServiceDetail {
 
     private Long updateTime;
 
-    private String serviceDetailStatus;
+    private Byte serviceDetailStatus;
 
     private Long orderId;
+
+    private Byte certainServiceUserStatus;
 
     public Long getOrderServiceDetailId() {
         return orderServiceDetailId;
@@ -53,6 +57,14 @@ public class OrderServiceDetail {
 
     public void setServiceDate(Date serviceDate) {
         this.serviceDate = serviceDate;
+    }
+
+    public Long getTimeQuantumId() {
+        return timeQuantumId;
+    }
+
+    public void setTimeQuantumId(Long timeQuantumId) {
+        this.timeQuantumId = timeQuantumId;
     }
 
     public String getAppointmentDate() {
@@ -87,12 +99,12 @@ public class OrderServiceDetail {
         this.updateTime = updateTime;
     }
 
-    public String getServiceDetailStatus() {
+    public Byte getServiceDetailStatus() {
         return serviceDetailStatus;
     }
 
-    public void setServiceDetailStatus(String serviceDetailStatus) {
-        this.serviceDetailStatus = serviceDetailStatus == null ? null : serviceDetailStatus.trim();
+    public void setServiceDetailStatus(Byte serviceDetailStatus){
+        this.serviceDetailStatus = serviceDetailStatus;
     }
 
     public Long getOrderId() {
@@ -101,5 +113,13 @@ public class OrderServiceDetail {
 
     public void setOrderId(Long orderId) {
         this.orderId = orderId;
+    }
+
+    public Byte getCertainServiceUserStatus() {
+        return certainServiceUserStatus;
+    }
+
+    public void setCertainServiceUserStatus(Byte certainServiceUserStatus) {
+        this.certainServiceUserStatus = certainServiceUserStatus;
     }
 }

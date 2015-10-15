@@ -19,7 +19,7 @@ public class OrderServiceDetailManager {
 	/**
 	 * @author liushuaic
 	 * @date 2015/10/10 14:28
-	 * 获取评估师的详记录
+	 * 获取某一个定单的评估人员
 	 * ***/
 	public OrderServiceDetail getEstimateOrderServiceDetailByOrderId(Long orderId){
 		return	orderServiceDetailDao.getEstimateOrderServiceDetailByOrderId(orderId);
@@ -35,5 +35,17 @@ public class OrderServiceDetailManager {
 		return orderServiceDetailDao.updateByPrimaryKeySelective(orderServiceDetail);
 		
 	}
+	
+	
+	/**
+	 * @author liushuaic
+	 * @date 2015/10/12 14:53
+	 * 添加定单详情
+	 * 
+	 * **/
+	public int insertSelective(OrderServiceDetail record){
+		return orderServiceDetailDao.insertSelective(record);
+	}
 
+	
 }

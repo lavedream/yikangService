@@ -82,4 +82,21 @@ public class ExceptionConstants {
 	}
 	
 	
+	
+	/**
+	 * @desc 定单异常
+	 * 04
+	 * */
+	public enum orderException{
+		
+		serviceUserHasBeenSelected("040001","服务人员已经被选择！");
+		
+		public String errorCode;
+		public String errorMessage;
+		private orderException(String errorCode,String errorMessage){
+			this.errorCode=errorCode;
+			this.errorMessage=errorMessage;
+		}
+	}
+	
 }

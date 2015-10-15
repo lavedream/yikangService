@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 import com.yikangyiliao.base.utils.AliasFactory;
 import com.yikangyiliao.pension.common.error.ExceptionConstants;
 import com.yikangyiliao.pension.entity.Device;
-import com.yikangyiliao.pension.entity.User;
 import com.yikangyiliao.pension.entity.UserDeviceTab;
-import com.yikangyiliao.pension.entity.UserInfo;
 import com.yikangyiliao.pension.manager.DeviceManager;
 import com.yikangyiliao.pension.manager.UserManager;
 
@@ -54,15 +52,20 @@ public class DeviceService {
 			
 			String userId=paramData.get("userId").toString();
 			
+			// 修改之前的设备为不 使用的
+			deviceManager.updateDeviceIsUsedIs0ByUserId(Long.valueOf(userId));
+			
 			Device device=new Device();
 			device.setCodeType(codeType);
 			device.setDeviceType(Byte.valueOf(deviceType));
 			device.setDeviceCode(deviceCode);
 			device.setCreateTime(currentDateTime);
 			device.setUpdateTime(currentDateTime);
-			
-			
+			device.setIsUsed((byte)1); //设置为当前使用的
+			device.setPushAlias(AliasFactory.generateAliasByUser(userId));//设置设备别名
 			deviceManager.insertDeviceSelective(device);
+			
+			
 			
 			UserDeviceTab userDeviceTab=new UserDeviceTab();
 			userDeviceTab.setCreateTime(currentDateTime);
@@ -88,21 +91,21 @@ public class DeviceService {
 	/**
 	 * @author liushuaic
 	 * @date 2015/09/16 10:49
-	 * @desc 获取用户的检测别名
+	 * @desc 获取用户的设备别名
 	 * **/
 	public Map<String,Object> getAliasByUser(Map<String,Object> paramData){
 		
 		Map<String,Object> rtnData=new HashMap<String,Object>();
 		
-		String userId=paramData.get("userId").toString();
-		
-		//UserInfo userInfo=userManager.getUserInfoByUserId(Long.valueOf(userId));
-		User user=userManager.selectByPrimaryKey(Long.valueOf(userId));
-		if(null != user){
-			//String alias=AliasFactory.generateAliasByUser(userInfo);
-			String alias=AliasFactory.generateAliasByUser(user);
+		if(null != paramData.get("userId")){
+			String userId=paramData.get("userId").toString();
+			
 			Map<String,String> dataMap=new HashMap<String,String>();
-			dataMap.put("alias", alias);
+			
+			Device device=deviceManager.getIsUsedDeviceByUserId(Long.valueOf(userId));
+			
+			dataMap.put("alias", device.getPushAlias());
+			
 			rtnData.put("data", dataMap);
 			rtnData.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
 			rtnData.put("message", ExceptionConstants.responseSuccess.responseSuccess.message);

@@ -21,7 +21,7 @@ import com.yikangyiliao.pension.entity.UserInfo;
 public class AliasFactory {
 
 	
-	private static String aliasPrefix="message_info";
+	private static String aliasPrefix="message_info_";
 	
 	/**
 	 * @author liushuaic
@@ -56,5 +56,14 @@ public class AliasFactory {
 		
 	}
 	
+	
+	/**
+	 * 根据用户id生成别名
+	 * */
+	public static String generateAliasByUser(String userId){
+		
+		return  aliasPrefix+userId;
+		
+	}
 	
 }

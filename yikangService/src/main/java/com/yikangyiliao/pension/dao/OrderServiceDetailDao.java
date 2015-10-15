@@ -15,5 +15,11 @@ public interface OrderServiceDetailDao {
 
     int updateByPrimaryKey(OrderServiceDetail record);
     
+    
+    /**
+     * @author liushuaic
+     * @date 2015/10/12 11:03
+     * @desc 获取某一个定单的评估人员
+     * */
     OrderServiceDetail getEstimateOrderServiceDetailByOrderId(Long orderId);
 }

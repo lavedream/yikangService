@@ -24,12 +24,16 @@
     <result column="order_number" property="orderNumber" jdbcType="VARCHAR" />
     <result column="data_source" property="dataSource" jdbcType="TINYINT" />
     <result column="data_group" property="dataGroup" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="link_user_name" property="linkUserName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     appointment_order_id, parent_link_address, phone_number, my_phone_number, nick_name, 
     appointment_date_time, time_quanturm_id, start_time, end_time, order_status, provence_code, 
     city_code, district_code, longitude, latitude, detail_address, map_postion_address, 
-    assessment_id, service_count, order_number, data_source, data_group
+    assessment_id, service_count, order_number, data_source, data_group, create_time, 
+    update_time, link_user_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -49,7 +53,8 @@
       city_code, district_code, longitude, 
       latitude, detail_address, map_postion_address, 
       assessment_id, service_count, order_number, 
-      data_source, data_group)
+      data_source, data_group, create_time, 
+      update_time, link_user_name)
     values (#{appointmentOrderId,jdbcType=BIGINT}, #{parentLinkAddress,jdbcType=VARCHAR}, 
       #{phoneNumber,jdbcType=VARCHAR}, #{myPhoneNumber,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
       #{appointmentDateTime,jdbcType=BIGINT}, #{timeQuanturmId,jdbcType=BIGINT}, #{startTime,jdbcType=INTEGER}, 
@@ -57,7 +62,8 @@
       #{cityCode,jdbcType=BIGINT}, #{districtCode,jdbcType=BIGINT}, #{longitude,jdbcType=DOUBLE}, 
       #{latitude,jdbcType=DOUBLE}, #{detailAddress,jdbcType=VARCHAR}, #{mapPostionAddress,jdbcType=VARCHAR}, 
       #{assessmentId,jdbcType=BIGINT}, #{serviceCount,jdbcType=INTEGER}, #{orderNumber,jdbcType=VARCHAR}, 
-      #{dataSource,jdbcType=TINYINT}, #{dataGroup,jdbcType=TINYINT})
+      #{dataSource,jdbcType=TINYINT}, #{dataGroup,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{linkUserName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yikangyiliao.pension.entity.AppointmentOrder" >
     insert into appointment_orders
@@ -128,6 +134,15 @@
       <if test="dataGroup != null" >
         data_group,
       </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="linkUserName != null" >
+        link_user_name,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="appointmentOrderId != null" >
@@ -195,6 +210,15 @@
       </if>
       <if test="dataGroup != null" >
         #{dataGroup,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="linkUserName != null" >
+        #{linkUserName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -264,6 +288,15 @@
       <if test="dataGroup != null" >
         data_group = #{dataGroup,jdbcType=TINYINT},
       </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="linkUserName != null" >
+        link_user_name = #{linkUserName,jdbcType=VARCHAR},
+      </if>
     </set>
     where appointment_order_id = #{appointmentOrderId,jdbcType=BIGINT}
   </update>
@@ -289,7 +322,10 @@
       service_count = #{serviceCount,jdbcType=INTEGER},
       order_number = #{orderNumber,jdbcType=VARCHAR},
       data_source = #{dataSource,jdbcType=TINYINT},
-      data_group = #{dataGroup,jdbcType=TINYINT}
+      data_group = #{dataGroup,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      link_user_name = #{linkUserName,jdbcType=VARCHAR}
     where appointment_order_id = #{appointmentOrderId,jdbcType=BIGINT}
   </update>
   
@@ -300,18 +336,6 @@
   	update appointment_orders set order_status=#{orderStatus}
   	where appointment_order_id = #{appointmentOrderId,jdbcType=BIGINT}
   </update>
-  
-  
-  <!-- 查询某一个订单的服务人员 -->
-  <select id="getUserServiceInfoByOrderId" parameterType="long" resultType="map">
-  	select 
-  		usi.* 
-  	from order_service_details ssd 
-	inner join user_service_infos usi on ssd.service_user_id=usi.user_id
-	where ssd.order_id=#{orderId}
-  </select>
-  
-  
   
   
   

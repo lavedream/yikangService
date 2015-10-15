@@ -108,5 +108,13 @@ public class UserManager {
 	public List<UserServiceInfo> getPingGuServiceAll(){
     	return userServiceInfoDao.getPingGuServiceAll();
     }
-	
+
+	 /**
+    * @author liushuaic
+    * @date 2015/10/14 20:03 
+    * @desc 获取某一个评估人员
+    * */
+	public Map<String,Object> getPingGuServicerByUserId(Long userId){
+		return userServiceInfoDao.getPingGuServicerByUserId(userId);
+	}
 }

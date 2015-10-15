@@ -222,4 +222,17 @@
 	where us.job_category=0
   </select>
   
+  
+  <!--  获取某一个评估师-->
+  <select id="getPingGuServicerByUserId" resultType="map" parameterType="long">
+  	select 
+  			us.user_id		  	as userId,
+  			'无'					as 'desc',
+			us.photo_url		as photoUrl, 
+			us.user_service_name as userServiceName
+  	from  user_service_infos us
+  	where user_id=#{userId}
+	where us.job_category=0
+  </select>
+  
 </mapper>

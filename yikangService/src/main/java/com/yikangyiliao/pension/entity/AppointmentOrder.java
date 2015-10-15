@@ -1,5 +1,7 @@
 package com.yikangyiliao.pension.entity;
 
+import java.util.Date;
+
 public class AppointmentOrder {
     private Long appointmentOrderId;
 
@@ -44,6 +46,12 @@ public class AppointmentOrder {
     private Byte dataSource;
 
     private Byte dataGroup;
+
+    private Date createTime;
+
+    private Date updateTime;
+
+    private String linkUserName;
 
     public Long getAppointmentOrderId() {
         return appointmentOrderId;
@@ -219,5 +227,29 @@ public class AppointmentOrder {
 
     public void setDataGroup(Byte dataGroup) {
         this.dataGroup = dataGroup;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getLinkUserName() {
+        return linkUserName;
+    }
+
+    public void setLinkUserName(String linkUserName) {
+        this.linkUserName = linkUserName == null ? null : linkUserName.trim();
     }
 }
