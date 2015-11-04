@@ -1,7 +1,5 @@
 package com.yikangyiliao.pension.entity;
 
-import java.util.Date;
-
 public class AppointmentOrder {
     private Long appointmentOrderId;
 
@@ -17,9 +15,9 @@ public class AppointmentOrder {
 
     private Long timeQuanturmId;
 
-    private Integer startTime;
+    private String startTime;
 
-    private Integer endTime;
+    private String endTime;
 
     private Integer orderStatus;
 
@@ -47,11 +45,13 @@ public class AppointmentOrder {
 
     private Byte dataGroup;
 
-    private Date createTime;
+    private Long createTime;
 
-    private Date updateTime;
+    private Long updateTime;
 
     private String linkUserName;
+
+    private String address;
 
     public Long getAppointmentOrderId() {
         return appointmentOrderId;
@@ -109,20 +109,20 @@ public class AppointmentOrder {
         this.timeQuanturmId = timeQuanturmId;
     }
 
-    public Integer getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Integer startTime) {
-        this.startTime = startTime;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime == null ? null : startTime.trim();
     }
 
-    public Integer getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Integer endTime) {
-        this.endTime = endTime;
+    public void setEndTime(String endTime) {
+        this.endTime = endTime == null ? null : endTime.trim();
     }
 
     public Integer getOrderStatus() {
@@ -229,19 +229,19 @@ public class AppointmentOrder {
         this.dataGroup = dataGroup;
     }
 
-    public Date getCreateTime() {
+    public Long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(Long createTime) {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
+    public Long getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
     }
 
@@ -251,5 +251,13 @@ public class AppointmentOrder {
 
     public void setLinkUserName(String linkUserName) {
         this.linkUserName = linkUserName == null ? null : linkUserName.trim();
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address == null ? null : address.trim();
     }
 }

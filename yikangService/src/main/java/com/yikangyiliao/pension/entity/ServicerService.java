@@ -44,11 +44,19 @@ public class ServicerService {
 			&& null != paramData.get("custumerTimeQuantumId")
 		){
 			
-			Map<String,Object> pingGuData=userManager.getPingGuServicerByUserId(28l);
+			Map<String,Object> pingGuData=userManager.getPingGuServicerByUserId(18l);
 			
-			rtnMap.put("data", pingGuData);
-			rtnMap.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
-			rtnMap.put("message", ExceptionConstants.responseSuccess.responseSuccess.message);
+			
+			if(pingGuData==null ){
+				rtnMap.put("status", ExceptionConstants.servicerException.servicerNoBady.errorCode);
+				rtnMap.put("message", ExceptionConstants.servicerException.servicerNoBady.errorMessage);
+			}else{
+				rtnMap.put("data", pingGuData);
+				rtnMap.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
+				rtnMap.put("message", ExceptionConstants.responseSuccess.responseSuccess.message);
+			}
+			
+
 		}else{
 			rtnMap.put( "status", ExceptionConstants.parameterException.parameterException.errorCode);
 			rtnMap.put( "message", ExceptionConstants.parameterException.parameterException.errorMessage);

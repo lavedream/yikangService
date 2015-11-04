@@ -221,6 +221,7 @@ public class InterfaceUtil {
 		serviceClassName.put("00-21","appointmentOrderService");
 		mathodClassPath.put("00-21-01", "addPointmentOrder");
 		mathodClassPath.put("00-21-02", "getServiceUserByOrderId");
+		mathodClassPath.put("00-21-03", "addPointmentOrderAndSubmitAssessment");
 		
 		
 		/**

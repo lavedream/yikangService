@@ -99,4 +99,25 @@ public class ExceptionConstants {
 		}
 	}
 	
+	
+	/**
+	 * 服务人员相关异常
+	 * 04
+	 * */
+	public enum servicerException{
+		
+		servicerNoBady("050001","没有服务人员！");
+		
+		
+		public String errorCode;
+		public String errorMessage;
+		
+		
+		private servicerException(String errorCode,String errorMessage){
+			this.errorCode=errorCode;
+			this.errorMessage=errorMessage;
+		}
+		
+	}
+	
 }

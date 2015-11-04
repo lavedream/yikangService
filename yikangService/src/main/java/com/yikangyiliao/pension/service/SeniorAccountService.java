@@ -17,9 +17,11 @@ import com.yikangyiliao.pension.common.constants.YKConstants;
 import com.yikangyiliao.pension.dao.OperateServiceLogDao;
 import com.yikangyiliao.pension.dao.SeniorAccountDao;
 import com.yikangyiliao.pension.dao.SeniorLivingConditionDao;
+import com.yikangyiliao.pension.entity.Location;
 import com.yikangyiliao.pension.entity.OperateServiceLog;
 import com.yikangyiliao.pension.entity.SeniorAccount;
 import com.yikangyiliao.pension.entity.SeniorLivingCondition;
+import com.yikangyiliao.pension.manager.LocationManager;
 
 /**
  * @author liushuaic
@@ -44,6 +46,10 @@ public class SeniorAccountService {
 	@Autowired
 	private SeniorLivingConditionDao seniorLivingConditionDao;
 
+	@Autowired
+	private LocationManager locationManager;
+	
+	
 	/**
 	 * @author liushuaic
 	 * @date 2015/07/28 10:45
@@ -113,15 +119,17 @@ public class SeniorAccountService {
 				}
 				
 				
-				if(paramData.containsKey("city")){
-					String city = paramData.get("city").toString();
-					seniorLivingCondition.setCity(city);
-				}
+//				if(paramData.containsKey("city")){
+//					String city = paramData.get("city").toString();
+//					seniorLivingCondition.setCity(city);
+//				}
 				
 				
 				if(paramData.containsKey("district")){
 					String district = paramData.get("district").toString();
 					seniorLivingCondition.setDistrict(district);
+					Location location=locationManager.getCityByDistrictCode(district);
+					seniorLivingCondition.setCity(location.getAdministrativeCode());
 				}
 				if(paramData.containsKey("floor")){
 					String floor = paramData.get("floor").toString();

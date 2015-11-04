@@ -9,8 +9,8 @@
     <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
     <result column="appointment_date_time" property="appointmentDateTime" jdbcType="BIGINT" />
     <result column="time_quanturm_id" property="timeQuanturmId" jdbcType="BIGINT" />
-    <result column="start_time" property="startTime" jdbcType="INTEGER" />
-    <result column="end_time" property="endTime" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="VARCHAR" />
+    <result column="end_time" property="endTime" jdbcType="VARCHAR" />
     <result column="order_status" property="orderStatus" jdbcType="INTEGER" />
     <result column="provence_code" property="provenceCode" jdbcType="BIGINT" />
     <result column="city_code" property="cityCode" jdbcType="BIGINT" />
@@ -24,16 +24,17 @@
     <result column="order_number" property="orderNumber" jdbcType="VARCHAR" />
     <result column="data_source" property="dataSource" jdbcType="TINYINT" />
     <result column="data_group" property="dataGroup" jdbcType="TINYINT" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="BIGINT" />
     <result column="link_user_name" property="linkUserName" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     appointment_order_id, parent_link_address, phone_number, my_phone_number, nick_name, 
     appointment_date_time, time_quanturm_id, start_time, end_time, order_status, provence_code, 
     city_code, district_code, longitude, latitude, detail_address, map_postion_address, 
     assessment_id, service_count, order_number, data_source, data_group, create_time, 
-    update_time, link_user_name
+    update_time, link_user_name, address
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -54,18 +55,26 @@
       latitude, detail_address, map_postion_address, 
       assessment_id, service_count, order_number, 
       data_source, data_group, create_time, 
-      update_time, link_user_name)
+      update_time, link_user_name, address
+      )
     values (#{appointmentOrderId,jdbcType=BIGINT}, #{parentLinkAddress,jdbcType=VARCHAR}, 
       #{phoneNumber,jdbcType=VARCHAR}, #{myPhoneNumber,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
-      #{appointmentDateTime,jdbcType=BIGINT}, #{timeQuanturmId,jdbcType=BIGINT}, #{startTime,jdbcType=INTEGER}, 
-      #{endTime,jdbcType=INTEGER}, #{orderStatus,jdbcType=INTEGER}, #{provenceCode,jdbcType=BIGINT}, 
+      #{appointmentDateTime,jdbcType=BIGINT}, #{timeQuanturmId,jdbcType=BIGINT}, #{startTime,jdbcType=VARCHAR}, 
+      #{endTime,jdbcType=VARCHAR}, #{orderStatus,jdbcType=INTEGER}, #{provenceCode,jdbcType=BIGINT}, 
       #{cityCode,jdbcType=BIGINT}, #{districtCode,jdbcType=BIGINT}, #{longitude,jdbcType=DOUBLE}, 
       #{latitude,jdbcType=DOUBLE}, #{detailAddress,jdbcType=VARCHAR}, #{mapPostionAddress,jdbcType=VARCHAR}, 
       #{assessmentId,jdbcType=BIGINT}, #{serviceCount,jdbcType=INTEGER}, #{orderNumber,jdbcType=VARCHAR}, 
-      #{dataSource,jdbcType=TINYINT}, #{dataGroup,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{linkUserName,jdbcType=VARCHAR})
+      #{dataSource,jdbcType=TINYINT}, #{dataGroup,jdbcType=TINYINT}, #{createTime,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=BIGINT}, #{linkUserName,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.yikangyiliao.pension.entity.AppointmentOrder" >
+  
+  
+    <selectKey resultType="Long" keyProperty="appointmentOrderId" order="AFTER">
+		SELECT LAST_INSERT_ID()
+	</selectKey>
+  
     insert into appointment_orders
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="appointmentOrderId != null" >
@@ -143,6 +152,9 @@
       <if test="linkUserName != null" >
         link_user_name,
       </if>
+      <if test="address != null" >
+        address,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="appointmentOrderId != null" >
@@ -167,10 +179,10 @@
         #{timeQuanturmId,jdbcType=BIGINT},
       </if>
       <if test="startTime != null" >
-        #{startTime,jdbcType=INTEGER},
+        #{startTime,jdbcType=VARCHAR},
       </if>
       <if test="endTime != null" >
-        #{endTime,jdbcType=INTEGER},
+        #{endTime,jdbcType=VARCHAR},
       </if>
       <if test="orderStatus != null" >
         #{orderStatus,jdbcType=INTEGER},
@@ -212,13 +224,16 @@
         #{dataGroup,jdbcType=TINYINT},
       </if>
       <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
+        #{createTime,jdbcType=BIGINT},
       </if>
       <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
+        #{updateTime,jdbcType=BIGINT},
       </if>
       <if test="linkUserName != null" >
         #{linkUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -244,10 +259,10 @@
         time_quanturm_id = #{timeQuanturmId,jdbcType=BIGINT},
       </if>
       <if test="startTime != null" >
-        start_time = #{startTime,jdbcType=INTEGER},
+        start_time = #{startTime,jdbcType=VARCHAR},
       </if>
       <if test="endTime != null" >
-        end_time = #{endTime,jdbcType=INTEGER},
+        end_time = #{endTime,jdbcType=VARCHAR},
       </if>
       <if test="orderStatus != null" >
         order_status = #{orderStatus,jdbcType=INTEGER},
@@ -289,13 +304,16 @@
         data_group = #{dataGroup,jdbcType=TINYINT},
       </if>
       <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
+        create_time = #{createTime,jdbcType=BIGINT},
       </if>
       <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=BIGINT},
       </if>
       <if test="linkUserName != null" >
         link_user_name = #{linkUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
       </if>
     </set>
     where appointment_order_id = #{appointmentOrderId,jdbcType=BIGINT}
@@ -308,8 +326,8 @@
       nick_name = #{nickName,jdbcType=VARCHAR},
       appointment_date_time = #{appointmentDateTime,jdbcType=BIGINT},
       time_quanturm_id = #{timeQuanturmId,jdbcType=BIGINT},
-      start_time = #{startTime,jdbcType=INTEGER},
-      end_time = #{endTime,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=VARCHAR},
+      end_time = #{endTime,jdbcType=VARCHAR},
       order_status = #{orderStatus,jdbcType=INTEGER},
       provence_code = #{provenceCode,jdbcType=BIGINT},
       city_code = #{cityCode,jdbcType=BIGINT},
@@ -323,9 +341,10 @@
       order_number = #{orderNumber,jdbcType=VARCHAR},
       data_source = #{dataSource,jdbcType=TINYINT},
       data_group = #{dataGroup,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      link_user_name = #{linkUserName,jdbcType=VARCHAR}
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      link_user_name = #{linkUserName,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR}
     where appointment_order_id = #{appointmentOrderId,jdbcType=BIGINT}
   </update>
   

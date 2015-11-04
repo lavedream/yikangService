@@ -34,6 +34,9 @@
       #{pushAlias,jdbcType=VARCHAR}, #{isUsed,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.yikangyiliao.pension.entity.Device" >
+    <selectKey resultType="Long" keyProperty="userId" order="AFTER">
+		SELECT LAST_INSERT_ID()
+	</selectKey>
     insert into devices
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="deviceId != null" >
@@ -138,7 +141,7 @@
   <!-- 查询某一个用户，现在使用的 设备 -->
   <select id="getIsUsedDeviceByUserId" resultMap="BaseResultMap" parameterType="long">
   	select 
-	<include refid="Base_Column_List"></include>
+	 devices.*
 	from devices inner join user_device_tabs on devices.device_id=user_device_tabs.device_id 
 		where devices.is_used=1 and user_device_tabs.user_id=#{userId}
   </select>

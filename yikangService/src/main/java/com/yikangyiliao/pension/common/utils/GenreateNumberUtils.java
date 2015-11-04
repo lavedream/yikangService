@@ -5,6 +5,7 @@ import java.util.Calendar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.yikangyiliao.base.utils.DateUtils;
 import com.yikangyiliao.pension.dao.GenerateNumberDao;
 import com.yikangyiliao.pension.entity.GenerateNumber;
 
@@ -45,6 +46,28 @@ public class GenreateNumberUtils {
 		
 		generateNumberDao.insert(generateNumber);
 		return  accountString+"-"+scaleName+"-"+maxNumber;
+	}
+	
+	public String generateAppointmentOrderNumber(){
+		
+		Integer maxNumber=generateNumberDao.selectMaxOrderNumberByGenerateTable("appointmentOrders");
+		
+		if(null == maxNumber){
+			maxNumber=0;
+		}
+		maxNumber=maxNumber+1;
+		Long currentDateTime=Calendar.getInstance().getTime().getTime();
+		GenerateNumber generateNumber=new GenerateNumber(); 
+		
+		generateNumber.setCreateTime(currentDateTime);
+		generateNumber.setGenerateTable("assessments");
+		generateNumber.setOrderNumber(maxNumber.longValue());
+		
+		generateNumberDao.insert(generateNumber);
+		
+		
+		return  "-"+DateUtils.getFormateCurrenteDateStr()+"-"+maxNumber;
+		
 	}
 	
 	
