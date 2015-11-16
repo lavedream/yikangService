@@ -27,6 +27,10 @@ public class OrderServiceDetail {
 
     private Byte certainServiceUserStatus;
 
+    private Long serviceItemId;
+
+    private String feedback;
+
     public Long getOrderServiceDetailId() {
         return orderServiceDetailId;
     }
@@ -103,7 +107,7 @@ public class OrderServiceDetail {
         return serviceDetailStatus;
     }
 
-    public void setServiceDetailStatus(Byte serviceDetailStatus){
+    public void setServiceDetailStatus(Byte serviceDetailStatus) {
         this.serviceDetailStatus = serviceDetailStatus;
     }
 
@@ -121,5 +125,21 @@ public class OrderServiceDetail {
 
     public void setCertainServiceUserStatus(Byte certainServiceUserStatus) {
         this.certainServiceUserStatus = certainServiceUserStatus;
+    }
+
+    public Long getServiceItemId() {
+        return serviceItemId;
+    }
+
+    public void setServiceItemId(Long serviceItemId) {
+        this.serviceItemId = serviceItemId;
+    }
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback == null ? null : feedback.trim();
     }
 }

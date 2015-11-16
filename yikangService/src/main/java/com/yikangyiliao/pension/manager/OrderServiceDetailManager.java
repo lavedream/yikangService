@@ -1,5 +1,9 @@
 package com.yikangyiliao.pension.manager;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -47,5 +51,52 @@ public class OrderServiceDetailManager {
 		return orderServiceDetailDao.insertSelective(record);
 	}
 
+	
+	
+	/**
+	 * @author liushuaic
+	 * @date 2015/11/13 16:39
+	 * @desc 查询我的服务日程
+	 * **/
+	public List<Map<String,Object>> getMyServiceScheduleByUserIdServiceDetailId(Long serviceUserId,Long orderServiceDetailId){
+		
+		Map<String,Object> paramData=new HashMap<String,Object>();
+		paramData.put("serviceUserId", serviceUserId);
+		paramData.put("orderServiceDetailId", orderServiceDetailId);
+		
+		return orderServiceDetailDao.getMyServiceScheduleByUserIdServiceDetailId(paramData);
+	}
+	
+	
+	/**
+	 * @author liushuaic
+     * @date 2015/10/12 11:03
+     * @desc
+     * 修改定单反馈，状态为反馈完成，已结束
+	 * */
+	public void updateFeedbackDetailStatus5FeedBackByOrderIdAndServiceUserId(String feedback,Long serviceUserId,Long orderId){
+		Map<String,Object> paramData=new HashMap<String,Object>();
+		paramData.put("serviceUserId", serviceUserId);
+		paramData.put("feedback", feedback);
+		paramData.put("orderId",  orderId);
+		orderServiceDetailDao.updateFeedbackDetailStatus5FeedBackByOrderIdAndServiceUserId(paramData);
+	}
+	
+	
+	
+	/**
+	 * @author liushuaic
+	 * @date 2015/11/16 10:56
+	 * @desc 
+	 * 查询某一个日程的详情
+	 * @param orderServiceDetailId
+     * @param serviceUserId
+	 * **/
+	public Map<String,Object> getOrderServiceDetailByOrderServiceDetailIdAndUserId(Long orderServiceDetailId,Long serviceUserId){
+		Map<String,Object> paramData=new HashMap<String,Object>();
+		paramData.put("orderServiceDetailId", orderServiceDetailId);
+		paramData.put("serviceUserId", serviceUserId);
+		return orderServiceDetailDao.getOrderServiceDetailByOrderServiceDetailIdAndUserId(paramData);
+	}
 	
 }

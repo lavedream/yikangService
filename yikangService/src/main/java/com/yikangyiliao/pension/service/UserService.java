@@ -13,8 +13,10 @@ import com.yikangyiliao.pension.common.utils.map.MapUtils;
 import com.yikangyiliao.pension.common.utils.map.model.GeoCodeModel;
 import com.yikangyiliao.pension.entity.Location;
 import com.yikangyiliao.pension.entity.User;
+import com.yikangyiliao.pension.entity.UserFrom;
 import com.yikangyiliao.pension.entity.UserServiceInfo;
 import com.yikangyiliao.pension.manager.LocationManager;
+import com.yikangyiliao.pension.manager.UserFromManager;
 import com.yikangyiliao.pension.manager.UserManager;
 
 
@@ -29,6 +31,10 @@ public class UserService {
 	private LocationManager locationManager;
 	
 	
+	@Autowired
+	private UserFromManager userFromManager;
+	
+	
 	/**
 	 * @author liushuaic
 	 * @date 2015/08/25 17:44 
@@ -37,7 +43,7 @@ public class UserService {
 	public Map<String,Object> saveRegisterUserAndSaveServiceInfo(Map<String,Object> paramData){
 		Map<String,Object> rtnData=new HashMap<String,Object>();
 		if(
-			paramData.containsKey("loginName")
+			  paramData.containsKey("loginName")
 			&&paramData.containsKey("passWord")
 			&&paramData.containsKey("userName")
 			&&paramData.containsKey("userPosition") //职位
@@ -45,6 +51,7 @@ public class UserService {
 			&&paramData.containsKey("districtCode")
 			&&paramData.containsKey("addressDetail")
 			&&paramData.containsKey("photoUrl")
+			&&paramData.containsKey("mapPositionAddress")
 			){
 			String loginName=paramData.get("loginName").toString();
 			User u=userManager.getUserByLoginName(loginName);
@@ -59,7 +66,8 @@ public class UserService {
 				String districtCode=paramData.get("districtCode").toString();
 				String addressDetail=paramData.get("addressDetail").toString();
 				String photoUrl=paramData.get("photoUrl").toString();
-				
+				String mapPositionAddress=paramData.get("mapPositionAddress").toString();
+			
 				User user=new User();
 				user.setUserName(userName);
 				user.setLoginName(loginName);
@@ -84,6 +92,19 @@ public class UserService {
 				userServiceInfo.setIsDelete(Byte.valueOf("0"));
 				userServiceInfo.setUserServiceName(userName);
 				
+				
+				if(paramData.containsKey("hospital")){
+					String hospital=paramData.get("hospital").toString();
+					userServiceInfo.setHospital(hospital);
+				}
+				if(paramData.containsKey("offices")){
+					userServiceInfo.setOffices(paramData.get("offices").toString());
+				}
+				if(paramData.containsKey("adept")){
+					userServiceInfo.setAdept(paramData.get("adept").toString());
+				}
+				
+				
 				// 反推一下，用户用户地址
 				
 				String address="";
@@ -92,8 +113,8 @@ public class UserService {
 				Location provence=locationManager.getProvenceByCityCode(districtCode);
 				userServiceInfo.setCityCode(Long.valueOf(city.getAdministrativeCode()));
 				userServiceInfo.setProvenceCode(Long.valueOf(provence.getAdministrativeCode()));
+				userServiceInfo.setMapPositionAddress(mapPositionAddress);
 				
-				address=provence.getName()+city.getName()+district.getName()+addressDetail;
 				 //设置经纬度
 				if(address.length()>0){
 					 try {
@@ -116,6 +137,19 @@ public class UserService {
 				
 				
 				userManager.insertUserServiceSelective(userServiceInfo);
+				
+				if(paramData.containsKey("invitationCode")){
+					UserFrom userFrom=new UserFrom();
+					userFrom.setUserId(user.getUserId());
+					userFrom.setFromUrl("");
+					userFrom.setInvitationCode(Integer.valueOf(paramData.get("invitationCode").toString()));
+					userFrom.setCreateTime(currentDateTime);
+					userFrom.setUpdateTime(currentDateTime);
+					//设置为用户注册
+					userFrom.setUserFrom("5");
+					userFromManager.insertSelective(userFrom);
+				}
+				
 				rtnData.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
 				rtnData.put("message", ExceptionConstants.responseSuccess.responseSuccess.message);
 			}else{

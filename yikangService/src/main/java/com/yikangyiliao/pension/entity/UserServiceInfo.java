@@ -31,6 +31,14 @@ public class UserServiceInfo {
 
     private Double latitude;
 
+    private String mapPositionAddress;
+
+    private String hospital;
+
+    private String offices;
+
+    private String adept;
+
     public Long getUserServiceInfoId() {
         return userServiceInfoId;
     }
@@ -149,5 +157,37 @@ public class UserServiceInfo {
 
     public void setLatitude(Double latitude) {
         this.latitude = latitude;
+    }
+
+    public String getMapPositionAddress() {
+        return mapPositionAddress;
+    }
+
+    public void setMapPositionAddress(String mapPositionAddress) {
+        this.mapPositionAddress = mapPositionAddress == null ? null : mapPositionAddress.trim();
+    }
+
+    public String getHospital() {
+        return hospital;
+    }
+
+    public void setHospital(String hospital) {
+        this.hospital = hospital == null ? null : hospital.trim();
+    }
+
+    public String getOffices() {
+        return offices;
+    }
+
+    public void setOffices(String offices) {
+        this.offices = offices == null ? null : offices.trim();
+    }
+
+    public String getAdept() {
+        return adept;
+    }
+
+    public void setAdept(String adept) {
+        this.adept = adept == null ? null : adept.trim();
     }
 }

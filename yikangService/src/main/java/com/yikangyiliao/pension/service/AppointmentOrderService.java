@@ -16,10 +16,14 @@ import com.yikangyiliao.pension.common.utils.map.MapUtils;
 import com.yikangyiliao.pension.common.utils.map.model.GeoCodeModel;
 import com.yikangyiliao.pension.entity.AppointmentOrder;
 import com.yikangyiliao.pension.entity.OrderServiceDetail;
+import com.yikangyiliao.pension.entity.SeniorAccount;
+import com.yikangyiliao.pension.entity.SeniorLivingCondition;
 import com.yikangyiliao.pension.entity.TimeQuantum;
 import com.yikangyiliao.pension.entity.UserServiceInfo;
 import com.yikangyiliao.pension.manager.AppointmentOrderManager;
 import com.yikangyiliao.pension.manager.OrderServiceDetailManager;
+import com.yikangyiliao.pension.manager.SeniorAccountManager;
+import com.yikangyiliao.pension.manager.SeniorLivinConditionManager;
 import com.yikangyiliao.pension.manager.TimeQuantumManager;
 import com.yikangyiliao.pension.schedule.PersonnelDistribution;
 
@@ -34,38 +38,36 @@ public class AppointmentOrderService {
 	@Autowired
 	private OrderServiceDetailManager orderServiceDetailManager;
 	
-	
 	@Autowired
 	private PersonnelDistribution personnelDistribution;
 	
 	@Autowired
 	private TimeQuantumManager timeQuantumManager;
 	
-	
 	@Autowired
 	private GenreateNumberUtils genreateNumberUtils;
+	
+	@Autowired
+	private SeniorAccountManager seniorAccountManager;
+	
+	@Autowired
+	private SeniorLivinConditionManager seniorLivinConditionManager;
+	
 	
 	
 	public Map<String,Object> addPointmentOrder(Map<String,Object> param) throws ParseException, InterruptedException{
 		
 		Map<String,Object> rtnMap=new HashMap<String,Object>();
 		if(	
-			   //null != param.get("parentLinkAddress")
 			 null != param.get("phoneNumber")
-			//&& null != param.get("myPhoneNumber")
 			&& null != param.get("nickName")
 			&& null != param.get("appointmentDateTime")
 			&& null != param.get("timeQuantumId")
 			&& null != param.get("startTime")
 			&& null != param.get("endTime")
-//			&& null != param.get("provenceCode")
-//			&& null != param.get("cityCode")
 			&& null != param.get("districtCode")
-			//&& null != param.get("longitude")
-			//&& null != param.get("latitude")
 			&& null != param.get("detailAddress")
 			&& null != param.get("mapPostionAddress")
-//			&& null != param.get("serviceCount")
 			&& null != param.get("dataSource")
 			&& null != param.get("dataGroup")
 			&& null != param.get("linkUserName")
@@ -206,6 +208,7 @@ public class AppointmentOrderService {
 					 String dataSource			=  param.get("dataSource").toString();
 					 String dataGroup			=  param.get("dataGroup").toString();
 					 String linkUserName		=  param.get("linkUserName").toString();
+					 String userId				=  param.get("userId").toString();
 					 
 					 appointmentOrder.setParentLinkAddress("");
 					 appointmentOrder.setPhoneNumber(phoneNumber);
@@ -240,7 +243,8 @@ public class AppointmentOrderService {
 					 
 					 // 生成订单编号
 					 appointmentOrder.setOrderNumber(genreateNumberUtils.generateAppointmentOrderNumber());
-					 
+					 double log=0;
+					 double lat=0;
 					 //设置经纬度
 					 try {
 						 GeoCodeModel geoCodeModel=MapUtils.getGeoCodeModelByAddress(detailAddress, null);
@@ -249,6 +253,10 @@ public class AppointmentOrderService {
 							 String lngLatStr=geoCodeModel.getGeocodes().get(0).getLocation();
 							 String lngStr=lngLatStr.split(",")[0];
 							 String latStr=lngLatStr.split(",")[1];
+							 
+							 log=Double.valueOf(lngStr);
+							 lat=Double.valueOf(latStr);
+							 
 							 appointmentOrder.setLongitude(Double.valueOf(lngStr));
 							 appointmentOrder.setLatitude(Double.valueOf(latStr));
 						 }
@@ -290,6 +298,25 @@ public class AppointmentOrderService {
 					 orderServiceDetail.setServiceRecord("");
 					 
 					 orderServiceDetailManager.insertSelective(orderServiceDetail);
+					 
+					 
+					 
+					 SeniorAccount seniorAccount=new SeniorAccount();
+					 //设置创建用户
+					 seniorAccount.setCreateUserId(Long.valueOf(userId));
+					 seniorAccount.setCreateTime(currentDateTimeMillis);
+					 seniorAccount.setPhoneNo(phoneNumber);
+					 seniorAccount.setName(linkUserName); //设置患者名称
+					 
+					 seniorAccountManager.insertSelective(seniorAccount);
+					 
+					 SeniorLivingCondition seniorLivingCondition=new SeniorLivingCondition();
+					 seniorLivingCondition.setLongitude(log);
+					 seniorLivingCondition.setLatitude(lat);
+					 seniorLivingCondition.setDistrict(districtCode);
+					 
+					 seniorLivinConditionManager.insertSelective(seniorLivingCondition);
+					 
 					 
 					 Map<String,Object> rtnData=new HashMap<String, Object>();
 					 
@@ -387,5 +414,49 @@ public class AppointmentOrderService {
 	
 	}
 	
+	/**
+	 * @author liushuaic
+	 * @date 2015/11/15 15:27
+	 * @desc 保存反馈
+	 * */
+	public Map<String,Object> saveFeedback(Map<String,Object> paramData){
+		Map<String,Object> rtnMap=new HashMap<String,Object>();
+		if(	paramData.containsKey("feedback")
+			&& paramData.containsKey("orderId")
+				){
+			String feedback=paramData.get("feedback").toString();
+			String orderId=paramData.get("orderId").toString();
+			String userId=paramData.get("userId").toString();
+			orderServiceDetailManager.updateFeedbackDetailStatus5FeedBackByOrderIdAndServiceUserId(
+					feedback, Long.valueOf(userId), Long.valueOf(orderId));
+		}else{
+			rtnMap.put("status", ExceptionConstants.parameterException.parameterException.errorCode);
+			rtnMap.put("message", ExceptionConstants.parameterException.parameterException.errorMessage);
+		}
+		return rtnMap;
+	}
+	
+	
+	/**
+	 * @author liushuaic
+	 * @date 2015/11/16 11:09
+	 * @desc 查询订单详情
+	 * */
+	public Map<String,Object> getOrderServiceDetailById(Map<String,Object> paramData){
+		Map<String,Object> rtnMap=new HashMap<String,Object>();
+		
+		if(  paramData.containsKey("orderServiceDetailId")
+			&& paramData.containsKey("serviceUserId")
+		 ){
+			Long orderServiceDetailId=Long.valueOf(paramData.get("orderServiceDetailId").toString());
+			Long serviceUserId=Long.valueOf(paramData.get("userId").toString());
+			orderServiceDetailManager.getOrderServiceDetailByOrderServiceDetailIdAndUserId(orderServiceDetailId,serviceUserId);
+		}else{
+			rtnMap.put("status", ExceptionConstants.parameterException.parameterException.errorCode);
+			rtnMap.put("message", ExceptionConstants.parameterException.parameterException.errorMessage);
+		}
+		
+		return rtnMap;
+	}
 	
 }

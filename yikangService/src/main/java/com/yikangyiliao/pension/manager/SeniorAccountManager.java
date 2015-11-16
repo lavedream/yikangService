@@ -29,4 +29,14 @@ public class SeniorAccountManager {
 		return seniorAccountDao.selectByPrimaryKey(seniorId);
 	}
 
+	
+	/**
+	 * @author liushuaic
+	 * @date 2015/08/13 15:48
+	 * @desc 添加患者
+	 * */
+	public int insertSelective(SeniorAccount record){
+		return seniorAccountDao.insert(record);
+	}
+	
 }

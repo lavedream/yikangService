@@ -17,11 +17,15 @@
     <result column="user_service_name" property="userServiceName" jdbcType="VARCHAR" />
     <result column="longitude" property="longitude" jdbcType="DOUBLE" />
     <result column="latitude" property="latitude" jdbcType="DOUBLE" />
+    <result column="map_position_address" property="mapPositionAddress" jdbcType="VARCHAR" />
+    <result column="hospital" property="hospital" jdbcType="VARCHAR" />
+    <result column="offices" property="offices" jdbcType="VARCHAR" />
+    <result column="adept" property="adept" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     user_service_info_id, user_id, job_category, user_postion, provence_code, city_code, 
     district_code, address_detail, photo_url, create_time, update_time, is_delete, user_service_name, 
-    longitude, latitude
+    longitude, latitude, map_position_address, hospital, offices, adept
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -38,14 +42,16 @@
       user_postion, provence_code, city_code, 
       district_code, address_detail, photo_url, 
       create_time, update_time, is_delete, 
-      user_service_name, longitude, latitude
-      )
+      user_service_name, longitude, latitude, 
+      map_position_address, hospital, offices, 
+      adept)
     values (#{userServiceInfoId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{jobCategory,jdbcType=BIGINT}, 
       #{userPostion,jdbcType=BIGINT}, #{provenceCode,jdbcType=BIGINT}, #{cityCode,jdbcType=BIGINT}, 
       #{districtCode,jdbcType=BIGINT}, #{addressDetail,jdbcType=VARCHAR}, #{photoUrl,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, #{isDelete,jdbcType=TINYINT}, 
-      #{userServiceName,jdbcType=VARCHAR}, #{longitude,jdbcType=DOUBLE}, #{latitude,jdbcType=DOUBLE}
-      )
+      #{userServiceName,jdbcType=VARCHAR}, #{longitude,jdbcType=DOUBLE}, #{latitude,jdbcType=DOUBLE}, 
+      #{mapPositionAddress,jdbcType=VARCHAR}, #{hospital,jdbcType=VARCHAR}, #{offices,jdbcType=VARCHAR}, 
+      #{adept,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yikangyiliao.pension.entity.UserServiceInfo" >
     insert into user_service_infos
@@ -95,6 +101,18 @@
       <if test="latitude != null" >
         latitude,
       </if>
+      <if test="mapPositionAddress != null" >
+        map_position_address,
+      </if>
+      <if test="hospital != null" >
+        hospital,
+      </if>
+      <if test="offices != null" >
+        offices,
+      </if>
+      <if test="adept != null" >
+        adept,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userServiceInfoId != null" >
@@ -141,6 +159,18 @@
       </if>
       <if test="latitude != null" >
         #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="mapPositionAddress != null" >
+        #{mapPositionAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="hospital != null" >
+        #{hospital,jdbcType=VARCHAR},
+      </if>
+      <if test="offices != null" >
+        #{offices,jdbcType=VARCHAR},
+      </if>
+      <if test="adept != null" >
+        #{adept,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -189,6 +219,18 @@
       <if test="latitude != null" >
         latitude = #{latitude,jdbcType=DOUBLE},
       </if>
+      <if test="mapPositionAddress != null" >
+        map_position_address = #{mapPositionAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="hospital != null" >
+        hospital = #{hospital,jdbcType=VARCHAR},
+      </if>
+      <if test="offices != null" >
+        offices = #{offices,jdbcType=VARCHAR},
+      </if>
+      <if test="adept != null" >
+        adept = #{adept,jdbcType=VARCHAR},
+      </if>
     </set>
     where user_service_info_id = #{userServiceInfoId,jdbcType=BIGINT}
   </update>
@@ -207,57 +249,11 @@
       is_delete = #{isDelete,jdbcType=TINYINT},
       user_service_name = #{userServiceName,jdbcType=VARCHAR},
       longitude = #{longitude,jdbcType=DOUBLE},
-      latitude = #{latitude,jdbcType=DOUBLE}
+      latitude = #{latitude,jdbcType=DOUBLE},
+      map_position_address = #{mapPositionAddress,jdbcType=VARCHAR},
+      hospital = #{hospital,jdbcType=VARCHAR},
+      offices = #{offices,jdbcType=VARCHAR},
+      adept = #{adept,jdbcType=VARCHAR}
     where user_service_info_id = #{userServiceInfoId,jdbcType=BIGINT}
   </update>
-  
-  <!-- 查询某个服务人员的信息， 根据用户id -->
-  <select id="getUserServiceInfoByUserId" resultType="map" parameterType="long">
-	  select 
-			us.user_id		  as userId, 
-			us.job_category   as jobCategory, 
-			us.user_postion   as userPosition, 
-			us.city_code      as cityCode, 
-			us.district_code  as districtCode, 
-			us.address_detail as addressDetail, 
-			us.photo_url	as photoUrl, 
-			us.create_time	as createTime, 
-			us.update_time  as updateTime, 
-			us.user_service_name as userName,
-			count(sa.senior_id)  as nums
-		 from user_service_infos us left join senior_account sa  on us.user_id=sa.create_user_id
-		 where  us.user_id = #{userId,jdbcType=BIGINT}
-  </select>
-  
-  
-  <!-- 获取所有评估师页面 -->
-  <select id="getPingGuServiceAll" resultMap="BaseResultMap">
-  	select 
-  			us.user_id		  	as userId, 
-			us.job_category   	as jobCategory, 
-			us.user_postion   	as userPosition, 
-			us.city_code      	as cityCode, 
-			us.district_code  	as districtCode, 
-			us.address_detail 	as addressDetail, 
-			us.photo_url		as photoUrl, 
-			us.create_time		as createTime, 
-			us.update_time  	as updateTime, 
-			us.user_service_name as userName
-  	from  user_service_infos us
-	where us.job_category=0
-  </select>
-  
-  
-  <!--  获取某一个评估师-->
-  <select id="getPingGuServicerByUserId" resultType="map" parameterType="long">
-  	select 
-  			us.user_id		  	as userId,
-  			'无'					as 'desc',
-			us.photo_url		as photoUrl, 
-			us.user_service_name as userServiceName
-  	from  user_service_infos us
-  	where user_id=#{userId}
-	and us.job_category=0
-  </select>
-  
 </mapper>
