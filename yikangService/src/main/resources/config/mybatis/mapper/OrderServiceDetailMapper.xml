@@ -202,10 +202,10 @@
   
   
     <!-- 修改定单反馈，状态为反馈完成，已结束 -->
-  <update id="updateFeedbackDetailStatus5FeedBackByOrderIdAndServiceUserId"  parameterType="map">
+  <update id="updateFeedbackDetailStatus5FeedBackByOrderServiceDetailIdAndServiceUserId"  parameterType="map">
   	update order_service_details 
 	set feedback=#{feedback},service_detail_status=5  
-	where order_id=#{orderId}
+	where order_service_detail_id=#{orderServiceDetailId}
 		and service_user_id=#{serviceUserId}
   </update>
   
@@ -251,14 +251,20 @@
   <!-- 查询某一个订单的详情， 根据 orderServiceId 和 userId  -->
   <select id="getOrderServiceDetailByOrderServiceDetailIdAndUserId"  parameterType="map" resultType="map">
   	select
-		osd.service_date,
-		osd.time_quantum_id,
+		osd.service_date 			as serviceDate,
+		osd.time_quantum_id			as timeQuantumId,
 		sa.sex,
-		ao.phone_number,
-		osd.service_detail_status,
-		osd.order_service_detail_id,
-		ctq.start_time,
-		ctq.end_time
+		ao.phone_number 			as phoneNumber,
+		osd.service_detail_status 	as serviceDetailStatus,
+		osd.order_service_detail_id as orderServiceDetailId,
+		ctq.start_time 				as startTime,
+		ctq.end_time 				as endTime,
+      	ao.address					as address,
+        ao.map_postion_address		as mapPositionAddress,
+        ao.detail_address			as detailAddress,
+        sa.birth_year				as birthYear,
+        ao.my_phone_number			as myPhoneNumber,
+        osd.feedback				as feedback
 	from order_service_details osd 
 	inner join appointment_orders ao on osd.order_id=ao.appointment_order_id
 	inner join senior_account sa on  ao.senior_id=sa.senior_id

@@ -118,6 +118,61 @@ public class AppointmentOrderTest {
 	}
 	
 	
+	/**
+	 * @author liushuaic
+	 * @date 2015/11/19 10:21
+	 * @desc 获取我的工作日程
+	 * */
+	@Test
+	public void TestGetServicerScheduleByServiceUserId() throws IOException{
+		
+		Map<String,Object> paramData=new HashMap<String, Object>();
+		
+		SendRequest.sendPost("00-21-04?appId=234&accessTicket=99b5ee453affe2efad86f03909495dd1b9ce342e78fd9ac33497fe204e9991195e4c7afd323d91954ba85f0a1bf9bb45&machineCode=123123",paramData);
+		
+	}
+	
+	
+	
+	
+	/**
+	 * @author liushuaic
+	 * @date 2015/11/19 10:30
+	 * @desc 获取我的工作日程详情
+	 * */
+	@Test
+	public void TestGetOrderServiceDetailById() throws IOException{
+		
+		Map<String,Object> paramData=new HashMap<String, Object>();
+		paramData.put("orderServiceDetailId", 1);
+		
+		SendRequest.sendPost("00-21-05?appId=234&accessTicket=99b5ee453affe2efad86f03909495dd1b9ce342e78fd9ac33497fe204e9991195e4c7afd323d91954ba85f0a1bf9bb45&machineCode=123123",paramData);
+		
+	}
+	
+	
+	/**
+	 * @author liushuaic
+	 * @date 2015/11/19 10:30
+	 * @desc 获取我的工作日程详情
+	 * */
+	@Test
+	public void TestSaveFeedback() throws IOException{
+		
+		Map<String,Object> paramData=new HashMap<String, Object>();
+		paramData.put("feedback", "你好测试");
+		paramData.put("orderServiceDetailId", 1);
+		
+		SendRequest.sendPost("00-21-06?appId=234&accessTicket=99b5ee453affe2efad86f03909495dd1b9ce342e78fd9ac33497fe204e9991195e4c7afd323d91954ba85f0a1bf9bb45&machineCode=123123",paramData);
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

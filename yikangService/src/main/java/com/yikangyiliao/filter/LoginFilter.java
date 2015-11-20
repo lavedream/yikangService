@@ -54,7 +54,7 @@ public class LoginFilter implements Filter {
 		//在登陆时，对ip 做登陆限制
 		
 		
-		if((null != appId && appId.length()>1 && null != accessTicket && accessTicket.length() >= 0) || requestURI.equals("/service/login") || requestURI.equals("/service/registAndSaveServiceInfo") ){
+		if((null != appId && appId.length()>1 && null != accessTicket && accessTicket.length() >= 0) || requestURI.equals("/service/login") || requestURI.equals("/service/registerUserAndSaveServiceInfo") ){
 			try {
 				if(		requestURI.equals("/service/login") 
 					|| requestURI.equals("/service/registerUserAndSaveServiceInfo")
@@ -73,7 +73,7 @@ public class LoginFilter implements Filter {
 		}else{
 			arg1.setCharacterEncoding("utf-8");
 			arg1.setContentType("application/json;charset=UTF-8");
-			arg1.getWriter().println("{'status':'999999','message':'数据校验失败!'}");
+			arg1.getWriter().print("{'status':'999999','message':'数据校验失败!'}");
 		}
 
 		

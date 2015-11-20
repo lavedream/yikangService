@@ -21,11 +21,11 @@ public class AppointmentOrder {
 
     private Integer orderStatus;
 
-    private Long provenceCode;
+    private String provenceCode;
 
-    private Long cityCode;
+    private String cityCode;
 
-    private Long districtCode;
+    private String districtCode;
 
     private Double longitude;
 
@@ -52,6 +52,10 @@ public class AppointmentOrder {
     private String linkUserName;
 
     private String address;
+
+    private Long seniorId;
+
+    private Long createUserId;
 
     public Long getAppointmentOrderId() {
         return appointmentOrderId;
@@ -133,28 +137,28 @@ public class AppointmentOrder {
         this.orderStatus = orderStatus;
     }
 
-    public Long getProvenceCode() {
+    public String getProvenceCode() {
         return provenceCode;
     }
 
-    public void setProvenceCode(Long provenceCode) {
-        this.provenceCode = provenceCode;
+    public void setProvenceCode(String provenceCode) {
+        this.provenceCode = provenceCode == null ? null : provenceCode.trim();
     }
 
-    public Long getCityCode() {
+    public String getCityCode() {
         return cityCode;
     }
 
-    public void setCityCode(Long cityCode) {
-        this.cityCode = cityCode;
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode == null ? null : cityCode.trim();
     }
 
-    public Long getDistrictCode() {
+    public String getDistrictCode() {
         return districtCode;
     }
 
-    public void setDistrictCode(Long districtCode) {
-        this.districtCode = districtCode;
+    public void setDistrictCode(String districtCode) {
+        this.districtCode = districtCode == null ? null : districtCode.trim();
     }
 
     public Double getLongitude() {
@@ -259,5 +263,21 @@ public class AppointmentOrder {
 
     public void setAddress(String address) {
         this.address = address == null ? null : address.trim();
+    }
+
+    public Long getSeniorId() {
+        return seniorId;
+    }
+
+    public void setSeniorId(Long seniorId) {
+        this.seniorId = seniorId;
+    }
+
+    public Long getCreateUserId() {
+        return createUserId;
+    }
+
+    public void setCreateUserId(Long createUserId) {
+        this.createUserId = createUserId;
     }
 }

@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import com.yikangyiliao.pension.manager.OrderServiceDetailManager;
 import com.yikangyiliao.pension.manager.SeniorAccountManager;
 import com.yikangyiliao.pension.manager.SeniorLivinConditionManager;
 import com.yikangyiliao.pension.manager.TimeQuantumManager;
+import com.yikangyiliao.pension.manager.UserFromManager;
 import com.yikangyiliao.pension.schedule.PersonnelDistribution;
 
 @Service(value="appointmentOrderService")
@@ -33,7 +35,6 @@ public class AppointmentOrderService {
 	
 	@Autowired
 	private AppointmentOrderManager appointmentOrderManager;
-	
 	
 	@Autowired
 	private OrderServiceDetailManager orderServiceDetailManager;
@@ -53,6 +54,9 @@ public class AppointmentOrderService {
 	@Autowired
 	private SeniorLivinConditionManager seniorLivinConditionManager;
 	
+	
+	@Autowired
+	private UserFromManager userFromManager;
 	
 	
 	public Map<String,Object> addPointmentOrder(Map<String,Object> param) throws ParseException, InterruptedException{
@@ -111,11 +115,11 @@ public class AppointmentOrderService {
 				 
 				 
 				//todo 
-				 appointmentOrder.setProvenceCode(1l);
-				 appointmentOrder.setCityCode(1l);
+				 appointmentOrder.setProvenceCode("");
+				 appointmentOrder.setCityCode("");
 				 
 				 
-				 appointmentOrder.setDistrictCode(Long.valueOf(districtCode));
+				 appointmentOrder.setDistrictCode(districtCode);
 				 appointmentOrder.setLongitude(Double.valueOf(longitude));
 				 appointmentOrder.setLatitude(Double.valueOf(latitude));
 				 appointmentOrder.setDetailAddress(detailAddress);
@@ -225,11 +229,11 @@ public class AppointmentOrderService {
 					 appointmentOrder.setStartTime(timeQuantum.getStartTime().toString());
 					 appointmentOrder.setEndTime(timeQuantum.getEndTime().toString());
 					 
-					 appointmentOrder.setProvenceCode(1l);
-					 appointmentOrder.setCityCode(1l);
+					 appointmentOrder.setProvenceCode("");
+					 appointmentOrder.setCityCode("");
 					 
 					 
-					 appointmentOrder.setDistrictCode(Long.valueOf(districtCode));
+					 appointmentOrder.setDistrictCode(districtCode);
 					 
 					 
 					 appointmentOrder.setDetailAddress(detailAddress);
@@ -316,6 +320,9 @@ public class AppointmentOrderService {
 					 seniorLivingCondition.setDistrict(districtCode);
 					 
 					 seniorLivinConditionManager.insertSelective(seniorLivingCondition);
+					 
+					 
+					 
 					 
 					 
 					 Map<String,Object> rtnData=new HashMap<String, Object>();
@@ -417,18 +424,23 @@ public class AppointmentOrderService {
 	/**
 	 * @author liushuaic
 	 * @date 2015/11/15 15:27
-	 * @desc 保存反馈
+	 * @desc 保存反馈 ，并修改订单服务状态为
 	 * */
 	public Map<String,Object> saveFeedback(Map<String,Object> paramData){
 		Map<String,Object> rtnMap=new HashMap<String,Object>();
-		if(	paramData.containsKey("feedback")
-			&& paramData.containsKey("orderId")
+		if(	
+			paramData.containsKey("orderServiceDetailId")
 				){
-			String feedback=paramData.get("feedback").toString();
-			String orderId=paramData.get("orderId").toString();
+			String feedback="";
+			if(paramData.containsKey("feedback")){
+				feedback=paramData.get("feedback").toString();
+			}
+			String orderId=paramData.get("orderServiceDetailId").toString();
 			String userId=paramData.get("userId").toString();
-			orderServiceDetailManager.updateFeedbackDetailStatus5FeedBackByOrderIdAndServiceUserId(
+			orderServiceDetailManager.updateFeedbackDetailStatus5FeedBackByOrderServiceDetailIdAndServiceUserId(
 					feedback, Long.valueOf(userId), Long.valueOf(orderId));
+		 	rtnMap.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
+		 	rtnMap.put("message", ExceptionConstants.responseSuccess.responseSuccess.message);
 		}else{
 			rtnMap.put("status", ExceptionConstants.parameterException.parameterException.errorCode);
 			rtnMap.put("message", ExceptionConstants.parameterException.parameterException.errorMessage);
@@ -445,12 +457,15 @@ public class AppointmentOrderService {
 	public Map<String,Object> getOrderServiceDetailById(Map<String,Object> paramData){
 		Map<String,Object> rtnMap=new HashMap<String,Object>();
 		
-		if(  paramData.containsKey("orderServiceDetailId")
-			&& paramData.containsKey("serviceUserId")
+		if(  
+			paramData.containsKey("orderServiceDetailId")
 		 ){
 			Long orderServiceDetailId=Long.valueOf(paramData.get("orderServiceDetailId").toString());
 			Long serviceUserId=Long.valueOf(paramData.get("userId").toString());
-			orderServiceDetailManager.getOrderServiceDetailByOrderServiceDetailIdAndUserId(orderServiceDetailId,serviceUserId);
+			Map<String,Object> data=orderServiceDetailManager.getOrderServiceDetailByOrderServiceDetailIdAndUserId(orderServiceDetailId,serviceUserId);
+			rtnMap.put("data", data);
+		 	rtnMap.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
+		 	rtnMap.put("message", ExceptionConstants.responseSuccess.responseSuccess.message);
 		}else{
 			rtnMap.put("status", ExceptionConstants.parameterException.parameterException.errorCode);
 			rtnMap.put("message", ExceptionConstants.parameterException.parameterException.errorMessage);
@@ -459,4 +474,37 @@ public class AppointmentOrderService {
 		return rtnMap;
 	}
 	
+	
+	/**
+	 * 
+	 * @author liushuaic
+	 * @date 2015/11/18 18:44
+	 * @desc 查询某一个用户的工作日程
+	 * 
+	 * */
+	public Map<String,Object> getServicerScheduleByServiceUserId(Map<String,Object> paramData){
+		Map<String,Object> rtnMap=new HashMap<String,Object>();
+		
+		if(paramData.containsKey("serviceDetailStatus")){
+			String serviceDetailStatus=paramData.get("serviceDetailStatus").toString();
+			if(null != serviceDetailStatus &&
+				(serviceDetailStatus.equals("-1")|| serviceDetailStatus.equals("0") ||serviceDetailStatus.equals("1"))){
+				String userId=paramData.get("userId").toString();
+				List<Map<String,Object>> rtnData=appointmentOrderManager.getServicerScheduleByServiceUserId(Integer.valueOf(serviceDetailStatus),Long.valueOf(userId));
+				rtnMap.put("data",rtnData);
+			 	rtnMap.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
+			 	rtnMap.put("message", ExceptionConstants.responseSuccess.responseSuccess.message);
+			}else{
+				rtnMap.put("status", ExceptionConstants.parameterException.parameterException.errorCode);
+				rtnMap.put("message", ExceptionConstants.parameterException.parameterException.errorMessage);
+			}
+		}else{
+			rtnMap.put("status", ExceptionConstants.parameterException.parameterException.errorCode);
+			rtnMap.put("message", ExceptionConstants.parameterException.parameterException.errorMessage);
+		}
+	
+		
+		return rtnMap;
+		
+	}
 }

@@ -1,6 +1,7 @@
 package com.yikangyiliao.pension.manager;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,5 +92,15 @@ public class AppointmentOrderManager {
 	}
 	
 	
-
+	/**
+     * @author liushuaic
+     * @date 2015/11/18 17:36
+     * @desc 查询的我工作日程
+     * **/
+	public List<Map<String,Object>> getServicerScheduleByServiceUserId(Integer serviceDetailStatus,Long serviceUserId){
+		Map<String,Object> paramData=new HashMap<String,Object>();
+		paramData.put("serviceUserId", serviceUserId);
+		paramData.put("serviceDetailStatus", serviceDetailStatus);
+		return appointmentOrderDao.getServicerScheduleByServiceUserId(paramData);
+	}
 }

@@ -1,5 +1,9 @@
 package com.yikangyiliao.pension.manager;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -38,5 +42,20 @@ public class SeniorAccountManager {
 	public int insertSelective(SeniorAccount record){
 		return seniorAccountDao.insert(record);
 	}
+	
+	
+	/**
+     * @author liushuaic
+     * @date 2015/11/17 16:38
+     * @desc 查询某个用户的推荐换则
+     * **/
+    public List<Map<String,Object>> getSeniorAccountInfoByInvitationUserId(Integer userStatus,Long userId){
+    	
+    	Map<String,Object> paramData=new HashMap<String,Object>();
+    	paramData.put("userId", userId);
+    	paramData.put("userStatus", userStatus);
+    	
+    	return seniorAccountDao.getSeniorAccountInfoByInvitationUserId(paramData);
+    }
 	
 }

@@ -40,7 +40,7 @@ public interface OrderServiceDetailDao {
      * @desc
      * 修改定单反馈，状态为反馈完成，已结束
      * **/
-    void updateFeedbackDetailStatus5FeedBackByOrderIdAndServiceUserId(Map<String,Object> paramData);
+    void updateFeedbackDetailStatus5FeedBackByOrderServiceDetailIdAndServiceUserId(Map<String,Object> paramData);
     
     
     /**

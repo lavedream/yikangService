@@ -1,5 +1,6 @@
 package com.yikangyiliao.pension.manager;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -116,5 +117,19 @@ public class UserManager {
     * */
 	public Map<String,Object> getPingGuServicerByUserId(Long userId){
 		return userServiceInfoDao.getPingGuServicerByUserId(userId);
+	}
+	
+	
+    /**
+     * @author liushuaic
+     * @date 2015/11/18 15:29
+     * @desc 邀请码，是根据用户id 获取的
+     * 添加用户邀请码
+     * */
+	public int updateInvitationCodeByUserId(Integer invitationCode,Long userId){
+		Map<String,Object> paramData=new HashMap<String,Object>();
+		paramData.put("invitationCode", invitationCode);
+		paramData.put("userId", userId);
+		return userDao.updateInvitationCodeByUserId(paramData);
 	}
 }

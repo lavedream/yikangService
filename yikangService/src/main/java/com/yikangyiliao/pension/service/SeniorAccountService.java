@@ -14,6 +14,8 @@ import org.springframework.util.StringUtils;
 
 import com.yikangyiliao.base.utils.DateUtils;
 import com.yikangyiliao.pension.common.constants.YKConstants;
+import com.yikangyiliao.pension.common.error.ExceptionConstants;
+import com.yikangyiliao.pension.common.response.ResponseMessage;
 import com.yikangyiliao.pension.dao.OperateServiceLogDao;
 import com.yikangyiliao.pension.dao.SeniorAccountDao;
 import com.yikangyiliao.pension.dao.SeniorLivingConditionDao;
@@ -22,6 +24,7 @@ import com.yikangyiliao.pension.entity.OperateServiceLog;
 import com.yikangyiliao.pension.entity.SeniorAccount;
 import com.yikangyiliao.pension.entity.SeniorLivingCondition;
 import com.yikangyiliao.pension.manager.LocationManager;
+import com.yikangyiliao.pension.manager.SeniorAccountManager;
 
 /**
  * @author liushuaic
@@ -48,6 +51,10 @@ public class SeniorAccountService {
 
 	@Autowired
 	private LocationManager locationManager;
+	
+	
+	@Autowired
+	private SeniorAccountManager seniorAccountManager;
 	
 	
 	/**
@@ -357,4 +364,48 @@ public class SeniorAccountService {
 		}
     	return rtnData;
     }
+	
+	
+	/**
+	 * @author liushuaic
+	 * @date 2015/11/17 18:28
+	 * @desc 查询用户推荐的患者
+	 * 
+	 * **/
+	public Map<String,Object> getSeniorAccountInfoByInvitationUserId(Map<String,Object> paramData){
+		Map<String, Object> rtnMap = new HashMap<String, Object>();
+		
+		try{
+			if(paramData.containsKey("userStatus")){
+				
+				String userStatus=paramData.get("userStatus").toString();
+				if(userStatus.equals("-1") || userStatus.equals("0") || userStatus.equals("-1")){
+					String userId=paramData.get("userId").toString();
+					List<Map<String,Object>> rtnData=seniorAccountManager.getSeniorAccountInfoByInvitationUserId(Integer.valueOf(userStatus),Long.valueOf(userId));
+					
+					rtnMap.put("data", rtnData);
+					rtnMap.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
+					rtnMap.put("message", ExceptionConstants.responseSuccess.responseSuccess.message);
+				}else{
+					rtnMap.put("status", ExceptionConstants.systemException.systemException.errorCode);
+					rtnMap.put("message", ExceptionConstants.systemException.systemException.errorMessage);
+				}
+				
+			}else{
+				rtnMap.put("status", ExceptionConstants.systemException.systemException.errorCode);
+				rtnMap.put("message", ExceptionConstants.systemException.systemException.errorMessage);
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			rtnMap.put("status", ExceptionConstants.systemException.systemException.errorCode);
+			rtnMap.put("message", ExceptionConstants.systemException.systemException.errorMessage);
+		}
+		
+		return rtnMap;
+	}
+	
+	
+	
+	
 }

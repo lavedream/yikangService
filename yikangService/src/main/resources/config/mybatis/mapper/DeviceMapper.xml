@@ -34,7 +34,7 @@
       #{pushAlias,jdbcType=VARCHAR}, #{isUsed,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.yikangyiliao.pension.entity.Device" >
-    <selectKey resultType="Long" keyProperty="userId" order="AFTER">
+    <selectKey resultType="Long" keyProperty="deviceId" order="AFTER">
 		SELECT LAST_INSERT_ID()
 	</selectKey>
     insert into devices

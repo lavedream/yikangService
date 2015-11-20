@@ -1,6 +1,7 @@
 package com.yikangyiliao.pension.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -27,4 +28,16 @@ public interface SeniorAccountDao {
      * 
      * */
     List<SeniorAccount> getSeniorAccountByUserId(@Param("userId") Long userId);
+    
+    
+    /**
+     * 
+     * @author liushuaic
+     * @date 2015/11/17 16:38
+     * @desc 查询某个用户的推荐换则
+     * 
+     * **/
+    List<Map<String,Object>> getSeniorAccountInfoByInvitationUserId(Map<String,Object> paramData);
+    
+    
 }

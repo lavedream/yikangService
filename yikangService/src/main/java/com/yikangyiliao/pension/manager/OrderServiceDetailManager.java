@@ -74,12 +74,12 @@ public class OrderServiceDetailManager {
      * @desc
      * 修改定单反馈，状态为反馈完成，已结束
 	 * */
-	public void updateFeedbackDetailStatus5FeedBackByOrderIdAndServiceUserId(String feedback,Long serviceUserId,Long orderId){
+	public void updateFeedbackDetailStatus5FeedBackByOrderServiceDetailIdAndServiceUserId(String feedback,Long serviceUserId,Long orderServiceDetailId){
 		Map<String,Object> paramData=new HashMap<String,Object>();
 		paramData.put("serviceUserId", serviceUserId);
 		paramData.put("feedback", feedback);
-		paramData.put("orderId",  orderId);
-		orderServiceDetailDao.updateFeedbackDetailStatus5FeedBackByOrderIdAndServiceUserId(paramData);
+		paramData.put("orderServiceDetailId",  orderServiceDetailId);
+		orderServiceDetailDao.updateFeedbackDetailStatus5FeedBackByOrderServiceDetailIdAndServiceUserId(paramData);
 	}
 	
 	

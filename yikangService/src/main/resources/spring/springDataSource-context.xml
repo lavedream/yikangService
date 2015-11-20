@@ -26,6 +26,7 @@
 		<property name="username" value="yikangtest"></property>
 		<property name="password" value="yikangtest"></property>
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="validationQuery" value="select 1"></property>
 	</bean>
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -33,7 +34,6 @@
 		<property name="configLocation"
 			value="/WEB-INF/classes/config/mybatis/myBatisConfigration.xml"></property>
 		<property name="mapperLocations" value="/WEB-INF/classes/config/mybatis/mapper/*.xml" />
-<!-- 		<property name="typeAliasesPackage" value="com.yikangyiliao.pension.dao" /> -->
 	</bean>
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

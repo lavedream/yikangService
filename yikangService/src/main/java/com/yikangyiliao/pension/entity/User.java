@@ -17,6 +17,8 @@ public class User {
 
     private Long loginTime;
 
+    private Integer invitationCode;
+
     public Long getUserId() {
         return userId;
     }
@@ -79,5 +81,13 @@ public class User {
 
     public void setLoginTime(Long loginTime) {
         this.loginTime = loginTime;
+    }
+
+    public Integer getInvitationCode() {
+        return invitationCode;
+    }
+
+    public void setInvitationCode(Integer invitationCode) {
+        this.invitationCode = invitationCode;
     }
 }

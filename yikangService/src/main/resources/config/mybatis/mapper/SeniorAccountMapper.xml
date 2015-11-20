@@ -261,5 +261,35 @@
   	</where>
   	order by create_time desc
   </select>
+  
+  <!-- 根据邀请人的id 查询 出被邀请患者的信息  -->
+  <select id="getSeniorAccountInfoByInvitationUserId" parameterType="map" resultType="map">
+  	select 
+	    sa.name as name, 
+		sa.sex as sex, 
+		sa.birth_year as birthYear, 
+		case 
+			when sa.name is null then null 
+		    else ''
+		end as photoUrl, 
+		case 
+			when sa.name is null then null 
+		    else uf.user_status
+		end
+		 as userStatus,
+		 ao.create_time as createTime,
+ 		 sa.senior_id  as seniorId
+	from users
+	inner join user_froms uf 			on users.user_id=uf.user_id
+	left  join appointment_orders ao	on users.user_id=ao.create_user_id
+	left  join senior_account sa 		on ao.senior_id=sa.senior_id
+	inner join users servicerUser		on uf.invitation_code=servicerUser.invitation_code
+	where
+		servicerUser.user_id=#{userId}
+	<if test=" userStatus == 0 or  userStatus == 1">
+			and  uf.user_status=#{userStatus}
+	</if>
+  </select>
+  
   	
 </mapper>

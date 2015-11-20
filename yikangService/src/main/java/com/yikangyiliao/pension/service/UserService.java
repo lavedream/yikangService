@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yikangyiliao.base.utils.InvitationCodeGnerateUtil;
 import com.yikangyiliao.pension.common.error.ExceptionConstants;
 import com.yikangyiliao.pension.common.utils.map.MapUtils;
 import com.yikangyiliao.pension.common.utils.map.model.GeoCodeModel;
@@ -43,15 +44,10 @@ public class UserService {
 	public Map<String,Object> saveRegisterUserAndSaveServiceInfo(Map<String,Object> paramData){
 		Map<String,Object> rtnData=new HashMap<String,Object>();
 		if(
-			  paramData.containsKey("loginName")
-			&&paramData.containsKey("passWord")
-			&&paramData.containsKey("userName")
-			&&paramData.containsKey("userPosition") //职位
-			&&paramData.containsKey("jobCategory") //全职，兼职
-			&&paramData.containsKey("districtCode")
-			&&paramData.containsKey("addressDetail")
-			&&paramData.containsKey("photoUrl")
-			&&paramData.containsKey("mapPositionAddress")
+				  paramData.containsKey("loginName")
+				&&paramData.containsKey("passWord")
+				&&paramData.containsKey("userName")
+				&&paramData.containsKey("jobCategory")//职位
 			){
 			String loginName=paramData.get("loginName").toString();
 			User u=userManager.getUserByLoginName(loginName);
@@ -61,12 +57,30 @@ public class UserService {
 				
 				String passWord=paramData.get("passWord").toString();
 				String userName=paramData.get("userName").toString();
-				String userPosition=paramData.get("userPosition").toString();
 				String jobCategory=paramData.get("jobCategory").toString();
-				String districtCode=paramData.get("districtCode").toString();
-				String addressDetail=paramData.get("addressDetail").toString();
-				String photoUrl=paramData.get("photoUrl").toString();
-				String mapPositionAddress=paramData.get("mapPositionAddress").toString();
+				
+				String userPosition="-2";
+				if(paramData.containsKey("userPosition")){
+					userPosition=paramData.get("userPosition").toString(); 
+				}
+				String mapPositionAddress="";
+				if(paramData.containsKey("mapPositionAddress")){
+					 mapPositionAddress=paramData.get("mapPositionAddress").toString();
+				}
+				String districtCode="-2";
+				if(paramData.containsKey("districtCode")){
+					districtCode=paramData.get("districtCode").toString();
+				}
+				String addressDetail="";
+				if(paramData.containsKey("addressDetail")){
+					 addressDetail=paramData.get("addressDetail").toString();
+				}
+				
+				String photoUrl="";
+				if(paramData.containsKey("photoUrl")){
+					photoUrl=paramData.get("photoUrl").toString();
+				}
+				
 			
 				User user=new User();
 				user.setUserName(userName);
@@ -76,21 +90,28 @@ public class UserService {
 				user.setSalt("000000");
 				user.setLoginTime(currentDateTime);
 				
-				
 				userManager.insertUserSelective(user);
+				userManager.updateInvitationCodeByUserId(InvitationCodeGnerateUtil.generateInvitationCode(user), user.getUserId());
 				
 				UserServiceInfo userServiceInfo=new UserServiceInfo();
 				userServiceInfo.setUserId(user.getUserId());
 				userServiceInfo.setPhotoUrl(photoUrl);
 				userServiceInfo.setProvenceCode(Long.valueOf("0"));
 				userServiceInfo.setAddressDetail(addressDetail);
-				userServiceInfo.setDistrictCode(Long.valueOf(districtCode));
-				userServiceInfo.setUserPostion(Long.valueOf(userPosition));
+				
 				userServiceInfo.setJobCategory(Long.valueOf(jobCategory));
+				userServiceInfo.setUserPostion(Long.valueOf(userPosition));
+				
+				userServiceInfo.setDistrictCode(Long.valueOf(districtCode));
+				
+				
+				
+				
 				userServiceInfo.setCreateTime(currentDateTime);
 				userServiceInfo.setUpdateTime(currentDateTime);
 				userServiceInfo.setIsDelete(Byte.valueOf("0"));
 				userServiceInfo.setUserServiceName(userName);
+				
 				
 				
 				if(paramData.containsKey("hospital")){
@@ -107,31 +128,48 @@ public class UserService {
 				
 				// 反推一下，用户用户地址
 				
-				String address="";
-				Location district=locationManager.getLocationByAdministrativeCode(districtCode);
 				Location city	=locationManager.getCityByDistrictCode(districtCode);
 				Location provence=locationManager.getProvenceByCityCode(districtCode);
-				userServiceInfo.setCityCode(Long.valueOf(city.getAdministrativeCode()));
-				userServiceInfo.setProvenceCode(Long.valueOf(provence.getAdministrativeCode()));
+				if(null != city){
+					userServiceInfo.setCityCode(Long.valueOf(city.getAdministrativeCode()));
+				}else{
+					userServiceInfo.setCityCode(0L);
+				}
+				if(null != provence){
+					userServiceInfo.setProvenceCode(Long.valueOf(provence.getAdministrativeCode()));
+				}else{
+					userServiceInfo.setProvenceCode(0L);
+				}
 				userServiceInfo.setMapPositionAddress(mapPositionAddress);
 				
 				 //设置经纬度
-				if(address.length()>0){
+				if(mapPositionAddress.length()>0){
 					 try {
-						 GeoCodeModel geoCodeModel=MapUtils.getGeoCodeModelByAddress(addressDetail, city.getAdministrativeCode());
-						 if(null != geoCodeModel.getGeocodes() && geoCodeModel.getGeocodes().size()>0){
-							 //  TODO 有可能模糊地址对应的有多个这个问题要修改
-							 String lngLatStr=geoCodeModel.getGeocodes().get(0).getLocation();
-							 String lngStr=lngLatStr.split(",")[0];
-							 String latStr=lngLatStr.split(",")[1];
-							 userServiceInfo.setLongitude(Double.valueOf(lngStr));
-							 userServiceInfo.setLatitude(Double.valueOf(latStr));
+						 if(null != city){
+							 GeoCodeModel geoCodeModel=MapUtils.getGeoCodeModelByAddress(mapPositionAddress, city.getAdministrativeCode());
+							 if(null != geoCodeModel.getGeocodes() && geoCodeModel.getGeocodes().size()>0){
+								 //  TODO 有可能模糊地址对应的有多个这个问题要修改
+								 String lngLatStr=geoCodeModel.getGeocodes().get(0).getLocation();
+								 String lngStr=lngLatStr.split(",")[0];
+								 String latStr=lngLatStr.split(",")[1];
+								 userServiceInfo.setLongitude(Double.valueOf(lngStr));
+								 userServiceInfo.setLatitude(Double.valueOf(latStr));
+							 }else{
+								 userServiceInfo.setLongitude(0d);
+								 userServiceInfo.setLatitude(0d);
+							 }
+						 }else{
+							 userServiceInfo.setLongitude(0d);
+							 userServiceInfo.setLatitude(0d);
 						 }
 						
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-				}
+				}else{
+					 userServiceInfo.setLongitude(0d);
+					 userServiceInfo.setLatitude(0d);
+				 }
 				
 				
 				
@@ -147,6 +185,9 @@ public class UserService {
 					userFrom.setUpdateTime(currentDateTime);
 					//设置为用户注册
 					userFrom.setUserFrom("5");
+					userFrom.setUserStatus(Byte.valueOf("0"));
+					userFrom.setNumbers(0l);
+					userFrom.setActiveTime(0l);
 					userFromManager.insertSelective(userFrom);
 				}
 				

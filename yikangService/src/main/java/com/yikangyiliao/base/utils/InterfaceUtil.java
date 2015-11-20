@@ -42,10 +42,21 @@ public class InterfaceUtil {
 		 * 获取某一个老人的信息
 		 * */
 		mathodClassPath.put("00-01-02","getSeniorAccountById");
+		
 		/**
 		 * 查询某一个用户下的所有人
 		 * */
 		mathodClassPath.put("00-01-03","getSeniorAccountByUserId");
+		
+		/**
+		 * @author liushuaic
+		 * 查询邀请患者
+		 * */
+		mathodClassPath.put("00-01-04","getSeniorAccountInfoByInvitationUserId");
+		
+		
+		
+		
 		
 		//量表
 		serviceClassName.put("00-02", "scaleService");
@@ -222,6 +233,13 @@ public class InterfaceUtil {
 		mathodClassPath.put("00-21-01", "addPointmentOrder");
 		mathodClassPath.put("00-21-02", "getServiceUserByOrderId");
 		mathodClassPath.put("00-21-03", "addPointmentOrderAndSubmitAssessment");
+		// 查询我的工作日程
+		mathodClassPath.put("00-21-04", "getServicerScheduleByServiceUserId");
+		//查询我的工作日程详情
+		mathodClassPath.put("00-21-05", "getOrderServiceDetailById");
+		
+		//保存反馈信息，设置订单服务完成
+		mathodClassPath.put("00-21-06", "saveFeedback");
 		
 		
 		/**

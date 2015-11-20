@@ -57,16 +57,18 @@ public class DateUtils {
 	
 	
 	public static void main(String[] args) throws ParseException {
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat sdf2=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date d=sdf.parse("2015-07-15");
-		System.out.println(d.getTime());
-		System.out.println(sdf2.format(sdf.parse("2015-07-15")));
-		
-		
-		SimpleDateFormat sdf3=new SimpleDateFormat("yyyyMMdd");
-		System.out.println(sdf3.format(Calendar.getInstance().getTime()));
-		
+//		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+//		SimpleDateFormat sdf2=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		Date d=sdf.parse("2015-07-15");
+//		System.out.println(d.getTime());
+//		System.out.println(sdf2.format(sdf.parse("2015-07-15")));
+//		
+//		
+//		SimpleDateFormat sdf3=new SimpleDateFormat("yyyyMMdd");
+//		System.out.println(sdf3.format(Calendar.getInstance().getTime()));
+		Date date=Calendar.getInstance().getTime();
+		SimpleDateFormat sdf2=new SimpleDateFormat("YYMMdd");
+		System.out.println(sdf2.format(date));
 	}
 
 }
