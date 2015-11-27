@@ -145,7 +145,7 @@
  
  <!--修改用户的邀请码  -->
   <update id="updateInvitationCodeByUserId" parameterType="map">
-  	update users set invitation_code = #{invitationCode,jdbcType=INTEGER}
+  	update users set invitation_code = #{invitationCode,jdbcType=VARCHAR}
   	where user_id=#{userId,jdbcType=BIGINT}
   </update>
 

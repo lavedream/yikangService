@@ -126,10 +126,30 @@ public class UserManager {
      * @desc 邀请码，是根据用户id 获取的
      * 添加用户邀请码
      * */
-	public int updateInvitationCodeByUserId(Integer invitationCode,Long userId){
+	public int updateInvitationCodeByUserId(String invitationCode,Long userId){
 		Map<String,Object> paramData=new HashMap<String,Object>();
 		paramData.put("invitationCode", invitationCode);
 		paramData.put("userId", userId);
 		return userDao.updateInvitationCodeByUserId(paramData);
 	}
+	
+	/**
+	 * @author liushuaic
+	 * @date 2015/11/26 16:10
+	 * @desc 修改用户信息
+	 * 
+	 * **/
+	public int updateUserServiceInfo(UserServiceInfo userServiceInfo){
+		return userServiceInfoDao.updateServiceInfoByUserId(userServiceInfo);
+	}
+	
+	/**
+	 * @author liushuaic
+	 * @date 2015/11/27 11:32
+	 * @desc 清空用户信息
+	 * */
+	public int  updateUserServiceInfoIsEmptyByUserId(Long userId){
+		return userServiceInfoDao.updateUserServiceInfoIsEmptyByUserId(userId);
+	}
+	
 }

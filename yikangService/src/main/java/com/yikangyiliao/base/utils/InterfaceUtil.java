@@ -1,3 +1,4 @@
+
 package com.yikangyiliao.base.utils;
 
 import java.io.InputStream;
@@ -188,6 +189,7 @@ public class InterfaceUtil {
 		mathodClassPath.put("00-17-03", "registerUserAndSaveServiceInfo");
 		// 获取某一个服务人员信息 
 		mathodClassPath.put("00-17-04", "getUserServiceInfoByUserId");
+		mathodClassPath.put("00-17-05", "updateUserServiceAndServiceInfo");
 		
 		
 		/**
@@ -237,7 +239,6 @@ public class InterfaceUtil {
 		mathodClassPath.put("00-21-04", "getServicerScheduleByServiceUserId");
 		//查询我的工作日程详情
 		mathodClassPath.put("00-21-05", "getOrderServiceDetailById");
-		
 		//保存反馈信息，设置订单服务完成
 		mathodClassPath.put("00-21-06", "saveFeedback");
 		

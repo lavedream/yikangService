@@ -2,8 +2,12 @@ package com.yikangyiliao.base.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -14,6 +18,7 @@ import java.util.Date;
 public class DateUtils {
 	
 	
+	private static String defaultFormateStr="yyyy-MM-dd";
 	
 	/**
 	 * @param dataStr 2015-06-25
@@ -53,22 +58,55 @@ public class DateUtils {
 		SimpleDateFormat sdf3=new SimpleDateFormat("yyyyMMdd");
 		
 		return sdf3.format(Calendar.getInstance().getTime());
+		
 	}
 	
 	
+	public static String formateDate(Date date){
+		
+		SimpleDateFormat sdf=new SimpleDateFormat(defaultFormateStr);
+		return sdf.format(date);
+				
+	}
+	
 	public static void main(String[] args) throws ParseException {
+		
 //		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 //		SimpleDateFormat sdf2=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //		Date d=sdf.parse("2015-07-15");
 //		System.out.println(d.getTime());
-//		System.out.println(sdf2.format(sdf.parse("2015-07-15")));
-//		
-//		
+//		System.out.println(sdf2.format(sdf.parse("2015-07-15")));	
 //		SimpleDateFormat sdf3=new SimpleDateFormat("yyyyMMdd");
 //		System.out.println(sdf3.format(Calendar.getInstance().getTime()));
+		
 		Date date=Calendar.getInstance().getTime();
 		SimpleDateFormat sdf2=new SimpleDateFormat("YYMMdd");
 		System.out.println(sdf2.format(date));
+		
+		
+		List<Map<String,Object>> datas=new ArrayList<Map<String,Object>>();
+		Map<String,Object> d=new HashMap<String, Object>();
+		d.put("dt", Calendar.getInstance().getTimeInMillis());
+		datas.add(d);
+		
+		formateListObejctDateMilins(datas,"dt");
+		
+		System.out.println(datas.get(0).get("dt"));
 	}
 
+	/**
+	 * @author liushuaic
+	 * @date 2015/11/20 16:07
+	 * @desc 格式化日期字符串
+	 * **/
+	public static void formateListObejctDateMilins(List<Map<String,Object>> datas,String properties){
+		
+		for(Map<String,Object> data:datas){
+			Long dateTime=Long.valueOf(data.get(properties).toString());
+			data.put(properties, DateUtils.formateDate(new Date(dateTime)));
+		}
+		
+	}
+	
+	
 }

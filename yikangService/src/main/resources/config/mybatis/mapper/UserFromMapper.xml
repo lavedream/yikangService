@@ -10,7 +10,7 @@
     <result column="create_time" jdbcType="BIGINT" property="createTime" />
     <result column="update_time" jdbcType="BIGINT" property="updateTime" />
     <result column="active_time" jdbcType="BIGINT" property="activeTime" />
-    <result column="invitation_code" jdbcType="INTEGER" property="invitationCode" />
+    <result column="invitation_code" jdbcType="VARCHAR" property="invitationCode" />
     <result column="user_status" jdbcType="TINYINT" property="userStatus" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -34,7 +34,7 @@
       user_status)
     values (#{userFromId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{userFrom,jdbcType=VARCHAR}, 
       #{fromUrl,jdbcType=VARCHAR}, #{numbers,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}, 
-      #{updateTime,jdbcType=BIGINT}, #{activeTime,jdbcType=BIGINT}, #{invitationCode,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=BIGINT}, #{activeTime,jdbcType=BIGINT}, #{invitationCode,jdbcType=VARCHAR}, 
       #{userStatus,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.yikangyiliao.pension.entity.UserFrom">
@@ -97,7 +97,7 @@
         #{activeTime,jdbcType=BIGINT},
       </if>
       <if test="invitationCode != null">
-        #{invitationCode,jdbcType=INTEGER},
+        #{invitationCode,jdbcType=VARCHAR},
       </if>
       <if test="userStatus != null">
         #{userStatus,jdbcType=TINYINT},
@@ -129,7 +129,7 @@
         active_time = #{activeTime,jdbcType=BIGINT},
       </if>
       <if test="invitationCode != null">
-        invitation_code = #{invitationCode,jdbcType=INTEGER},
+        invitation_code = #{invitationCode,jdbcType=VARCHAR},
       </if>
       <if test="userStatus != null">
         user_status = #{userStatus,jdbcType=TINYINT},
@@ -146,7 +146,7 @@
       create_time = #{createTime,jdbcType=BIGINT},
       update_time = #{updateTime,jdbcType=BIGINT},
       active_time = #{activeTime,jdbcType=BIGINT},
-      invitation_code = #{invitationCode,jdbcType=INTEGER},
+      invitation_code = #{invitationCode,jdbcType=VARCHAR},
       user_status = #{userStatus,jdbcType=TINYINT}
     where user_from_id = #{userFromId,jdbcType=BIGINT}
   </update>

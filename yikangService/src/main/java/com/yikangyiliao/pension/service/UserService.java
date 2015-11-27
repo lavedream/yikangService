@@ -47,7 +47,7 @@ public class UserService {
 				  paramData.containsKey("loginName")
 				&&paramData.containsKey("passWord")
 				&&paramData.containsKey("userName")
-				&&paramData.containsKey("jobCategory")//职位
+				&&paramData.containsKey("userPosition")//职位
 			){
 			String loginName=paramData.get("loginName").toString();
 			User u=userManager.getUserByLoginName(loginName);
@@ -57,11 +57,11 @@ public class UserService {
 				
 				String passWord=paramData.get("passWord").toString();
 				String userName=paramData.get("userName").toString();
-				String jobCategory=paramData.get("jobCategory").toString();
+				String userPosition=paramData.get("userPosition").toString();
 				
-				String userPosition="-2";
-				if(paramData.containsKey("userPosition")){
-					userPosition=paramData.get("userPosition").toString(); 
+				String jobCategory="-2";
+				if(paramData.containsKey("jobCategory")){
+					jobCategory=paramData.get("jobCategory").toString(); 
 				}
 				String mapPositionAddress="";
 				if(paramData.containsKey("mapPositionAddress")){
@@ -91,7 +91,8 @@ public class UserService {
 				user.setLoginTime(currentDateTime);
 				
 				userManager.insertUserSelective(user);
-				userManager.updateInvitationCodeByUserId(InvitationCodeGnerateUtil.generateInvitationCode(user), user.getUserId());
+				//修改用户邀请码
+				userManager.updateInvitationCodeByUserId(InvitationCodeGnerateUtil.generateInvitationCodeTwo(user), user.getUserId());
 				
 				UserServiceInfo userServiceInfo=new UserServiceInfo();
 				userServiceInfo.setUserId(user.getUserId());
@@ -172,15 +173,13 @@ public class UserService {
 				 }
 				
 				
-				
-				
 				userManager.insertUserServiceSelective(userServiceInfo);
 				
 				if(paramData.containsKey("invitationCode")){
 					UserFrom userFrom=new UserFrom();
 					userFrom.setUserId(user.getUserId());
 					userFrom.setFromUrl("");
-					userFrom.setInvitationCode(Integer.valueOf(paramData.get("invitationCode").toString()));
+					userFrom.setInvitationCode(paramData.get("invitationCode").toString());
 					userFrom.setCreateTime(currentDateTime);
 					userFrom.setUpdateTime(currentDateTime);
 					//设置为用户注册
@@ -267,7 +266,6 @@ public class UserService {
 			String userId=paramData.get("userId").toString();
 			String userPostion=paramData.get("userPostion").toString();
 			String jobCategory=paramData.get("jobCategory").toString();
-//			String provenceCode=paramData.get("provenceCode").toString();
 			String cityCode=paramData.get("cityCode").toString();
 			String districtCode=paramData.get("districtCode").toString();
 			String addressDetail=paramData.get("addressDetail").toString();
@@ -386,6 +384,153 @@ public class UserService {
 	}
 	
 	
+	
+	
+	/**
+	 * 
+	 * @author liushuaic
+	 * @date 2015/11/26 16:11
+	 * @desc 修改用户信息
+	 * 
+	 ***/
+	public Map<String,Object> updateUserServiceAndServiceInfo(Map<String,Object> paramData){
+		
+				Map<String,Object> rtnData=new HashMap<String,Object>();
+		
+				
+				Long currentDateTime=Calendar.getInstance().getTimeInMillis();
+				
+				
+				UserServiceInfo userServiceInfo=new UserServiceInfo();
+				
+				String userId=paramData.get("userId").toString();
+				
+				userServiceInfo.setUserId(Long.valueOf(userId));
+				
+				userManager.updateUserServiceInfoIsEmptyByUserId(Long.valueOf(userId));
+				
+				if(paramData.containsKey("jobCategory")){
+					String jobCategory=paramData.get("jobCategory").toString(); 
+					userServiceInfo.setJobCategory(Long.valueOf(jobCategory));
+				}
+				if( paramData.containsKey("districtCode") && paramData.containsKey("mapPositionAddress")){
+					 
+					String mapPositionAddress=paramData.get("mapPositionAddress").toString();
+					userServiceInfo.setMapPositionAddress(mapPositionAddress);
+					
+					String districtCode=paramData.get("districtCode").toString();
+					userServiceInfo.setDistrictCode(Long.valueOf(districtCode));
+				}
+				if(paramData.containsKey("addressDetail")){
+					String addressDetail=paramData.get("addressDetail").toString();
+					userServiceInfo.setAddressDetail(addressDetail);
+				}
+				
+				if(paramData.containsKey("photoUrl")){
+					String photoUrl=paramData.get("photoUrl").toString();
+					userServiceInfo.setPhotoUrl(photoUrl);
+				}
+				
+				if(paramData.containsKey("userPosition")){
+					String userPosition=paramData.get("userPosition").toString();
+					userServiceInfo.setUserPostion(Long.valueOf(userPosition));
+				}
+				
+				if(paramData.containsKey("userName")){
+					String userName=paramData.get("userName").toString();
+					userServiceInfo.setUserServiceName(userName);
+				}
+				
+				userServiceInfo.setUpdateTime(currentDateTime);
+				
+				if(paramData.containsKey("hospital")){
+					String hospital=paramData.get("hospital").toString();
+					userServiceInfo.setHospital(hospital);
+				}
+				if(paramData.containsKey("offices")){
+					userServiceInfo.setOffices(paramData.get("offices").toString());
+				}
+				if(paramData.containsKey("adept")){
+					userServiceInfo.setAdept(paramData.get("adept").toString());
+				}
+				
+				
+				// 反推一下，用户用户地址
+				
+				if(
+						paramData.containsKey("districtCode")
+					&& paramData.containsKey("mapPositionAddress")
+				){
+					
+					String districtCode=paramData.get("districtCode").toString();
+					String mapPositionAddress=paramData.get("mapPositionAddress").toString();
+					
+					Location city	=locationManager.getCityByDistrictCode(districtCode);
+					Location provence=locationManager.getProvenceByCityCode(districtCode);
+					if(null != city){
+						userServiceInfo.setCityCode(Long.valueOf(city.getAdministrativeCode()));
+					}else{
+						userServiceInfo.setCityCode(0L);
+					}
+					if(null != provence){
+						userServiceInfo.setProvenceCode(Long.valueOf(provence.getAdministrativeCode()));
+					}else{
+						userServiceInfo.setProvenceCode(0L);
+					}
+					
+					
+					userServiceInfo.setMapPositionAddress(mapPositionAddress);
+					
+					 //设置经纬度
+					if(mapPositionAddress.length()>0){
+						 try {
+							 if(null != city){
+								 GeoCodeModel geoCodeModel=MapUtils.getGeoCodeModelByAddress(mapPositionAddress, city.getAdministrativeCode());
+								 if(null != geoCodeModel.getGeocodes() && geoCodeModel.getGeocodes().size()>0){
+									 //  TODO 有可能模糊地址对应的有多个这个问题要修改
+									 String lngLatStr=geoCodeModel.getGeocodes().get(0).getLocation();
+									 String lngStr=lngLatStr.split(",")[0];
+									 String latStr=lngLatStr.split(",")[1];
+									 userServiceInfo.setLongitude(Double.valueOf(lngStr));
+									 userServiceInfo.setLatitude(Double.valueOf(latStr));
+								 }else{
+									 userServiceInfo.setLongitude(0d);
+									 userServiceInfo.setLatitude(0d);
+								 }
+							 }else{
+								 userServiceInfo.setLongitude(0d);
+								 userServiceInfo.setLatitude(0d);
+							 }
+							
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}else{
+						 userServiceInfo.setLongitude(0d);
+						 userServiceInfo.setLatitude(0d);
+					 }
+				
+				}
+				
+				
+				
+				userManager.updateUserServiceInfo(userServiceInfo);
+				
+				
+				rtnData.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
+				rtnData.put("message", ExceptionConstants.responseSuccess.responseSuccess.message);
+			
+				return rtnData;
+	}
+	
+	
+	public Map<String,Object> testMessage(Map<String,Object> paramData){
+		Map<String,Object> rtnMap=new HashMap<String,Object>();
+		rtnMap.put("data","测试！");
+		rtnMap.put("status","000000");
+		rtnMap.put("message","测试！");
+		return rtnMap;
+	}
 	
 	
 }

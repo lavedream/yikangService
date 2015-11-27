@@ -383,7 +383,7 @@
 	    1 as 'isRead',
 	    ao.address,
         '' as photoUrl,
-	    osd.service_date as serviceDate,
+	    date_format(osd.service_date,'%Y-%m-%d') as serviceDate,
 	    osd.order_service_detail_id as orderServiceDetailId,
 	    osd.service_detail_status   as serviceDetailStatus
 	from appointment_orders ao

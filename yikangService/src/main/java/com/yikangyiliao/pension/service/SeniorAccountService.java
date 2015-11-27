@@ -379,21 +379,21 @@ public class SeniorAccountService {
 			if(paramData.containsKey("userStatus")){
 				
 				String userStatus=paramData.get("userStatus").toString();
-				if(userStatus.equals("-1") || userStatus.equals("0") || userStatus.equals("-1")){
+				if(userStatus.equals("-1") || userStatus.equals("0") || userStatus.equals("1")){
 					String userId=paramData.get("userId").toString();
 					List<Map<String,Object>> rtnData=seniorAccountManager.getSeniorAccountInfoByInvitationUserId(Integer.valueOf(userStatus),Long.valueOf(userId));
-					
+					DateUtils.formateListObejctDateMilins(rtnData, "createTime");
 					rtnMap.put("data", rtnData);
 					rtnMap.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
 					rtnMap.put("message", ExceptionConstants.responseSuccess.responseSuccess.message);
 				}else{
-					rtnMap.put("status", ExceptionConstants.systemException.systemException.errorCode);
-					rtnMap.put("message", ExceptionConstants.systemException.systemException.errorMessage);
+					rtnMap.put("status", ExceptionConstants.parameterException.parameterException.errorCode);
+					rtnMap.put("message", ExceptionConstants.parameterException.parameterException.errorMessage);
 				}
 				
 			}else{
-				rtnMap.put("status", ExceptionConstants.systemException.systemException.errorCode);
-				rtnMap.put("message", ExceptionConstants.systemException.systemException.errorMessage);
+				rtnMap.put("status", ExceptionConstants.parameterException.parameterException.errorCode);
+				rtnMap.put("message", ExceptionConstants.parameterException.parameterException.errorMessage);
 			}
 			
 		}catch(Exception e){

@@ -17,7 +17,7 @@ public class UserFrom {
 
     private Long activeTime;
 
-    private Integer invitationCode;
+    private String invitationCode;
 
     private Byte userStatus;
 
@@ -85,12 +85,12 @@ public class UserFrom {
         this.activeTime = activeTime;
     }
 
-    public Integer getInvitationCode() {
+    public String getInvitationCode() {
         return invitationCode;
     }
 
-    public void setInvitationCode(Integer invitationCode) {
-        this.invitationCode = invitationCode;
+    public void setInvitationCode(String invitationCode) {
+        this.invitationCode = invitationCode == null ? null : invitationCode.trim();
     }
 
     public Byte getUserStatus() {

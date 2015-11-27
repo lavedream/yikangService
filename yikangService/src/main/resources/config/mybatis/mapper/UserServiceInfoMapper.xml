@@ -271,6 +271,7 @@
 			us.create_time	as createTime, 
 			us.update_time  as updateTime, 
 			us.user_service_name as userName,
+			us.map_position_address as mapPositionAddress,
 			us.hospital,
 			us.offices,
 			us.adept,
@@ -283,5 +284,80 @@
 		 where  us.user_id = #{userId,jdbcType=BIGINT}
   </select>
   
+  <!-- 修改用户信息， 根据 userId -->
+   <update id="updateServiceInfoByUserId" parameterType="com.yikangyiliao.pension.entity.UserServiceInfo" >
+    update user_service_infos
+    <set >
+      <if test="jobCategory != null" >
+        job_category = #{jobCategory,jdbcType=BIGINT},
+      </if>
+      <if test="userPostion != null" >
+        user_postion = #{userPostion,jdbcType=BIGINT},
+      </if>
+      <if test="provenceCode != null" >
+        provence_code = #{provenceCode,jdbcType=BIGINT},
+      </if>
+      <if test="cityCode != null" >
+        city_code = #{cityCode,jdbcType=BIGINT},
+      </if>
+      <if test="districtCode != null" >
+        district_code = #{districtCode,jdbcType=BIGINT},
+      </if>
+      <if test="addressDetail != null" >
+        address_detail = #{addressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="photoUrl != null" >
+        photo_url = #{photoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=TINYINT},
+      </if>
+      <if test="userServiceName != null" >
+        user_service_name = #{userServiceName,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="mapPositionAddress != null" >
+        map_position_address = #{mapPositionAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="hospital != null" >
+        hospital = #{hospital,jdbcType=VARCHAR},
+      </if>
+      <if test="offices != null" >
+        offices = #{offices,jdbcType=VARCHAR},
+      </if>
+      <if test="adept != null" >
+        adept = #{adept,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  
+  <!-- 清空用户信息 -->
+  <update id="updateUserServiceInfoIsEmptyByUserId" parameterType="long">
+  	update 
+	  	user_service_infos set job_category=-2,user_postion=-2,
+		 provence_code=-2,city_code=-2,district_code=-2,
+		 address_detail='',
+		 photo_url='',
+		 user_service_name='',
+		 longitude=0,
+		 latitude=0,
+		 map_position_address='',
+		 hospital='',
+		 offices='',
+		 adept=''
+	 where user_id=#{userId}
+  </update>
   
 </mapper>

@@ -251,7 +251,6 @@
   <!-- 查询某一个订单的详情， 根据 orderServiceId 和 userId  -->
   <select id="getOrderServiceDetailByOrderServiceDetailIdAndUserId"  parameterType="map" resultType="map">
   	select
-		osd.service_date 			as serviceDate,
 		osd.time_quantum_id			as timeQuantumId,
 		sa.sex,
 		ao.phone_number 			as phoneNumber,
@@ -264,7 +263,9 @@
         ao.detail_address			as detailAddress,
         sa.birth_year				as birthYear,
         ao.my_phone_number			as myPhoneNumber,
-        osd.feedback				as feedback
+        osd.feedback				as feedback,
+        ''							as conclusion,
+        date_format(osd.service_date,'%Y-%m-%d') as serviceDate
 	from order_service_details osd 
 	inner join appointment_orders ao on osd.order_id=ao.appointment_order_id
 	inner join senior_account sa on  ao.senior_id=sa.senior_id

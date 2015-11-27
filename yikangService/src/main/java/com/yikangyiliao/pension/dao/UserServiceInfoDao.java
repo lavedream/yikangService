@@ -45,5 +45,22 @@ public interface UserServiceInfoDao {
     Map<String,Object> getPingGuServicerByUserId(Long userId);
     
     
+    /**
+     * @author liushuaic
+     * @date 2015/1126 16:23
+     * @desc
+     *  修改用户信息， 根据 userId 
+     * */
+    int updateServiceInfoByUserId(UserServiceInfo record);
+    
+    /**
+     * @author liushuaic
+     * @date 2015/11/27 11:29
+     * @desc 
+     * 清空用户信息
+     * 
+     * 
+     * **/
+    int updateUserServiceInfoIsEmptyByUserId(long userId);
     
 }
