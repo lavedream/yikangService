@@ -276,6 +276,7 @@
 			us.offices,
 			us.adept,
 			users.invitation_code as invitationCode,
+			''  as 'invitationUrl',
 			count(sa.senior_id)  as nums
 		 from 
 		 	user_service_infos us 

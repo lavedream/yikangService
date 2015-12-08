@@ -11,6 +11,8 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
 
+import com.yikangyiliao.base.config.YiKangServiceConfige;
+
 
 /**
  * @author liushuaic
@@ -24,9 +26,14 @@ public class InterfaceUtil {
 	
 	private static Map<String,String> mathodClassPath=null;
 	
+	private static Map<String,YiKangServiceConfige> mathodServiceConfig=null;
+	
 	static{
 		serviceClassName=new HashMap<String,String>();
 		mathodClassPath=new HashMap<String,String>();
+		mathodServiceConfig=new HashMap<String,YiKangServiceConfige>();
+		
+		
 		serviceClassName.put("0-0","test");
 		mathodClassPath.put("0-0-1","test");
 		
@@ -192,6 +199,14 @@ public class InterfaceUtil {
 		mathodClassPath.put("00-17-05", "updateUserServiceAndServiceInfo");
 		
 		
+		//忘记密码
+		YiKangServiceConfige forgotPassword=new YiKangServiceConfige();
+		forgotPassword.setServiceName("userService");
+		forgotPassword.setMethodName("forgotPassword");
+		forgotPassword.setIsFileter(false);
+		mathodServiceConfig.put("00-17-06",forgotPassword);
+		
+		
 		/**
 		 * @author liushuaic
 		 * @date 2015/09/01 14:19
@@ -289,6 +304,16 @@ public class InterfaceUtil {
 		return serviceClassName.get(serviceCode);
 	}
 
+	
+	/**
+	 * @author liushuaic
+	 * @date 2015/11/26 11:06
+	 * 获取method config
+	 * 
+	 * **/
+	public static YiKangServiceConfige getMethodYikangServiceConfigByServiceCode(String serviceCode){
+		return mathodServiceConfig.get(serviceCode);
+	}
 	
 	/***
 	 *@author liushuaic

@@ -405,4 +405,17 @@
 	
   </select>
   
+ <!--查询我的定单 根据userId,OrderStatus  --> 
+  <select id="getMyAppointmentOrderByUserIdOrderStatus" resultMap="BaseResultMap" parameterType="map">
+  	select 
+    <include refid="Base_Column_List" />
+    from appointment_orders
+    where user_id=#{userId}
+    <if test="null != orderStatus">
+    	and order_status=#{orderStatus}
+    </if>
+    order by create_time desc
+  </select>
+  
+  
 </mapper>

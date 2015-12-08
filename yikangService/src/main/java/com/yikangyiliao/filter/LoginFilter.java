@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
+import com.yikangyiliao.base.config.YiKangServiceConfige;
 import com.yikangyiliao.base.utils.AccessTiketCheckout;
+import com.yikangyiliao.base.utils.InterfaceUtil;
 import com.yikangyiliao.base.utils.NetworkUtil;
 
 
@@ -45,30 +47,38 @@ public class LoginFilter implements Filter {
 			requestURI=requestURI.substring(contextPath.length());
 		}
 		
+		String serviceCode=requestURI.replace("/service/", "");
 		
 		String appId=hsr.getParameter("appId");
 		String accessTicket=hsr.getParameter("accessTicket");
 		String hostIp=NetworkUtil.getIpAddress(hsr);
 		log.debug("登陆ip-->"+hostIp);
 		
-		//在登陆时，对ip 做登陆限制
+			//在登陆时，对ip 做登陆限制
 		
+		YiKangServiceConfige yiKangServiceConfige=InterfaceUtil.getMethodYikangServiceConfigByServiceCode(serviceCode);
 		
-		if((null != appId && appId.length()>1 && null != accessTicket && accessTicket.length() >= 0) || requestURI.equals("/service/login") || requestURI.equals("/service/registerUserAndSaveServiceInfo") ){
+		if(
+				(null != appId && appId.length()>1 && null != accessTicket && accessTicket.length() >= 0) 
+				|| requestURI.equals("/service/login") 
+				|| requestURI.equals("/service/registAndSaveServiceInfo") 
+				|| (null != yiKangServiceConfige && !yiKangServiceConfige.getIsFileter())
+		 ){
 			try {
 				if(		requestURI.equals("/service/login") 
 					|| requestURI.equals("/service/registerUserAndSaveServiceInfo")
 					|| requestURI.equals("/fileUpload/imgeFileUpload")	
-					){
+					|| (null != yiKangServiceConfige && !yiKangServiceConfige.getIsFileter())
+				 ){
 					arg2.doFilter(arg0, arg1);
 				}else if(null != accessTicket && AccessTiketCheckout.checkAccessTiketLayout(accessTicket, hsr)){
 					arg2.doFilter(arg0, arg1);
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				log.error("登陆ip-->"+hostIp);
 				e.printStackTrace();
 			}
+			
 			
 		}else{
 			arg1.setCharacterEncoding("utf-8");

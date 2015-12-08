@@ -34,13 +34,13 @@ public class InvitationCodeGnerateUtil{
 	 * @author liushuaic
 	 * @date 2015/11/26 18:01
 	 * @desc  生成邀请码
-	 * 格式： abcd12
+	 * 格式： cd12
 	 * */
 	public static String generateInvitationCodeTwo(User user){
 		
 		
 		String userIdStr=user.getUserId().toString();
-		int forSize=5-userIdStr.length();
+		int forSize=4-userIdStr.length();
 		String randomStr="";
 		for(int i=0;i<forSize;i++){
 			Random random=new Random();

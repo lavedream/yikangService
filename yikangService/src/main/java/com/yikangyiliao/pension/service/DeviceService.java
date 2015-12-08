@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.yikangyiliao.base.utils.AliasFactory;
 import com.yikangyiliao.pension.common.error.ExceptionConstants;
 import com.yikangyiliao.pension.entity.Device;
+import com.yikangyiliao.pension.entity.User;
 import com.yikangyiliao.pension.entity.UserDeviceTab;
 import com.yikangyiliao.pension.manager.DeviceManager;
 import com.yikangyiliao.pension.manager.UserManager;
@@ -90,9 +91,11 @@ public class DeviceService {
 	
 	
 	/**
+	 * 
 	 * @author liushuaic
 	 * @date 2015/09/16 10:49
 	 * @desc 获取用户的设备别名
+	 * 
 	 * **/
 	public Map<String,Object> getAliasByUser(Map<String,Object> paramData){
 		
@@ -103,9 +106,10 @@ public class DeviceService {
 			
 			Map<String,String> dataMap=new HashMap<String,String>();
 			
-			Device device=deviceManager.getIsUsedDeviceByUserId(Long.valueOf(userId));
+			//Device device=deviceManager.getIsUsedDeviceByUserId(Long.valueOf(userId));
+			User user=userManager.getUserByUserId(Long.valueOf(userId));
 			
-			dataMap.put("alias", device.getPushAlias());
+			dataMap.put("alias", user.getPushAlias());
 			
 			rtnData.put("data", dataMap);
 			rtnData.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);

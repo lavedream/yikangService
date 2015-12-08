@@ -132,9 +132,14 @@
   
   <!--修改设备为当前不使用的  -->
   <update id="updateDeviceIsUsedIs0ByUserId" parameterType="long">
+<!--   	update devices inner join user_device_tabs on devices.device_id=user_device_tabs.device_id -->
+<!--  	set devices.is_used=0 -->
+<!--  	where user_device_tabs.user_id=#{userId} -->
   	update devices inner join user_device_tabs on devices.device_id=user_device_tabs.device_id
  	set devices.is_used=0
- 	where user_device_tabs.user_id=#{userId}
+ 	where 
+ 		user_device_tabs.user_id=#{userId}
+ 	and devices.is_used=1
   </update>
   
   

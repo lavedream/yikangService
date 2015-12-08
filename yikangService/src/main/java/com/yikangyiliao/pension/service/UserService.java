@@ -8,8 +8,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yikangyiliao.base.utils.AliasFactory;
 import com.yikangyiliao.base.utils.InvitationCodeGnerateUtil;
+import com.yikangyiliao.base.utils.messageUtil.SMSUtil;
 import com.yikangyiliao.pension.common.error.ExceptionConstants;
+import com.yikangyiliao.pension.common.response.ResponseMessage;
 import com.yikangyiliao.pension.common.utils.map.MapUtils;
 import com.yikangyiliao.pension.common.utils.map.model.GeoCodeModel;
 import com.yikangyiliao.pension.entity.Location;
@@ -89,8 +92,17 @@ public class UserService {
 				user.setCreateTime(currentDateTime);
 				user.setSalt("000000");
 				user.setLoginTime(currentDateTime);
+				user.setPushAlias("");
 				
 				userManager.insertUserSelective(user);
+				user.setUserName(null);
+				user.setLoginName(null);
+				user.setLoginPassword(null);
+				user.setCreateTime(null);
+				user.setSalt(null);
+				user.setLoginTime(null);
+				user.setPushAlias(AliasFactory.generateAliasByUser(user.getUserId().toString()));
+				userManager.updateUser(user);  //修改用户推送
 				//修改用户邀请码
 				userManager.updateInvitationCodeByUserId(InvitationCodeGnerateUtil.generateInvitationCodeTwo(user), user.getUserId());
 				
@@ -532,5 +544,39 @@ public class UserService {
 		return rtnMap;
 	}
 	
+	/**
+	 * 
+	 * @author liushuaic
+	 * @date 2015/12/01 14:57
+	 * @desc 忘记密码
+	 * TODO 设置访问过多限制
+	 * **/
+	public Map<String,Object> forgotPassword(Map<String,Object> paramData){
+		Map<String,Object> rtnMap=new HashMap<String,Object>();
+		try{
+			if(paramData.containsKey("loginName")){
+				String loginName=paramData.get("loginName").toString();
+				User user=userManager.getUserByLoginName(loginName);
+				if(null != user){
+					String mobileNumber=user.getLoginName();
+					boolean isSend=SMSUtil.sendMessage(mobileNumber, SMSUtil.messageMode.getMyPassword.modeId,new String[]{user.getLoginPassword()});
+					if(isSend){
+						rtnMap.put("status","000000");
+						rtnMap.put("message","信息发送成功！");
+					}else{
+						rtnMap.put("status","999999");
+						rtnMap.put("message","信息发送失败！");
+					}
+				}
+				
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			rtnMap.put("status","999999");
+			rtnMap.put("message","信息发送失败！");
+		}
+		
+		return rtnMap;
+	}
 	
 }

@@ -30,6 +30,16 @@ public class UserManager {
 	
 	
 	
+	/**
+	 * @author liushuaic
+	 * @date 2015/12/04 11:28
+	 * @desc 获取用户
+	 * 
+	 * **/
+	public User getUserByUserId(Long userId){
+		return userDao.selectByPrimaryKey(userId);
+	}
+	
 	
 	
 	/**

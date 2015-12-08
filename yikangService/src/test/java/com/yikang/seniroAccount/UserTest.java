@@ -48,7 +48,7 @@ public class UserTest {
 		try{
 			
 			Map<String,Object> paramData=new HashMap<String, Object>();
-			paramData.put("loginName",53233);
+			paramData.put("loginName",53333233);
 			paramData.put("passWord",1);
 			paramData.put("passWord",1);
 			paramData.put("jobCategory",1);
@@ -106,5 +106,29 @@ public class UserTest {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
+	@Test
+	public void TestForgotPassword(){
+		
+		try{
+			
+			Map<String,Object> paramData=new HashMap<String, Object>();
+			paramData.put("loginName", "13716907523");
+			
+			SendRequest.sendPost("00-17-06?appId=234&machineCode=123123",paramData);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+
+	
+	
+	
+	
+	
 	
 }
