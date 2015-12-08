@@ -153,8 +153,37 @@ public class MessageUtils {
     public static PushPayload buildPushObject_ANDORID_alias_alert(String alias,String message) {
         return PushPayload.newBuilder().setPlatform(Platform.android()).setAudience(Audience.alias(alias)).setMessage(Message.content(message)).build();
     }
-    
-	public static void main(String[] args) {
-		MessageUtils.sendMessage("");
+	
+	
+	/**
+	 * @author liushuaic
+	 * @date 2015/09/06 16:38
+	 **/
+	public static Boolean sendMessageByPushPayLoad(PushPayload pushPayLoad) {
+
+		if (accessWay.equals("JPUSH")) {
+
+			JPushClient jpushClient = new JPushClient(masterSecret, appKey, retryTimes);
+
+			try {
+				PushResult pushResult = jpushClient.sendPush(pushPayLoad);
+				if (pushResult.isResultOK()) {
+					return true;
+				}
+
+			} catch (APIConnectionException e) {
+				e.printStackTrace();
+				return false;
+			} catch (APIRequestException e) {
+				e.printStackTrace();
+				return false;
+			}catch (Exception e) {
+				e.printStackTrace();
+				return false;
+			}
+			return true;
+		}
+
+		return false;
 	}
 }
