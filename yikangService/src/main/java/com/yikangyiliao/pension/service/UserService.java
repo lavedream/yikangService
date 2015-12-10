@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.yikangyiliao.base.utils.AliasFactory;
 import com.yikangyiliao.base.utils.InvitationCodeGnerateUtil;
+import com.yikangyiliao.base.utils.SystemProperties;
 import com.yikangyiliao.base.utils.messageUtil.SMSUtil;
 import com.yikangyiliao.pension.common.error.ExceptionConstants;
 import com.yikangyiliao.pension.common.response.ResponseMessage;
@@ -93,6 +94,7 @@ public class UserService {
 				user.setSalt("000000");
 				user.setLoginTime(currentDateTime);
 				user.setPushAlias("");
+				user.setInvitationCode("");
 				
 				userManager.insertUserSelective(user);
 				user.setUserName(null);
@@ -389,6 +391,9 @@ public class UserService {
 			String userId=paramData.get("userId").toString();
 			
 			Map<String,Object> userServiceInfo=userManager.getUserServiceInfoByUserId(Long.valueOf(userId));
+			// 邀请url
+			String invitationUrl=SystemProperties.getPropertieValue("invitationUrl")+userServiceInfo.get("invitationCode").toString();
+			userServiceInfo.put("invitationUrl",invitationUrl);
 			rtnData.put("data", userServiceInfo);
 			rtnData.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
 			rtnData.put("message", ExceptionConstants.responseSuccess.responseSuccess.message);

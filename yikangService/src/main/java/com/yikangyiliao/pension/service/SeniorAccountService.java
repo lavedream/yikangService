@@ -15,7 +15,6 @@ import org.springframework.util.StringUtils;
 import com.yikangyiliao.base.utils.DateUtils;
 import com.yikangyiliao.pension.common.constants.YKConstants;
 import com.yikangyiliao.pension.common.error.ExceptionConstants;
-import com.yikangyiliao.pension.common.response.ResponseMessage;
 import com.yikangyiliao.pension.dao.OperateServiceLogDao;
 import com.yikangyiliao.pension.dao.SeniorAccountDao;
 import com.yikangyiliao.pension.dao.SeniorLivingConditionDao;

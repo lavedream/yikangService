@@ -5,6 +5,7 @@ import cn.jpush.api.common.APIConnectionException;
 import cn.jpush.api.common.APIRequestException;
 import cn.jpush.api.push.PushResult;
 import cn.jpush.api.push.model.Message;
+import cn.jpush.api.push.model.Options;
 import cn.jpush.api.push.model.Platform;
 import cn.jpush.api.push.model.PushPayload;
 import cn.jpush.api.push.model.PushPayload.Builder;
@@ -37,13 +38,13 @@ public class MessageUtils {
 	/**
 	 * appk
 	 * */
-	private static String appKey="4b9dd13dcdaf8e936b52eeba";
+	private static String appKey="9de890837df54fce0b818cc4";
 	
 	/**
 	 * 安全密钥
 	 * 
 	 * **/
-	private static String masterSecret="b0a05dd0cdc308598c63b83b";
+	private static String masterSecret="16fb21e870c56e506a71f59c";
 	
 	/**
 	 * 
@@ -123,7 +124,14 @@ public class MessageUtils {
      * @param message 信息内容
      * **/
     public static PushPayload buildPushObject_all_alias_alert(String alias,String message) {
-        return PushPayload.newBuilder().setPlatform(Platform.all()).setAudience(Audience.alias(alias)).setMessage(Message.content(message)).build();
+//         PushPayload.newBuilder().setPlatform(Platform.android_ios()).setAudience(Audience.alias(alias)).build().alertAll(message);
+//         Notification.alert(message);
+//        return PushPayload.newBuilder().setPlatform(Platform.android_ios()).setAudience(Audience.alias(alias)).setNotification(Notification.alert(message)).build();
+       
+    	Options options=Options.newBuilder().setApnsProduction(true).build();
+    	return PushPayload.newBuilder().setPlatform(Platform.all()).setAudience(Audience.alias(alias))
+                .setNotification(Notification.alert(message)).setOptions(options)
+                .build();
     }
     
     

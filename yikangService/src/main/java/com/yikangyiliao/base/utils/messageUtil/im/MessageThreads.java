@@ -31,8 +31,8 @@ public class MessageThreads {
 
 	public static void main(String[] args) throws InterruptedException {
 		Message message=new Message();
-		message.setAlias("message_info_165");
-		message.setContent("test");
+		message.setAlias("message_info_168");
+		message.setContent("测试信息");
 		MessageThreads messageThreads=new MessageThreads();
 		messageThreads.startSendMessage();
 		MessageQueue.put(message);

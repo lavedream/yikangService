@@ -14,28 +14,28 @@ public class MessageSender implements Runnable {
 
 	public void run() {
 		while (true){
-			
 			Message message=MessageQueue.pop();
-			PushPayload pushPayload;
-			pushPayload=MessageUtils.buildPushObject_all_alias_alert("message_info_165", "---");
 			if(null == message){
 				try {
-					System.out.println(" null ");
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}else{
-				System.out.println("---"+message.getContent());
-				pushPayload=MessageUtils.buildPushObject_all_alias_alert(message.getAlias(), message.getContent());
+				PushPayload pushPayload=MessageUtils.buildPushObject_all_alias_alert(message.getAlias(), message.getContent());
 				
+				
+				//如果没有发送成功，重新放入，发送队列，只以是否推送到 极光为准。
+				boolean  isSended=MessageUtils.sendMessageByPushPayLoad(pushPayload);
+				if(isSended){
+					try {
+						MessageQueue.put(message);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 			
-			boolean  isSended=MessageUtils.sendMessageByPushPayLoad(pushPayload);
-			
-			if(isSended){
-				
-			}
 			
 		}
 	}
