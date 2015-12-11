@@ -4,7 +4,6 @@ import cn.jpush.api.JPushClient;
 import cn.jpush.api.common.APIConnectionException;
 import cn.jpush.api.common.APIRequestException;
 import cn.jpush.api.push.PushResult;
-import cn.jpush.api.push.model.Message;
 import cn.jpush.api.push.model.Options;
 import cn.jpush.api.push.model.Platform;
 import cn.jpush.api.push.model.PushPayload;
@@ -124,9 +123,6 @@ public class MessageUtils {
      * @param message 信息内容
      * **/
     public static PushPayload buildPushObject_all_alias_alert(String alias,String message) {
-//         PushPayload.newBuilder().setPlatform(Platform.android_ios()).setAudience(Audience.alias(alias)).build().alertAll(message);
-//         Notification.alert(message);
-//        return PushPayload.newBuilder().setPlatform(Platform.android_ios()).setAudience(Audience.alias(alias)).setNotification(Notification.alert(message)).build();
        
     	Options options=Options.newBuilder().setApnsProduction(true).build();
     	return PushPayload.newBuilder().setPlatform(Platform.all()).setAudience(Audience.alias(alias))
@@ -145,7 +141,8 @@ public class MessageUtils {
      * @param message 信息内容
      * */
     public static PushPayload buildPushObject_IOS_alias_alert(String alias,String message) {
-        return PushPayload.newBuilder().setPlatform(Platform.ios()).setAudience(Audience.alias(alias)).setMessage(Message.content(message)).build();
+    	Options options=Options.newBuilder().setApnsProduction(true).build();
+        return PushPayload.newBuilder().setPlatform(Platform.ios()).setAudience(Audience.alias(alias)).setNotification(Notification.alert(message)).setOptions(options).build();
     }
     
     
@@ -159,7 +156,8 @@ public class MessageUtils {
      * 
      * */
     public static PushPayload buildPushObject_ANDORID_alias_alert(String alias,String message) {
-        return PushPayload.newBuilder().setPlatform(Platform.android()).setAudience(Audience.alias(alias)).setMessage(Message.content(message)).build();
+    	Options options=Options.newBuilder().setApnsProduction(true).build();
+        return PushPayload.newBuilder().setPlatform(Platform.android()).setAudience(Audience.alias(alias)).setNotification(Notification.alert(message)).setOptions(options).build();
     }
 	
 	
