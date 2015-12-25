@@ -162,4 +162,16 @@ public class UserManager {
 		return userServiceInfoDao.updateUserServiceInfoIsEmptyByUserId(userId);
 	}
 	
+	
+    /**
+     * @author liushuaic
+     * @date 2015/12/21 11:12
+     * @desc 修改用户密码
+     * ***/
+    public int updatePasswordByLoginName(String userName,String password){
+    	Map<String,Object> paramData=new HashMap<String,Object>();
+    	paramData.put("userName", userName);
+    	paramData.put("password", password);
+    	return userDao.updatePasswordByLoginName(paramData);
+    }
 }

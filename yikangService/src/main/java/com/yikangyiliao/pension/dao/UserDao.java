@@ -26,4 +26,12 @@ public interface UserDao {
      * 添加用户邀请码
      * */
     int updateInvitationCodeByUserId(Map<String,Object> paramData);
+    
+    
+    /**
+     * @author liushuaic
+     * @date 2015/12/21 11:12
+     * @desc 修改用户密码
+     * ***/
+    int updatePasswordByLoginName(Map<String,Object> paramData);
 }

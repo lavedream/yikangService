@@ -124,6 +124,34 @@ public class UserTest {
 	}
 	
 	
+	@Test
+	public void TestUserNotAtSystem(){
+		
+		try{
+			
+			Map<String,Object> paramData=new HashMap<String, Object>();
+			paramData.put("loginName", "13716907523");
+			
+			SendRequest.sendPost("00-17-07?appId=234&machineCode=123123",paramData);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	@Test
+	public void TestResetPassword(){
+		
+		try{
+//			
+			Map<String,Object> paramData=new HashMap<String, Object>();
+			paramData.put("loginName", "13716907523");
+			paramData.put("password", "password");
+			
+			SendRequest.sendPost("00-17-08?appId=234&machineCode=123123",paramData);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 
 	
 	

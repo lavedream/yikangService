@@ -207,6 +207,22 @@ public class InterfaceUtil {
 		mathodServiceConfig.put("00-17-06",forgotPassword);
 		
 		
+		//查询用户是否存在
+		YiKangServiceConfige isMySystemUser=new YiKangServiceConfige();
+		isMySystemUser.setServiceName("userService");
+		isMySystemUser.setMethodName("isMySystemUser");
+		isMySystemUser.setIsFileter(false);
+		mathodServiceConfig.put("00-17-07",isMySystemUser);
+		
+		
+		//重置密码
+		YiKangServiceConfige resetPassword=new YiKangServiceConfige();
+		resetPassword.setServiceName("userService");
+		resetPassword.setMethodName("resetPassword");
+		resetPassword.setIsFileter(false);
+		mathodServiceConfig.put("00-17-08",resetPassword);
+		
+		
 		/**
 		 * @author liushuaic
 		 * @date 2015/09/01 14:19
@@ -265,6 +281,9 @@ public class InterfaceUtil {
 		 * */
 		serviceClassName.put("00-22","servicerService");
 		mathodClassPath.put("00-22-01","getAssessmentService");
+		
+		
+		YiKangServiceConfige  userPasswordReset=new YiKangServiceConfige();
 		
 		
 		

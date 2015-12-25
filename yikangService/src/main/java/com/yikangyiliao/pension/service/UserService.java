@@ -584,4 +584,68 @@ public class UserService {
 		return rtnMap;
 	}
 	
+	/**
+	 * 
+	 * @author liushuaic
+	 * @date 2015/12/19 00:16 
+	 * @desc 重置密码
+	 * 
+	 * ***/
+	public ResponseMessage resetPassword(Map<String,Object> paramData){
+		ResponseMessage responseMessage=new ResponseMessage();
+		if(paramData.containsKey("loginName")){
+			String loginName=paramData.get("loginName").toString();
+			
+			User user=userManager.getUserByLoginName(loginName);
+			
+			if(null != user){
+				
+				String password=paramData.get("password").toString();
+				
+				userManager.updatePasswordByLoginName(loginName, password);
+				responseMessage.setStatus(ExceptionConstants.responseSuccess.responseSuccess.code);
+				responseMessage.setMessage(ExceptionConstants.responseSuccess.responseSuccess.message);
+			}else{
+				responseMessage.setStatus(ExceptionConstants.systemException.systemException.errorCode);
+				responseMessage.setMessage(ExceptionConstants.systemException.systemException.errorMessage);
+			}
+			
+			
+		}else{
+			responseMessage.setStatus(ExceptionConstants.parameterException.parameterException.errorCode);
+			responseMessage.setMessage(ExceptionConstants.parameterException.parameterException.errorMessage);
+		}
+		
+		return responseMessage;
+	}
+	
+	/**
+	 * @author liushuaic
+	 * @date 2015/12/21 17:50
+	 * @desc 是否存在系统中
+	 * 
+	 * **/
+	public ResponseMessage isMySystemUser(Map<String,Object> paramData){
+		ResponseMessage responseMessage=new ResponseMessage();
+		if(paramData.containsKey("loginName")){
+			String loginName=paramData.get("loginName").toString();
+			User user=userManager.getUserByLoginName(loginName);
+			if(null != user){
+				responseMessage.setStatus(ExceptionConstants.responseSuccess.responseSuccess.code);
+				responseMessage.setMessage(ExceptionConstants.responseSuccess.responseSuccess.message);
+			}else{
+				responseMessage.setStatus(ExceptionConstants.userException.userNotAtSystem.errorCode);
+				responseMessage.setMessage(ExceptionConstants.userException.userNotAtSystem.errorMessage);
+			}
+		}else{
+			responseMessage.setStatus(ExceptionConstants.userException.userNotAtSystem.errorCode);
+			responseMessage.setMessage(ExceptionConstants.userException.userNotAtSystem.errorMessage);
+		}
+		
+		return responseMessage;
+		
+	}
+	
+	
+	
 }

@@ -171,4 +171,11 @@
   	</where>
   </select>
   
+  <!-- 修改用户的密码 -->
+  <update id="updatePasswordByLoginName" parameterType="map">
+  	update users us set us.login_password=#{password}
+  	where login_name=#{userName}
+  </update>
+  
+  
 </mapper>

@@ -265,7 +265,7 @@
   <!-- 根据邀请人的id 查询 出被邀请患者的信息  -->
   <select id="getSeniorAccountInfoByInvitationUserId" parameterType="map" resultType="map">
   	select 
-	    sa.name as name, 
+	   	users.user_name as name, 
 		sa.sex as sex, 
 		sa.birth_year as birthYear, 
 		case 

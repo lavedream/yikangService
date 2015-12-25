@@ -120,4 +120,24 @@ public class ExceptionConstants {
 		
 	}
 	
+	
+	/**
+	 * 用户异常
+	 * 05
+	 * */
+	public enum userException{
+		
+		
+		userNotAtSystem("050001","未注册用户！");
+		
+		public String errorCode;
+		public String errorMessage;
+		
+		
+		private userException(String errorCode,String errorMessage){
+			this.errorCode=errorCode;
+			this.errorMessage=errorMessage;
+		}
+	}
+	
 }
