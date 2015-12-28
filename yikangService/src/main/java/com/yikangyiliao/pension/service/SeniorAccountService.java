@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 import com.yikangyiliao.base.utils.DateUtils;
 import com.yikangyiliao.pension.common.constants.YKConstants;
 import com.yikangyiliao.pension.common.error.ExceptionConstants;
+import com.yikangyiliao.pension.common.response.ResponseMessage;
 import com.yikangyiliao.pension.dao.OperateServiceLogDao;
 import com.yikangyiliao.pension.dao.SeniorAccountDao;
 import com.yikangyiliao.pension.dao.SeniorLivingConditionDao;
@@ -404,6 +405,35 @@ public class SeniorAccountService {
 		return rtnMap;
 	}
 	
+	/**
+	 * @author liushuaic
+	 * @date 2015/12/28 17:18
+	 * @desc 查询某一个
+	 * */
+	public ResponseMessage getSeniorAccountByClentUserId(Map<String,Object> paramData){
+		
+		ResponseMessage responseMessage=new ResponseMessage();
+		
+		try{
+			
+			if(paramData.containsKey("userId")){
+				
+				String userId=paramData.get("userId").toString();
+				seniorAccountManager.getSeniorAccountByCreateUserId(Long.valueOf(userId));
+				
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			responseMessage.setStatus( ExceptionConstants.systemException.systemException.errorCode);
+			responseMessage.setMessage( ExceptionConstants.systemException.systemException.errorMessage);
+		}
+		
+		
+		return responseMessage;
+		
+		
+	}
 	
 	
 	

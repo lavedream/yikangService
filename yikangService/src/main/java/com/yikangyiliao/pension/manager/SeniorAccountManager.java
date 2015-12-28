@@ -44,6 +44,20 @@ public class SeniorAccountManager {
 	}
 	
 	
+	
+	
+	/**
+	 * @author liushuaic
+	 * @date 2015/12/28 17:35
+	 * @desc 获取某一个创建人下的所有患者
+	 * **/
+	public List<SeniorAccount> getSeniorAccountByCreateUserId(Long userId){
+		return seniorAccountDao.getSeniorAccountByCreateUserId(userId);
+	}
+	
+	
+	
+	
 	/**
      * @author liushuaic
      * @date 2015/11/17 16:38

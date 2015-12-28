@@ -253,6 +253,28 @@
   
 <!--   查询某一个用户下的所有的老人信息 -->
   <select id="getSeniorAccountByUserId" parameterType="long" resultMap="BaseResultMap">
+<!--   	select senior_id,name from senior_account -->
+<!--   	<where> -->
+<!--   		<if test="null != userId"> -->
+<!--   			create_user_id=#{userId} -->
+<!--   		</if> -->
+<!--   	</where> -->
+<!--   	order by create_time desc -->
+	
+	select  
+		sa.senior_id,sa.name 
+	from appointment_orders ao inner join order_service_details osd 
+	on (ao.appointment_order_id=osd.order_id and service_user_id=#{userId} )
+	inner join senior_account sa on ao.senior_id=sa.senior_id
+	order by sa.create_time desc
+	
+  </select>
+  
+  
+  
+  
+  <!-- 获取患者根据创建人 -->
+  <select id="getSeniorAccountByCreateUserId" parameterType="long" resultMap="BaseResultMap">
   	select senior_id,name from senior_account
   	<where>
   		<if test="null != userId">
@@ -277,7 +299,7 @@
 		    else uf.user_status
 		end
 		 as userStatus,
-		 ao.create_time as createTime,
+		 users.create_time as createTime,
  		 sa.senior_id  as seniorId
 	from users
 	inner join user_froms uf 			on users.user_id=uf.user_id

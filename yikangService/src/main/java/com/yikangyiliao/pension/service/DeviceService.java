@@ -109,7 +109,9 @@ public class DeviceService {
 			//Device device=deviceManager.getIsUsedDeviceByUserId(Long.valueOf(userId));
 			User user=userManager.getUserByUserId(Long.valueOf(userId));
 			
-			dataMap.put("alias", user.getPushAlias());
+			if(null != user){
+				dataMap.put("alias", user.getPushAlias());
+			}
 			
 			rtnData.put("data", dataMap);
 			rtnData.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);

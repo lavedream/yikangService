@@ -30,6 +30,16 @@ public interface SeniorAccountDao {
     List<SeniorAccount> getSeniorAccountByUserId(@Param("userId") Long userId);
     
     
+    
+    /**
+     * @author liushuaic
+     * @date 2015/07/30 18:50
+     * @desc 查询某一个创建人下的所有的 老人信息
+     * 
+     * */
+    List<SeniorAccount> getSeniorAccountByCreateUserId(@Param("userId") Long userId);
+    
+    
     /**
      * 
      * @author liushuaic
