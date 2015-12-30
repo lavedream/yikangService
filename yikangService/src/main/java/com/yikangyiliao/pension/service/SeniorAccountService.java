@@ -419,8 +419,10 @@ public class SeniorAccountService {
 			if(paramData.containsKey("userId")){
 				
 				String userId=paramData.get("userId").toString();
-				seniorAccountManager.getSeniorAccountByCreateUserId(Long.valueOf(userId));
-				
+				List<SeniorAccount> data=seniorAccountManager.getSeniorAccountByCreateUserId(Long.valueOf(userId));
+				responseMessage.setData(data);
+				responseMessage.setStatus( ExceptionConstants.responseSuccess.responseSuccess.code);
+				responseMessage.setMessage(ExceptionConstants.responseSuccess.responseSuccess.message);
 			}
 			
 		}catch(Exception e){

@@ -62,7 +62,17 @@ public class InterfaceUtil {
 		 * */
 		mathodClassPath.put("00-01-04","getSeniorAccountInfoByInvitationUserId");
 		
-		
+		/**
+		 * @author liushuaic
+		 * @date 2015/12/29  10:33
+		 * @desc 获取某一个用户创建的患者
+		 * 
+		 * **/
+		YiKangServiceConfige getSeniorAccountByClentUserId=new YiKangServiceConfige();
+		getSeniorAccountByClentUserId.setServiceName("seniorAccountService");
+		getSeniorAccountByClentUserId.setMethodName("getSeniorAccountByClentUserId");
+		getSeniorAccountByClentUserId.setIsFileter(false);
+		mathodServiceConfig.put("00-01-05",getSeniorAccountByClentUserId);
 		
 		
 		

@@ -68,4 +68,24 @@ public class SeniorAccountServiceTest {
 		}
 	}
 	
+	
+	
+	/**
+	 * @author liushuaic
+	 * @date 2015/07/28 12:15
+	 * @desc 测试00-01-04 查询某一个用户下的所有人
+	 * getSeniorAccountInfoByInvitationUserId
+	 * */
+	@Test
+	public void TestGetSeniorAccountByClentUserId(){
+		try {
+			
+			Map<String,Object> paramData=new HashMap<String, Object>();
+			SendRequest.sendPost("00-01-05?appId=00-01&machineCode=123123&accessTicket=ae7433528cdd54dc76e922c1d612c82dfcfc343a64e68012c34c1b74c4cd73dd5e4c7afd323d91954ba85f0a1bf9bb45",paramData);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
