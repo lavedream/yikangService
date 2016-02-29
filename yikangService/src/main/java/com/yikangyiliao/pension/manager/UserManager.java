@@ -12,6 +12,7 @@ import com.yikangyiliao.pension.dao.UserInfoDao;
 import com.yikangyiliao.pension.dao.UserServiceInfoDao;
 import com.yikangyiliao.pension.entity.User;
 import com.yikangyiliao.pension.entity.UserInfo;
+import com.yikangyiliao.pension.entity.UserModel;
 import com.yikangyiliao.pension.entity.UserServiceInfo;
 
 
@@ -174,4 +175,22 @@ public class UserManager {
     	paramData.put("password", password);
     	return userDao.updatePasswordByLoginName(paramData);
     }
+    
+    
+    
+    /**
+     * @author liushuaic
+     * @date 2016-02-25 16:11
+     * @desc 获取我邀请的用户
+     * 
+     * ***/
+    public List<UserModel> getInvationUserInfoByInvationUserId(Long userId,Integer userStatus){
+    	Map<String,Object> paramData=new HashMap<String,Object>();
+    	paramData.put("userId", userId);
+    	paramData.put("userStatus", userStatus);
+    	return userDao.getInvationUserInfoByInvationUserId(paramData);
+    }
+    
+    
+    
 }

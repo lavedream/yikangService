@@ -12,10 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.yikangyiliao.base.utils.DateUtils;
 import com.yikangyiliao.pension.common.error.ExceptionConstants;
+import com.yikangyiliao.pension.common.page.PageParameter;
+import com.yikangyiliao.pension.common.response.ResponseMessage;
 import com.yikangyiliao.pension.common.utils.GenreateNumberUtils;
 import com.yikangyiliao.pension.common.utils.map.MapUtils;
 import com.yikangyiliao.pension.common.utils.map.model.GeoCodeModel;
 import com.yikangyiliao.pension.entity.AppointmentOrder;
+import com.yikangyiliao.pension.entity.AppointmentOrderServiceModel;
 import com.yikangyiliao.pension.entity.OrderServiceDetail;
 import com.yikangyiliao.pension.entity.SeniorAccount;
 import com.yikangyiliao.pension.entity.SeniorLivingCondition;
@@ -507,4 +510,43 @@ public class AppointmentOrderService {
 		return rtnMap;
 		
 	}
+	
+	
+	
+	
+	
+	/**
+	 * @author liushuaic
+	 * @date 2016-02-25 18:39
+	 * 查询某一个用户下的所有订单
+	 * */
+	public ResponseMessage getAppointmentOrderListPageByUserId(Map<String,Object> paramData){
+		ResponseMessage responseMessage=new ResponseMessage();
+		
+		try{
+			if(paramData.containsKey("page")){
+				PageParameter page=new PageParameter();
+				paramData.put("page", page);
+			}
+			List<AppointmentOrderServiceModel> data=appointmentOrderManager.getAppointmentOrderListPageByUserId(paramData);
+			responseMessage.setData(data);
+			responseMessage.setStatus(ExceptionConstants.responseSuccess.responseSuccess.code);
+			responseMessage.setMessage(ExceptionConstants.responseSuccess.responseSuccess.message);
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			responseMessage.setStatus(ExceptionConstants.systemException.systemException.errorCode);
+			responseMessage.setMessage(ExceptionConstants.systemException.systemException.errorMessage);
+		}
+		
+		return responseMessage;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }

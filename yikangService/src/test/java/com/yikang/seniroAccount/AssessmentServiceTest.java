@@ -14,13 +14,13 @@ public class AssessmentServiceTest {
 	public void testSaveAssessment(){
 		try {
 			Map<String, Object> paramData = new HashMap<String, Object>();
-			paramData.put("seniorId",1);
-			paramData.put("userId", 1);
+			//paramData.put("seniorId",44);
+			//paramData.put("userId", 1);
 			
 //			String seniorId=paramData.get("seniorId").toString();
 //			String userId=
 			
-			SendRequest.sendPost("00-15-01", paramData);
+			SendRequest.sendPost("00-23-01?appId=234&accessTicket=''&machineCode=123123", paramData);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

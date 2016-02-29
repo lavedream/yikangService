@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.yikangyiliao.pension.dao.AppointmentOrderDao;
 import com.yikangyiliao.pension.entity.AppointmentOrder;
+import com.yikangyiliao.pension.entity.AppointmentOrderServiceModel;
 
 @Component
 public class AppointmentOrderManager {
@@ -103,4 +104,16 @@ public class AppointmentOrderManager {
 		paramData.put("serviceDetailStatus", serviceDetailStatus);
 		return appointmentOrderDao.getServicerScheduleByServiceUserId(paramData);
 	}
+	
+	
+	
+	/**
+	 * @author liushuaic
+	 * @date 2016/01/29 18:23
+	 * @desc 获取某一个用户的定单列表
+	 * */
+	public List<AppointmentOrderServiceModel> getAppointmentOrderListPageByUserId(Map<String, Object> paramData){
+		return appointmentOrderDao.getAppointmentOrderListPageByUserId(paramData);
+	}
+	
 }

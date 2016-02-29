@@ -3,12 +3,14 @@ package com.yikangyiliao.pension.service;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yikangyiliao.base.utils.AliasFactory;
+import com.yikangyiliao.base.utils.DateUtils;
 import com.yikangyiliao.base.utils.InvitationCodeGnerateUtil;
 import com.yikangyiliao.base.utils.SystemProperties;
 import com.yikangyiliao.base.utils.messageUtil.SMSUtil;
@@ -19,6 +21,7 @@ import com.yikangyiliao.pension.common.utils.map.model.GeoCodeModel;
 import com.yikangyiliao.pension.entity.Location;
 import com.yikangyiliao.pension.entity.User;
 import com.yikangyiliao.pension.entity.UserFrom;
+import com.yikangyiliao.pension.entity.UserModel;
 import com.yikangyiliao.pension.entity.UserServiceInfo;
 import com.yikangyiliao.pension.manager.LocationManager;
 import com.yikangyiliao.pension.manager.UserFromManager;
@@ -84,7 +87,10 @@ public class UserService {
 				if(paramData.containsKey("photoUrl")){
 					photoUrl=paramData.get("photoUrl").toString();
 				}
-				
+				String offices="";
+				if(paramData.containsKey("offices")){
+					photoUrl=paramData.get("offices").toString();
+				}
 			
 				User user=new User();
 				user.setUserName(userName);
@@ -113,7 +119,7 @@ public class UserService {
 				userServiceInfo.setPhotoUrl(photoUrl);
 				userServiceInfo.setProvenceCode(Long.valueOf("0"));
 				userServiceInfo.setAddressDetail(addressDetail);
-				
+				userServiceInfo.setOffices(offices);
 				userServiceInfo.setJobCategory(Long.valueOf(jobCategory));
 				userServiceInfo.setUserPostion(Long.valueOf(userPosition));
 				
@@ -128,11 +134,11 @@ public class UserService {
 				userServiceInfo.setUserServiceName(userName);
 				
 				
-				
+				String hospital="";
 				if(paramData.containsKey("hospital")){
-					String hospital=paramData.get("hospital").toString();
-					userServiceInfo.setHospital(hospital);
+					 hospital=paramData.get("hospital").toString();
 				}
+				userServiceInfo.setHospital(hospital);
 				if(paramData.containsKey("offices")){
 					userServiceInfo.setOffices(paramData.get("offices").toString());
 				}
@@ -646,6 +652,43 @@ public class UserService {
 		
 	}
 	
+	
+	
+	/**
+	 * @author liushuaic
+	 * @date 2016-02-26 16:38
+	 * @desc 获取我邀请的用户
+	 * */
+	public ResponseMessage getInvationUserInfoByInvationUserId(Map<String,Object> paramData){
+		ResponseMessage responseMessage=new ResponseMessage();
+		try{
+			if(paramData.containsKey("userStatus")){
+				
+				String userStatus=paramData.get("userStatus").toString();
+				if(userStatus.equals("-1") || userStatus.equals("0") || userStatus.equals("1")){
+					String userId=paramData.get("userId").toString();
+					List<UserModel> rtnData=userManager.getInvationUserInfoByInvationUserId(Long.valueOf(userId),Integer.valueOf(userStatus));
+					responseMessage.setData(rtnData);
+					responseMessage.setStatus( ExceptionConstants.responseSuccess.responseSuccess.code);
+					responseMessage.setMessage( ExceptionConstants.responseSuccess.responseSuccess.message);
+				}else{
+					responseMessage.setStatus(ExceptionConstants.parameterException.parameterException.errorCode);
+					responseMessage.setMessage(ExceptionConstants.parameterException.parameterException.errorMessage);
+				}
+				
+			}else{
+				responseMessage.setStatus( ExceptionConstants.parameterException.parameterException.errorCode);
+				responseMessage.setMessage(ExceptionConstants.parameterException.parameterException.errorMessage);
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			responseMessage.setStatus(ExceptionConstants.systemException.systemException.errorCode);
+			responseMessage.setMessage(ExceptionConstants.systemException.systemException.errorMessage);
+		}
+		
+		return responseMessage;
+	}
 	
 	
 }

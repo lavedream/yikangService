@@ -33,7 +33,6 @@ public class AssessmentService {
 	
 	
 	@Autowired
-	
 	private UserManager userManager;  
 	
 	/**
@@ -97,8 +96,6 @@ public class AssessmentService {
 			if(null != paramData &&  paramData.containsKey("seniorId")){
 				
 				String seniorId=paramData.get("seniorId").toString();
-				
-				
 				List<Assessment> data=assessmentManager.getAssessmentBySeniorId(Long.valueOf(seniorId));
 				rtnMap.put("data", data);
 				rtnMap.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);

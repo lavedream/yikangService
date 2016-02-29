@@ -165,15 +165,17 @@ public class SeniorAccountService {
 					String unit = paramData.get("unit").toString();
 					seniorLivingCondition.setUnit(Integer.parseInt(unit));
 				}
+				String longitude="0";
 				if(paramData.containsKey("longitude")){
-					String longitude = paramData.get("longitude").toString();
-					seniorLivingCondition.setLongitude(Double.parseDouble(longitude));
+					longitude = paramData.get("longitude").toString();
 				}
-				if(paramData.containsKey("latitude")){
-					String latitude = paramData.get("latitude").toString();
-					seniorLivingCondition.setLatitude(Double.parseDouble(latitude));
-				}
+				seniorLivingCondition.setLongitude(Double.parseDouble(longitude));
 				
+				String latitude="0";
+				if(paramData.containsKey("latitude")){
+					latitude = paramData.get("latitude").toString();
+				}
+				seniorLivingCondition.setLatitude(Double.parseDouble(latitude));
 				
 			
 					seniroAccount.setName(name);

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.yikangyiliao.pension.entity.AppointmentOrder;
+import com.yikangyiliao.pension.entity.AppointmentOrderServiceModel;
 
 public interface AppointmentOrderDao {
     int deleteByPrimaryKey(Long appointmentOrderId);
@@ -54,6 +55,15 @@ public interface AppointmentOrderDao {
      * **/
     List<Map<String,Object>> getServicerScheduleByServiceUserId(Map<String,Object> paramData);
     
+    
+    
+    
+    /**
+     * @author liushuaic
+     * @date 2016/02/25 16:56
+     * @desc 获取订单列表
+     * */
+    List<AppointmentOrderServiceModel> getAppointmentOrderListPageByUserId(Map<String,Object> paramData);
 }
 
 

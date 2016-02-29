@@ -62,6 +62,17 @@ public class DateUtils {
 	}
 	
 	
+	/**
+	 * @author liushuaic
+	 * @date 2016/02/1 15:18
+	 * @desc 格式化字符串 yyyy-MM-dd HH:mm:ss
+	 * */
+	public static String formateDate(Long dateTime){
+		Date date=new Date(dateTime);
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return sdf.format(date);
+	}
+	
 	public static String formateDate(Date date){
 		
 		SimpleDateFormat sdf=new SimpleDateFormat(defaultFormateStr);

@@ -233,6 +233,17 @@ public class InterfaceUtil {
 		mathodServiceConfig.put("00-17-08",resetPassword);
 		
 		
+		
+		//获取我邀请的用户
+		YiKangServiceConfige getInvationUserByUserId=new YiKangServiceConfige();
+		getInvationUserByUserId.setServiceName("userService");
+		getInvationUserByUserId.setMethodName("getInvationUserInfoByInvationUserId");
+		getInvationUserByUserId.setIsFileter(true);
+		mathodServiceConfig.put("00-17-09",getInvationUserByUserId);
+		
+		
+		
+		
 		/**
 		 * @author liushuaic
 		 * @date 2015/09/01 14:19
@@ -282,6 +293,14 @@ public class InterfaceUtil {
 		mathodClassPath.put("00-21-05", "getOrderServiceDetailById");
 		//保存反馈信息，设置订单服务完成
 		mathodClassPath.put("00-21-06", "saveFeedback");
+		
+		
+		
+		YiKangServiceConfige getOrderByUserId=new YiKangServiceConfige();
+		getOrderByUserId.setServiceName("appointmentOrderService");
+		getOrderByUserId.setMethodName("getAppointmentOrderListPageByUserId");
+		getOrderByUserId.setIsFileter(true);
+		mathodServiceConfig.put("00-21-07",getOrderByUserId);
 		
 		
 		/**

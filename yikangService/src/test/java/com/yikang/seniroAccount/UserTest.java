@@ -137,6 +137,8 @@ public class UserTest {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	@Test
 	public void TestResetPassword(){
 		
@@ -147,6 +149,25 @@ public class UserTest {
 			paramData.put("password", "password");
 			
 			SendRequest.sendPost("00-17-08?appId=234&machineCode=123123",paramData);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * @author liushuaic
+	 * @date 2016-02-26 15:31
+	 * 查询获取推荐列表
+	 * 
+	 * */
+	@Test
+	public void TestGetUserInfo(){
+		
+		try{
+			Map<String,Object> paramData=new HashMap<String, Object>();
+			paramData.put("userStatus", 0);
+			SendRequest.sendPost("00-17-09?appId=234&accessTicket=6d454b32bf07ec80bd7258fe341712850540ae8e72ef6b48b13746e40a90a41d5e4c7afd323d91954ba85f0a1bf9bb45&machineCode=123123",paramData);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

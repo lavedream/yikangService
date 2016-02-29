@@ -1,6 +1,9 @@
 package com.yikang.seniroAccount;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,5 +51,13 @@ public class DeviceTest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	public static void main(String[] args) {
+//		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		System.out.println(sdf.format(new Date(1439537378304l)));
+		SimpleDateFormat  sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String assessmentName=sdf.format(Calendar.getInstance().getTime());
+		
+		System.out.println(assessmentName);
 	}
 }

@@ -1,8 +1,10 @@
 package com.yikangyiliao.pension.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import com.yikangyiliao.pension.entity.User;
+import com.yikangyiliao.pension.entity.UserModel;
 
 public interface UserDao {
     int deleteByPrimaryKey(Long userId);
@@ -34,4 +36,13 @@ public interface UserDao {
      * @desc 修改用户密码
      * ***/
     int updatePasswordByLoginName(Map<String,Object> paramData);
+    
+    
+    /**
+     * @author liushuaic
+     * @date 2016-02-25 16:11
+     * @desc 获取我邀请的用户
+     * 
+     * ***/
+    List<UserModel> getInvationUserInfoByInvationUserId(Map<String,Object> paramData);
 }

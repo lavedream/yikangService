@@ -45,10 +45,10 @@ public class MapUtils {
 		
 		String paramStr=KEYPARAM+"";
 		if(null != address && address !=""){
-			paramStr=paramStr+"&address='"+URLEncoder.encode(address)+"'";
+			paramStr=paramStr+"&address="+URLEncoder.encode(address)+"";
 		}
 		if(null != city && city !=""){
-			paramStr=paramStr+"&city='"+city+"'";
+			paramStr=paramStr+"&city="+city+"";
 		}
 		
 		
@@ -90,8 +90,14 @@ public class MapUtils {
 		return geoCodeModel;
 	}
 	public static void main(String[] args) throws IOException {
-		GeoCodeModel gmc=MapUtils.getGeoCodeModelByAddress("北京市海淀区万寿路光华护士基金",null);
-		System.out.println(gmc.getGeocodes().get(0).getLocation());
+//		GeoCodeModel gmc=MapUtils.getGeoCodeModelByAddress("北京市海淀区万寿路光华护士基金",null);
+//		System.out.println(gmc.getGeocodes().get(0).getLocation());
+		
+		String target="史各庄(公交站)";
+		target=target.replace("("," ");
+		target=target.replace(")"," ");
+		
+		System.out.println(URLEncoder.encode(target));
 	}
 	
 }

@@ -418,4 +418,79 @@
   </select>
   
   
+  
+   <resultMap id="appointmentOrderMap" type="com.yikangyiliao.pension.entity.AppointmentOrderServiceModel" >
+    <id column="appointment_order_id" 	property="appointmentOrderId" jdbcType="BIGINT" />
+    <result column="phone_number" 		property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="my_phone_number" 	property="myPhoneNumber" jdbcType="VARCHAR" />
+    <result column="appointment_date_time" property="appointmentDateTime" jdbcType="BIGINT" />
+    <result column="time_quanturm_id" 	property="timeQuanturmId" jdbcType="BIGINT" />
+    <result column="start_time" 		property="startTime" jdbcType="VARCHAR" />
+    <result column="end_time" 			property="endTime" jdbcType="VARCHAR" />
+    <result column="order_status" 		property="orderStatus" jdbcType="INTEGER" />
+    <result column="city_code" 			property="cityCode" jdbcType="VARCHAR" />
+    <result column="district_code" 		property="districtCode" jdbcType="VARCHAR" />
+    <result column="longitude" 			property="longitude" jdbcType="DOUBLE" />
+    <result column="latitude" 			property="latitude" jdbcType="DOUBLE" />
+    <result column="detail_address" 	property="detailAddress" jdbcType="VARCHAR" />
+    <result column="map_postion_address" property="mapPostionAddress" jdbcType="VARCHAR" />
+    <result column="order_number" 		property="orderNumber" jdbcType="VARCHAR" />
+    <result column="data_source" 		property="dataSource" jdbcType="TINYINT" />
+    <result column="data_group" 		property="dataGroup" jdbcType="TINYINT" />
+    <result column="create_time" 		property="createTime" jdbcType="BIGINT" />
+    <result column="link_user_name" 	property="linkUserName" jdbcType="VARCHAR" />
+    <result column="address" 			property="address" jdbcType="VARCHAR" />
+    <result column="senior_id"	 		property="seniorId" jdbcType="BIGINT" />
+    
+    <result column="appointment_date"   property="appointmentDate"/>
+    
+    <result column="service_title"		property="serviceTitle" />
+    <result column="service_price"		property="servicePrice" />
+    <result column="service_item_id"		property="serviceItemId" />
+    
+    
+    <result column="login_name"		property="loginName" />
+    <result column="user_id"		property="userId" />
+    <result column="start_time"		property="startTime" />
+    
+  </resultMap>
+  
+   <!-- 查询个人的定单 -->
+  <select id="getAppointmentOrderListPageByUserId" parameterType="map" resultMap="appointmentOrderMap">
+  	select 
+  		ao.appointment_order_id,
+  		ao.phone_number,
+  		ao.my_phone_number,
+  		ao.order_status,
+  		ao.city_code,
+  		ao.district_code,
+  		ao.longitude,
+  		ao.latitude,
+  		ao.detail_address,
+  		ao.map_postion_address,
+  		ao.order_number,
+  		ao.data_source,
+  		ao.data_group,
+  		ao.create_time,
+  		ao.link_user_name,
+  		ao.address,
+  		ao.senior_id,
+  		
+	  	 osd.appointment_date,
+	     osd.service_item_id,
+	     si.service_title,
+	     si.service_price,
+	     
+	     users.login_name,
+	     users.user_id,
+	     ctq.start_time
+	from appointment_orders ao
+	left join order_service_details osd on ao.appointment_order_id=osd.order_id
+	left join service_items si 			on osd.service_item_id=si.service_item_id
+	left join users 					on  ao.create_user_id=users.user_id
+	left join custumer_time_quantums ctq on osd.time_quantum_id=ctq.custumer_time_quantum_id
+	where ao.create_user_id=#{paramUserId}
+  	order by create_time desc
+  </select>
+  
 </mapper>

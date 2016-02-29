@@ -168,6 +168,22 @@ public class AppointmentOrderTest {
 	}
 	
 	
+	/**
+	 * @author liushuaic
+	 * @date 2015/11/19 10:30
+	 * @desc 获取我的工作日程详情
+	 * */
+	@Test
+	public void TestGetOrderByUserId() throws IOException{
+		
+		Map<String,Object> paramData=new HashMap<String, Object>();
+		paramData.put("userId", 11);
+		
+		SendRequest.sendPost("00-21-07?appId=234&accessTicket=99b5ee453affe2efad86f03909495dd1b9ce342e78fd9ac33497fe204e9991195e4c7afd323d91954ba85f0a1bf9bb45&machineCode=123123",paramData);
+		
+	}
+	
+	
 	
 	
 	

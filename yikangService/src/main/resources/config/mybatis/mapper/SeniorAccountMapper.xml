@@ -287,20 +287,21 @@
   <!-- 根据邀请人的id 查询 出被邀请患者的信息  -->
   <select id="getSeniorAccountInfoByInvitationUserId" parameterType="map" resultType="map">
   	select 
+  		distinct
 	   	users.user_name as name, 
-		sa.sex as sex, 
-		sa.birth_year as birthYear, 
-		case 
-			when sa.name is null then null 
-		    else ''
-		end as photoUrl, 
-		case 
-			when sa.name is null then null 
-		    else uf.user_status
-		end
-		 as userStatus,
+		sa.sex 			as sex, 
+		sa.birth_year	as birthYear, 
+			case 
+				when sa.name is null then null 
+			    else ''
+			end 		as photoUrl, 
+			case 
+				when sa.name is null then null 
+			    else uf.user_status
+			end 		as userStatus,
 		 users.create_time as createTime,
- 		 sa.senior_id  as seniorId
+ 		 sa.senior_id  as seniorId,
+ 		 uf.user_id    as userId
 	from users
 	inner join user_froms uf 			on users.user_id=uf.user_id
 	left  join appointment_orders ao	on users.user_id=ao.create_user_id
@@ -313,5 +314,14 @@
 	</if>
   </select>
   
+  
+  <!--获取患者列表  -->
+  <select id="getSeniorAccountListPage" parameterType="map" resultMap="BaseResultMap">
+  
+	  select 
+	  	<include refid="Base_Column_List"></include>
+	  from senior_account
+  	
+  </select>
   	
 </mapper>

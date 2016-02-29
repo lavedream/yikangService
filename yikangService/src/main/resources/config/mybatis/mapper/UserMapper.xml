@@ -177,5 +177,26 @@
   	where login_name=#{userName}
   </update>
   
+
+<!-- 获取邀请的用户列表  -->
+  <select id="getInvationUserInfoByInvationUserId"   resultType="com.yikangyiliao.pension.entity.UserModel">
+  	select 
+		users.user_id 	  as userId,
+		users.user_name   as name,
+	    ui.user_sex       as sex,
+	    ''				  as bithYear,
+	    ''				  as photoUrl,
+	    users.create_time as createTime,
+		uf.user_status    as userStatus
+	from users as invationUser
+	inner join user_froms uf 			on uf.invitation_code=invationUser.invitation_code
+	inner join users					on users.user_id=uf.user_id
+	left join user_infos ui				on ui.user_id   =users.user_id
+	left join appointment_orders as ao 	on users.user_id=ao.create_user_id 
+	where invationUser.user_id=#{userId}
+	<if test=" userStatus == 0 or  userStatus == 1">
+			and  uf.user_status=#{userStatus}
+	</if>
+  </select>
   
 </mapper>
