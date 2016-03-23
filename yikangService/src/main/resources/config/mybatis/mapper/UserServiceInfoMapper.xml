@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yikangyiliao.pension.dao.UserServiceInfoDao" >
-  <resultMap id="BaseResultMap" type="com.yikangyiliao.pension.entity.UserServiceInfo" >
+ <resultMap id="BaseResultMap" type="com.yikangyiliao.pension.entity.UserServiceInfo" >
     <id column="user_service_info_id" property="userServiceInfoId" jdbcType="BIGINT" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="job_category" property="jobCategory" jdbcType="BIGINT" />
@@ -21,11 +21,12 @@
     <result column="hospital" property="hospital" jdbcType="VARCHAR" />
     <result column="offices" property="offices" jdbcType="VARCHAR" />
     <result column="adept" property="adept" jdbcType="VARCHAR" />
+    <result column="position_audit_status" property="positionAuditStatus" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List" >
     user_service_info_id, user_id, job_category, user_postion, provence_code, city_code, 
     district_code, address_detail, photo_url, create_time, update_time, is_delete, user_service_name, 
-    longitude, latitude, map_position_address, hospital, offices, adept
+    longitude, latitude, map_position_address, hospital, offices, adept, position_audit_status
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -44,14 +45,14 @@
       create_time, update_time, is_delete, 
       user_service_name, longitude, latitude, 
       map_position_address, hospital, offices, 
-      adept)
+      adept, position_audit_status)
     values (#{userServiceInfoId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{jobCategory,jdbcType=BIGINT}, 
       #{userPostion,jdbcType=BIGINT}, #{provenceCode,jdbcType=BIGINT}, #{cityCode,jdbcType=BIGINT}, 
       #{districtCode,jdbcType=BIGINT}, #{addressDetail,jdbcType=VARCHAR}, #{photoUrl,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, #{isDelete,jdbcType=TINYINT}, 
       #{userServiceName,jdbcType=VARCHAR}, #{longitude,jdbcType=DOUBLE}, #{latitude,jdbcType=DOUBLE}, 
       #{mapPositionAddress,jdbcType=VARCHAR}, #{hospital,jdbcType=VARCHAR}, #{offices,jdbcType=VARCHAR}, 
-      #{adept,jdbcType=VARCHAR})
+      #{adept,jdbcType=VARCHAR}, #{positionAuditStatus,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.yikangyiliao.pension.entity.UserServiceInfo" >
     insert into user_service_infos
@@ -113,6 +114,9 @@
       <if test="adept != null" >
         adept,
       </if>
+      <if test="positionAuditStatus != null" >
+        position_audit_status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userServiceInfoId != null" >
@@ -171,6 +175,9 @@
       </if>
       <if test="adept != null" >
         #{adept,jdbcType=VARCHAR},
+      </if>
+      <if test="positionAuditStatus != null" >
+        #{positionAuditStatus,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -231,6 +238,9 @@
       <if test="adept != null" >
         adept = #{adept,jdbcType=VARCHAR},
       </if>
+      <if test="positionAuditStatus != null" >
+        position_audit_status = #{positionAuditStatus,jdbcType=TINYINT},
+      </if>
     </set>
     where user_service_info_id = #{userServiceInfoId,jdbcType=BIGINT}
   </update>
@@ -253,7 +263,8 @@
       map_position_address = #{mapPositionAddress,jdbcType=VARCHAR},
       hospital = #{hospital,jdbcType=VARCHAR},
       offices = #{offices,jdbcType=VARCHAR},
-      adept = #{adept,jdbcType=VARCHAR}
+      adept = #{adept,jdbcType=VARCHAR},
+      position_audit_status = #{positionAuditStatus,jdbcType=TINYINT}
     where user_service_info_id = #{userServiceInfoId,jdbcType=BIGINT}
   </update>
   
@@ -283,6 +294,61 @@
 		 	inner join users on us.user_id=users.user_id
 		  	left join senior_account sa  on us.user_id=sa.create_user_id
 		 where  us.user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  
+  
+  <resultMap type="com.yikangyiliao.pension.entity.UserServiceInfo" id="UserServiceInfoMapForTwo">
+  	<result column="userId" property="userId"/>
+  	<result column="jobCategory" property="jobCategory"/>
+  	<result column="userPosition" property="userPosition"/>
+  	<result column="cityCode" property="cityCode"/>
+  	<result column="districtCode" property="districtCode"/>
+  	<result column="photoUrl" property="photoUrl"/>
+  	<result column="createTime" property="createTime"/>
+  	<result column="updateTime" property="updateTime"/>
+  	<result column="userServiceName" property="userServiceName"/>
+  	<result column="mapPositionAddress" property="mapPositionAddress"/>
+  	<result column="hospital" property="hospital"/>
+  	<result column="offices" property="offices"/>
+  	<result column="invitationUrl" property="invitationUrl"/>
+  	<result column="nums" property="nums"/>
+  	<collection property="adepts" javaType="com.yikangyiliao.pension.entity.Adept">
+  		<result column="adeptId" property="adeptId"/>
+  		<result column="adeptName" property="adeptName"/>
+  	</collection>
+  </resultMap>
+  
+  
+      <!-- 查询某个服务人员的信息， 根据用户id -->
+  <select id="getUserServiceInfoByUserIdTwo" resultMap="UserServiceInfoMapForTwo" parameterType="long">
+	select 
+		us.user_id		  as userId, 
+		us.job_category   as jobCategory, 
+		us.user_postion   as userPosition, 
+		us.city_code      as cityCode, 
+		us.district_code  as districtCode, 
+		us.address_detail as addressDetail, 
+		us.photo_url	as photoUrl, 
+		us.create_time	as createTime, 
+		us.update_time  as updateTime, 
+		us.user_service_name as userServiceName,
+		us.map_position_address as mapPositionAddress,
+		us.hospital,
+		us.offices,
+		users.invitation_code as invitationCode,
+		''  as 'invitationUrl',
+		count(sa.senior_id)  as nums ,
+		us.position_audit_status as positionAuditStatus,
+		users.info_write as infoWrite,
+        adepts.adept_id as adeptId,
+        adepts.adept_name as adeptName
+	 from 
+		user_service_infos us 
+		inner join users on us.user_id=users.user_id
+		left join senior_account sa  on us.user_id=sa.create_user_id
+        left join user_adept_maps uam on us.user_id=uam.user_id
+        left join adepts on uam.adept_id=adepts.adept_id
+	 where  us.user_id = #{userId,jdbcType=BIGINT}
   </select>
   
   <!-- 修改用户信息， 根据 userId -->
@@ -359,6 +425,11 @@
 		 offices='',
 		 adept=''
 	 where user_id=#{userId}
+  </update>
+  
+  <!--提交用户职位修改的申请  -->
+  <update id="submitUpdateUserPosition" parameterType="map" >
+  	update user_postion=#{userPostion} and position_audit_status=1  where user_id=#{useId}
   </update>
   
 </mapper>

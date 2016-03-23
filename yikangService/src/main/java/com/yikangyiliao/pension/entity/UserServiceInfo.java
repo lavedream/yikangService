@@ -1,5 +1,8 @@
 package com.yikangyiliao.pension.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserServiceInfo {
     private Long userServiceInfoId;
 
@@ -8,6 +11,8 @@ public class UserServiceInfo {
     private Long jobCategory;
 
     private Long userPostion;
+    
+    private Long userPosition;
 
     private Long provenceCode;
 
@@ -38,6 +43,25 @@ public class UserServiceInfo {
     private String offices;
 
     private String adept;
+    
+    // 职位审核状态
+    private Byte positionAuditStatus;
+    
+    //邀请路径
+    private String invitationUrl;
+    
+    //患者数量
+    private Integer  nums;
+    
+    //用户信息填写状态
+    private Integer infoWrite;
+    
+    //邀请码
+    private String invitationCode;
+    
+    //擅长列表
+    private List<Adept> adepts=new ArrayList<Adept>();
+    
 
     public Long getUserServiceInfoId() {
         return userServiceInfoId;
@@ -190,4 +214,60 @@ public class UserServiceInfo {
     public void setAdept(String adept) {
         this.adept = adept == null ? null : adept.trim();
     }
+
+	public Byte getPositionAuditStatus() {
+		return positionAuditStatus;
+	}
+
+	public void setPositionAuditStatus(Byte positionAuditStatus) {
+		this.positionAuditStatus = positionAuditStatus;
+	}
+
+	public String getInvitationUrl() {
+		return invitationUrl;
+	}
+
+	public void setInvitationUrl(String invitationUrl) {
+		this.invitationUrl = invitationUrl;
+	}
+
+	public Integer getNums() {
+		return nums;
+	}
+
+	public void setNums(Integer nums) {
+		this.nums = nums;
+	}
+
+	public Integer getInfoWrite() {
+		return infoWrite;
+	}
+
+	public void setInfoWrite(Integer infoWrite) {
+		this.infoWrite = infoWrite;
+	}
+
+	public String getInvitationCode() {
+		return invitationCode;
+	}
+
+	public void setInvitationCode(String invitationCode) {
+		this.invitationCode = invitationCode;
+	}
+
+	public List<Adept> getAdepts() {
+		return adepts;
+	}
+
+	public void setAdepts(List<Adept> adepts) {
+		this.adepts = adepts;
+	}
+
+	public Long getUserPosition() {
+		return userPosition;
+	}
+
+	public void setUserPosition(Long userPosition) {
+		this.userPosition = userPosition;
+	}
 }

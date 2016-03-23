@@ -30,7 +30,7 @@ public class UserTest {
 			paramData.put("loginName","liushuai");
 			paramData.put("passWord","liushuai");
 			
-			SendRequest.sendPost("regist",paramData);
+			SendRequest.sendPost("registerUser?appId=1",paramData);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -173,6 +173,24 @@ public class UserTest {
 		}
 	}
 	
+	
+	/**
+	 * @author liushuaic
+	 * @date 2016-03-17 16:31
+	 * 查询获取推荐列表
+	 * 
+	 * */
+	@Test
+	public void TestGetUserInfoAdept(){
+		
+		try{
+			Map<String,Object> paramData=new HashMap<String, Object>();
+//			paramData.put("userStatus", 0);
+			SendRequest.sendPost("00-17-10?appId=234&accessTicket=4286a50e808d04da0d39e4a83ef19f44aefb5c39877bd22903d981090d1f3b7c5e4c7afd323d91954ba85f0a1bf9bb45&machineCode=123123",paramData);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	
 	

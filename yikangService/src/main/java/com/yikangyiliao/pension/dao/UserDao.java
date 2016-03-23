@@ -45,4 +45,24 @@ public interface UserDao {
      * 
      * ***/
     List<UserModel> getInvationUserInfoByInvationUserId(Map<String,Object> paramData);
+    
+    
+    /**
+     * @author liushuaic
+     * @date 2016-03-21 11:38
+     * @desc 查询我邀请的用户
+     * 
+     * ***/
+    List<UserModel> getInvationUserInfoByInvationUserIdAndUserStatus(Map<String,Object> paramData);
+    /**
+     * @author liushuaic
+     * @date 2016-03-21 11:38
+     * @desc 查询我邀请的用户
+     * 
+     * ***/
+   Long getInvationUserInfoNumsByInvationUserIdAndUserStatus(Map<String,Object> paramData);
+ 
+    
+    
+    
 }

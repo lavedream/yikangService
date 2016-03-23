@@ -20,6 +20,8 @@ public class User {
     private String invitationCode;
 
     private String pushAlias;
+    
+    private Byte infoWrite;
 
     public Long getUserId() {
         return userId;
@@ -100,4 +102,12 @@ public class User {
     public void setPushAlias(String pushAlias) {
         this.pushAlias = pushAlias == null ? null : pushAlias.trim();
     }
+
+	public Byte getInfoWrite() {
+		return infoWrite;
+	}
+
+	public void setInfoWrite(Byte infoWrite) {
+		this.infoWrite = infoWrite;
+	}
 }

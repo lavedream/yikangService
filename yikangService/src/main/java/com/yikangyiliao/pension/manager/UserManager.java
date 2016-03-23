@@ -98,6 +98,15 @@ public class UserManager {
 		return userServiceInfoDao.getUserServiceInfoByUserId(userId);
 	}
 	
+	 /**
+     * @author liushuaic
+     * @date 2016/03/14 11:58
+     * @dsec 查询某一个员工的信息，根据 用户id 
+     * */
+	public UserServiceInfo getUserServiceInfoByUserIdTwo(Long userId){
+		return userServiceInfoDao.getUserServiceInfoByUserIdTwo(userId);
+	}
+	
 	
     /**
      * @author liushuaic
@@ -192,5 +201,71 @@ public class UserManager {
     }
     
     
+    /**
+     * @author liushuaic
+     * @date 2016-03-21 14:10
+     * @desc 查询我邀请注册的所有用户
+     * **/
+    public Long getMyInvitionUserNumsByInvitionUserId(Long userId){
+    	Map<String,Object> paramData=new HashMap<String,Object>();
+    	paramData.put("userId", userId);
+    	paramData.put("userStatus", -1);
+    	return userDao.getInvationUserInfoNumsByInvationUserIdAndUserStatus(paramData);
+    }
+    
+    
+    /**
+     * @author liushuaic
+     * @date 2016-03-21 12:16
+     * @desc 查询我邀请的服务中的用户
+     * */
+    public Long getServiceingUserNumsByInvitionUserId(Long userId){
+    	Map<String,Object> paramData=new HashMap<String,Object>();
+    	paramData.put("userId", userId);
+    	paramData.put("userStatus", 1);
+    	return userDao.getInvationUserInfoNumsByInvationUserIdAndUserStatus(paramData);
+    }
+    
+    /**
+     * @author liushuaic
+     * @date 2016-03-21 12:16
+     * @desc 查询我邀请的用户未消费的
+     * */
+    public Long getMyinvationUserNoPaying(Long userId){
+    	Map<String,Object> paramData=new HashMap<String,Object>();
+    	paramData.put("userId", userId);
+    	paramData.put("userStatus", 0);
+    	return userDao.getInvationUserInfoNumsByInvationUserIdAndUserStatus(paramData);
+    }
+    
+    
+    /**
+     * @author liushuaic
+     * @date 2016-03-21 12:20
+     * @desc 查询服务完成的用户
+     * **/
+    public Long getServicedUserNumbsByInvitionUserId(Long userId){
+    	Map<String,Object> paramData=new HashMap<String,Object>();
+    	paramData.put("userId", userId);
+    	paramData.put("userStatus", 2);
+    	return userDao.getInvationUserInfoNumsByInvationUserIdAndUserStatus(paramData);
+    }
+    
+    
+    /**
+     * @author liushuaic
+     * @date 2016-03-21 11:38
+     * @desc 查询我邀请的用户
+     * ***/
+    public  List<UserModel> getInvationUserInfoByInvationUserIdAndUserStatus(Long userId,Integer userStatus){
+      	Map<String,Object> paramData=new HashMap<String,Object>();
+    	paramData.put("userId", userId);
+    	paramData.put("userStatus",userStatus);
+    	return userDao.getInvationUserInfoByInvationUserIdAndUserStatus(paramData);
+    }
+    
+    public int submitUpdateUserPosition(){
+    	return 0;
+    }
     
 }

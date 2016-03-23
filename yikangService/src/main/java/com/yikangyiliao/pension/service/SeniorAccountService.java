@@ -440,5 +440,41 @@ public class SeniorAccountService {
 	}
 	
 	
+	/**
+	 * @author liushuaic
+	 * @date 2016-03-18 16:00
+	 * @desc 查询某一个
+	 * */
+	public ResponseMessage getMyinvitationUserByUserId(Map<String,Object> paramData){
+		
+		ResponseMessage responseMessage=new ResponseMessage();
+		
+		try{
+			
+			if(paramData.containsKey("userId")){
+				
+				String userId=paramData.get("userId").toString();
+				
+				//List<SeniorAccount> data=seniorAccountManager.getMyinvitationUserByUserId(Long.valueOf(userId));
+				//responseMessage.setData(data);
+				
+				
+				
+				responseMessage.setStatus( ExceptionConstants.responseSuccess.responseSuccess.code);
+				responseMessage.setMessage(ExceptionConstants.responseSuccess.responseSuccess.message);
+			}
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			responseMessage.setStatus( ExceptionConstants.systemException.systemException.errorCode);
+			responseMessage.setMessage( ExceptionConstants.systemException.systemException.errorMessage);
+		}
+		
+		
+		return responseMessage;
+		
+		
+	}
+	
 	
 }
