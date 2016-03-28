@@ -1,12 +1,16 @@
+
 package com.yikang.seniroAccount;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
 
 import com.yikang.base.SendRequest;
+import com.yikangyiliao.pension.entity.Adept;
 
 
 /**
@@ -27,10 +31,10 @@ public class UserTest {
 	public void TestRegisterUser(){
 		try {
 			Map<String,Object> paramData=new HashMap<String, Object>();
-			paramData.put("loginName","liushuai");
-			paramData.put("passWord","liushuai");
+			paramData.put("loginName","17801092536");
+			paramData.put("passWord","123456");
 			
-			SendRequest.sendPost("regist",paramData);
+			SendRequest.sendPost("registerUser?appId=1",paramData);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -143,7 +147,6 @@ public class UserTest {
 	public void TestResetPassword(){
 		
 		try{
-//			
 			Map<String,Object> paramData=new HashMap<String, Object>();
 			paramData.put("loginName", "13716907523");
 			paramData.put("password", "password");
@@ -172,7 +175,72 @@ public class UserTest {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * @author liushuaic
+	 * @date 2016-03-25 15:31
+	 * 查询获取推荐列表
+	 * 
+	 * */
+	@Test
+	public void TestGetUserInfoTwo(){
+		
+		try{
+			Map<String,Object> paramData=new HashMap<String, Object>();
+			paramData.put("userStatus", 0);
+			SendRequest.sendPost("00-17-10?appId=234&accessTicket=39fe63196e8820f2df8003a84fdbcdb4fd87be8a38a7d32e0691c30c1e4eebfb5e4c7afd323d91954ba85f0a1bf9bb45&machineCode=123123",paramData);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
+	
+	/**
+	 * @author liushuaic
+	 * @date 2016-03-17 16:31
+	 * 查询获取推荐列表
+	 * 
+	 * */
+	@Test
+	public void TestGetUserInfoAdept(){
+		
+		try{
+			Map<String,Object> paramData=new HashMap<String, Object>();
+//			paramData.put("userStatus", 0);
+			SendRequest.sendPost("00-17-10?appId=234&accessTicket=4286a50e808d04da0d39e4a83ef19f44aefb5c39877bd22903d981090d1f3b7c5e4c7afd323d91954ba85f0a1bf9bb45&machineCode=123123",paramData);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * @author liushuaic
+	 * @date 2016-03-17 16:31
+	 * 查询获取推荐列表
+	 * 
+	 * */
+	@Test
+	public void TestUpdateUserServiceAndServiceInfoTwo(){
+		
+		try{
+			Map<String,Object> paramData=new HashMap<String, Object>();
+//			paramData.put("userStatus", 0);
+			Adept a=new Adept();
+			a.setAdeptId(0l);
+			
+			Adept a2=new Adept();
+			a2.setAdeptId(1l);
+			
+			List<Integer> adpets=new ArrayList<Integer>();
+			adpets.add(1);
+			adpets.add(2);
+			
+			
+			paramData.put("adepts", adpets);
+			
+			SendRequest.sendPost("00-17-12?appId=234&accessTicket=4286a50e808d04da0d39e4a83ef19f44aefb5c39877bd22903d981090d1f3b7c5e4c7afd323d91954ba85f0a1bf9bb45&machineCode=123123",paramData);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	
 	

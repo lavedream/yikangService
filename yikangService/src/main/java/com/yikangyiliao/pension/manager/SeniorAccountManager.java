@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.yikangyiliao.pension.dao.SeniorAccountDao;
 import com.yikangyiliao.pension.entity.SeniorAccount;
+import com.yikangyiliao.pension.entity.UserInfo;
 
 
 /**
@@ -55,6 +56,15 @@ public class SeniorAccountManager {
 		return seniorAccountDao.getSeniorAccountByCreateUserId(userId);
 	}
 	
+	
+	/**
+	 * @author liushuaic
+	 * @date 2016/03/18 16:35
+	 * @desc 获取某一个创建人下的所有患者
+	 * **/
+//	public List<UserInfo> getMyinvitationUserByUserId(Long userId){
+//		return seniorAccountDao.getMyinvitationUserByUserId(userId);
+//	}
 	
 	
 	

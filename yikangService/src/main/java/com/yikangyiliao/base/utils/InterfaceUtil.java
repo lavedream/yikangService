@@ -62,6 +62,8 @@ public class InterfaceUtil {
 		 * */
 		mathodClassPath.put("00-01-04","getSeniorAccountInfoByInvitationUserId");
 		
+		
+		
 		/**
 		 * @author liushuaic
 		 * @date 2015/12/29  10:33
@@ -73,6 +75,18 @@ public class InterfaceUtil {
 		getSeniorAccountByClentUserId.setMethodName("getSeniorAccountByClentUserId");
 		getSeniorAccountByClentUserId.setIsFileter(false);
 		mathodServiceConfig.put("00-01-05",getSeniorAccountByClentUserId);
+		
+		
+		/**
+		 * @author liushuaic
+		 * @date 2016-03-18 15:48
+		 * @desc 获取我邀请的用户
+		 * */
+		YiKangServiceConfige getMyInvitationUserByUserId=new YiKangServiceConfige();
+		getMyInvitationUserByUserId.setServiceName("seniorAccountService");
+		getMyInvitationUserByUserId.setMethodName("getMyinvitationUserByUserId");
+		getMyInvitationUserByUserId.setIsFileter(true);
+		mathodServiceConfig.put("00-01-06",getMyInvitationUserByUserId);
 		
 		
 		
@@ -194,8 +208,12 @@ public class InterfaceUtil {
 		 * 
 		 * **/
 		
-		serviceClassName.put("regist", "userService");
-		mathodClassPath.put("regist", "registerUser");
+		serviceClassName.put("registerUser", "userService");
+		YiKangServiceConfige registUser=new YiKangServiceConfige();
+		registUser.setServiceName("userService");
+		registUser.setMethodName("registerUser");
+		registUser.setIsFileter(false);
+		mathodServiceConfig.put("registerUser",registUser);
 		
 		serviceClassName.put("registerUserAndSaveServiceInfo", "userService");
 		mathodClassPath.put("registerUserAndSaveServiceInfo", "saveRegisterUserAndSaveServiceInfo");
@@ -207,6 +225,7 @@ public class InterfaceUtil {
 		// 获取某一个服务人员信息 
 		mathodClassPath.put("00-17-04", "getUserServiceInfoByUserId");
 		mathodClassPath.put("00-17-05", "updateUserServiceAndServiceInfo");
+		
 		
 		
 		//忘记密码
@@ -243,6 +262,34 @@ public class InterfaceUtil {
 		
 		
 		
+		//获取我的信息
+		YiKangServiceConfige getUserServiceInfoByUserIdTwo=new YiKangServiceConfige();
+		getInvationUserByUserId.setServiceName("userService");
+		getUserServiceInfoByUserIdTwo.setMethodName("getUserServiceInfoByUserIdTwo");
+		getUserServiceInfoByUserIdTwo.setIsFileter(true);
+		mathodServiceConfig.put("00-17-10",getUserServiceInfoByUserIdTwo);
+		
+		
+		//获取我邀请的用户
+		YiKangServiceConfige getInvationUserInfoByInvationUserIdTwo=new YiKangServiceConfige();
+		getInvationUserInfoByInvationUserIdTwo.setServiceName("userService");
+		getInvationUserInfoByInvationUserIdTwo.setMethodName("getInvationUserInfoByInvationUserIdTwo");
+		getInvationUserInfoByInvationUserIdTwo.setIsFileter(true);
+		mathodServiceConfig.put("00-17-11",getInvationUserInfoByInvationUserIdTwo);
+		
+		//修改用户信息
+		YiKangServiceConfige updateUserServiceAndServiceInfoTwo=new YiKangServiceConfige();
+		updateUserServiceAndServiceInfoTwo.setServiceName("userService");
+		updateUserServiceAndServiceInfoTwo.setMethodName("updateUserServiceAndServiceInfoTwo");
+		updateUserServiceAndServiceInfoTwo.setIsFileter(false);
+		mathodServiceConfig.put("00-17-12",updateUserServiceAndServiceInfoTwo);
+		
+		//提交修改用户职位的接口
+		YiKangServiceConfige submitUpdateUserPosition=new YiKangServiceConfige();
+		submitUpdateUserPosition.setServiceName("userService");
+		submitUpdateUserPosition.setMethodName("submitUpdateUserPosition");
+		submitUpdateUserPosition.setIsFileter(false);
+		mathodServiceConfig.put("00-17-13",submitUpdateUserPosition);
 		
 		/**
 		 * @author liushuaic
@@ -311,6 +358,48 @@ public class InterfaceUtil {
 		serviceClassName.put("00-22","servicerService");
 		mathodClassPath.put("00-22-01","getAssessmentService");
 		
+		
+		
+		serviceClassName.put("00-23","adeptService");
+		YiKangServiceConfige getAdeptsByType=new YiKangServiceConfige();
+		getAdeptsByType.setServiceName("adeptService");
+		getAdeptsByType.setMethodName("getAdeptsByType");
+		getAdeptsByType.setIsFileter(true);
+		mathodServiceConfig.put("00-23-01",getAdeptsByType);
+		
+		
+		/**
+		 * @author liushuaic
+		 * @date 2016-03-22 16:38
+		 * @desc 获取办公室列表
+		 * */
+		serviceClassName.put("00-24","officeService");
+		YiKangServiceConfige getOffice=new YiKangServiceConfige();
+		getOffice.setServiceName("officeService");
+		getOffice.setMethodName("getOffice");
+		getOffice.setIsFileter(true);
+		mathodServiceConfig.put("00-24-01",getOffice);
+		
+		
+		
+		/**
+		 * @author liushuaic
+		 * @date 2016-03-22 15:19
+		 * @desc  获取验证码
+		 * */
+		serviceClassName.put("00-25","captchaService");
+		YiKangServiceConfige getCaptchar=new YiKangServiceConfige();
+		getCaptchar.setServiceName("captchaService");
+		getCaptchar.setMethodName("getCaptchar");
+		getCaptchar.setIsFileter(false);
+		mathodServiceConfig.put("00-25-01",getCaptchar);
+		
+		
+		YiKangServiceConfige validateCaptchar=new YiKangServiceConfige();
+		validateCaptchar.setServiceName("captchaService");
+		validateCaptchar.setMethodName("validateCaptchar");
+		validateCaptchar.setIsFileter(false);
+		mathodServiceConfig.put("00-25-02",validateCaptchar);
 		
 		YiKangServiceConfige  userPasswordReset=new YiKangServiceConfige();
 		

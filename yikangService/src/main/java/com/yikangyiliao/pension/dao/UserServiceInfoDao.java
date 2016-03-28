@@ -25,6 +25,13 @@ public interface UserServiceInfoDao {
      * */
     Map<String,Object> getUserServiceInfoByUserId(Long userIds);
     
+    /**
+     * @author liushuaic
+     * @date 2015/03/14 11:58
+     * @dsec 查询某一个员工的信息，根据 用户id 
+     * */
+    UserServiceInfo getUserServiceInfoByUserIdTwo(Long userIds);
+    
     
     
     /**
@@ -58,9 +65,35 @@ public interface UserServiceInfoDao {
      * @date 2015/11/27 11:29
      * @desc 
      * 清空用户信息
-     * 
-     * 
      * **/
     int updateUserServiceInfoIsEmptyByUserId(long userId);
+    
+    
+    
+    /**
+     * @author liushuaic
+     * @date 2016-03-21 18:30
+     * @desc 提交用户修改职位的申请
+     * 
+     * **/
+    int submitUpdateUserPosition(Map<String,Object> paramData);
+    
+    
+    /**
+     * @author liushuaic
+     * @date 2016-03-25 14:41
+     * @desc 修改职位的审核状态
+     * 
+     * */
+    int updateUserPositionAuditStatusByStatusAndUserId(Map<String,Object> paramData);
+    
+    /**
+     * @author liushuaic
+     * @date 2016-03-25 14:41
+     * @desc 修改职位的审核状态
+     * 
+     * */
+    int updateUserPositionStatusCheckePass(Map<String,Object> paramData);
+    
     
 }

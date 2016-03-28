@@ -78,9 +78,12 @@ public class SendRequest {
 			Map<String,Object> data=new HashMap<String, Object>();
 			System.out.println("接收到请求时间"+sdf.format(new Date()));
 			data=objectMapper.readValue(responseBody, Map.class);
-			String dataStr=data.get("data").toString();
-			System.out.println("解析出请求时间"+sdf.format(new Date()));
-			System.out.println(AES.Decrypt(dataStr, "1234567890abcDEF"));
+			if(data.containsKey("data")){
+				String dataStr=data.get("data").toString();
+				System.out.println("解析出请求时间"+sdf.format(new Date()));
+				System.out.println(AES.Decrypt(dataStr, "1234567890abcDEF"));
+			}
+			
 		} catch(Exception e){
 			e.printStackTrace();
 		}finally {

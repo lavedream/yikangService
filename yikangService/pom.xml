@@ -247,6 +247,11 @@
 					<webResources>
 						<resource>
 							<directory>src/main/webapp</directory>
+							<directory>libs/</directory>
+							<targetPath>WEB-INF/lib</targetPath>
+							<includes>
+								<include>**/*.jar</include>
+							</includes>
 						</resource>
 					</webResources>
 				</configuration>
