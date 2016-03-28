@@ -280,7 +280,7 @@ public class UserService {
 				userServiceInfo.setPhotoUrl("");
 				userServiceInfo.setProvenceCode(Long.valueOf("0"));
 				userServiceInfo.setAddressDetail("");
-				userServiceInfo.setOffices("");
+				userServiceInfo.setOffices("-2");
 				userServiceInfo.setJobCategory(Long.valueOf(-2));
 				userServiceInfo.setUserPostion(Long.valueOf(-2));
 
@@ -766,9 +766,9 @@ public class UserService {
 		if (paramData.containsKey("offices")) {
 			userServiceInfo.setOffices(paramData.get("offices").toString());
 		}
-		List<Integer> adepts=null;
+		List<String> adepts=null;
 		if (paramData.containsKey("adepts")) {
-			 adepts=(List<Integer>) paramData.get("adepts");
+			 adepts=(List<String>) paramData.get("adepts");
 		}
 
 		// 反推一下，用户用户地址
@@ -836,7 +836,7 @@ public class UserService {
 		
 		if(null != adepts){
 			adeptMapManager.deleteUserAdeptAll(Long.valueOf(userId));
-			for(Integer adept:adepts){
+			for(String adept:adepts){
 				adeptMapManager.insertSelective(Long.valueOf(adept),Long.valueOf(userId));
 			}
 		}
