@@ -125,6 +125,7 @@ public class MobileCaptchaUtil {
 						cms.setDestoryTime(1); //设置销毁时间
 						cms.setMobileNumber(mobileNumber); //设置手机号
 						cms.setSendDate(currentDate);     //设置发送时间
+						cms.setCaptcha(captcha+"");
 						MobileCaptchaUtil.CAPTCHACACHE.put(mobileNumber, cms);
 						responseMessage.setStatus(ExceptionConstants.responseSuccess.responseSuccess.code);
 						responseMessage.setMessage("您的验证码，已经发送！请注意，手机提醒！");

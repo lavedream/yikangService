@@ -1,6 +1,7 @@
 package com.yikangyiliao.pension.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.yikangyiliao.pension.entity.Adept;
 
@@ -30,6 +31,11 @@ public interface AdeptDao {
     List<Adept> getAdeptsByType(Long type);
     
     
-    
+    /**
+     * @author liushuaic
+     * @date 2016-03-24 15:06
+     * @desc 获取我的擅长列表
+     * **/
+    List<Adept> getAdeptsByTypeAndUserId(Map<String,Object> paramData);
     
 }

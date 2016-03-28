@@ -76,4 +76,7 @@ public class Adept {
 	public void setIsCheck(Integer isCheck) {
 		this.isCheck = isCheck;
 	}
+	public static void main(String[] args) {
+		System.out.println((int)'a');
+	}
 }

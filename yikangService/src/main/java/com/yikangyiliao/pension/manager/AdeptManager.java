@@ -1,6 +1,8 @@
 package com.yikangyiliao.pension.manager;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,7 +33,17 @@ public class AdeptManager {
 		return adeptDao.getAdeptsByType(type);
 	}
 	
-	
+	/**
+	 * @author liushuaic
+	 * @date 2016-03-24 15:08
+	 * @desc 获取我的擅长列表
+	 * */
+	public List<Adept> getAdeptsByTypeAndUserId(Long type,Long userId){
+		Map<String,Object> paramData=new HashMap<String,Object>();
+		paramData.put("type", type);
+		paramData.put("userId", userId);
+		return adeptDao.getAdeptsByTypeAndUserId(paramData);
+	}
 	
 	
 }

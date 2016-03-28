@@ -1,14 +1,21 @@
 package com.yikangyiliao.pension.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.JsonObject;
 import com.yikangyiliao.base.utils.AliasFactory;
 import com.yikangyiliao.base.utils.InvitationCodeGnerateUtil;
 import com.yikangyiliao.base.utils.SystemProperties;
@@ -30,6 +37,7 @@ import com.yikangyiliao.pension.entity.UserServiceInfo;
 import com.yikangyiliao.pension.manager.AdeptManager;
 import com.yikangyiliao.pension.manager.LocationManager;
 import com.yikangyiliao.pension.manager.OfficeManager;
+import com.yikangyiliao.pension.manager.UserAdeptMapManager;
 import com.yikangyiliao.pension.manager.UserFromManager;
 import com.yikangyiliao.pension.manager.UserManager;
 import com.yikangyiliao.pension.responseDataModel.MyInvationUserModel;
@@ -51,6 +59,9 @@ public class UserService {
 
 	@Autowired
 	private AdeptManager adeptManager;
+	
+	@Autowired
+	private UserAdeptMapManager adeptMapManager;
 
 	/**
 	 * @author liushuaic
@@ -227,7 +238,6 @@ public class UserService {
 	/**
 	 * @author liushuaic
 	 * @date 2015/08/25 17:44 注册用户
-	 * TODO 没有按照事物规则来， 造成，不能回滚。
 	 **/
 	public Map<String, Object> registerUser(Map<String, Object> paramData) {
 		Map<String, Object> rtnData = new HashMap<String, Object>();
@@ -252,6 +262,7 @@ public class UserService {
 				user.setInfoWrite((byte)0); //设置为没有填写个人信息
 
 				userManager.insertUserSelective(user);
+				
 				user.setUserName(null);
 				user.setLoginName(null);
 				user.setLoginPassword(null);
@@ -477,86 +488,88 @@ public class UserService {
 				+ userServiceInfo.getInvitationCode();
 		userServiceInfo.setInvitationUrl(invitationUrl);
 
-		if (null != userServiceInfo) {
-			if (null != userServiceInfo.getUserPosition() && !userServiceInfo.getUserPosition().equals(-2l)) {
-				Long userPosition = userServiceInfo.getUserPosition();
-				if (userPosition.equals(0)) { // 医生
-
-					Long userId1 = userServiceInfo.getUserId();
-					String hospital = userServiceInfo.getHospital();
-					String photoUrl = userServiceInfo.getPhotoUrl();
-					String userName = userServiceInfo.getUserServiceName();
-					String offices = userServiceInfo.getOffices();
-
-					DocotorModel doctor = new DocotorModel();
-
-					doctor.setUserId(userId1);
-					doctor.setHospital(hospital);
-					doctor.setUserPosition(userPosition.intValue());
-					doctor.setPhotoUrl(photoUrl);
-					doctor.setUserName(userName);
-					doctor.setOffices(offices);
-					officeManager.getOffices();
-					Office office = officeManager.getOffice(Long.valueOf(offices));
-					doctor.setOffice(office);
-					doctor.setInfoWrite(user.getInfoWrite().intValue());
-					doctor.setPositionAuditStatus(userServiceInfo.getPositionAuditStatus().intValue());
-					rtnData.put("data", doctor);
-				} else if (userPosition.equals(1)) { // 护士
-
-					Long userId1 = userServiceInfo.getUserId();
-					String hospital = userServiceInfo.getHospital();
-					String photoUrl = userServiceInfo.getPhotoUrl();
-					String userName = userServiceInfo.getUserServiceName();
-					String offices = userServiceInfo.getOffices();
-					Long jobCategroy = userServiceInfo.getJobCategory();
-					Long cityCode = userServiceInfo.getCityCode();
-					Long districtCode = userServiceInfo.getDistrictCode();
-					String addressDetail = userServiceInfo.getAddressDetail();
-
-					NurseModel nurseModel = new NurseModel();
-					nurseModel.setUserId(Long.valueOf(userId1));
-					nurseModel.setUserName(userName);
-					nurseModel.setUserPosition(userPosition.intValue());
-					nurseModel.setJobCategroy(jobCategroy.intValue());
-					nurseModel.setCityCode(cityCode.intValue());
-					nurseModel.setPhotoUrl(photoUrl);
-					nurseModel.setDistrictCode(districtCode.intValue());
-					nurseModel.setAddressDetail(addressDetail);
-					nurseModel.setInfoWrite(user.getInfoWrite().intValue());
-					nurseModel.setPositionAuditStatus(userServiceInfo.getPositionAuditStatus().intValue());
-
-					rtnData.put("data", nurseModel);
-
-				} else if (userPosition.equals(2)) { // 康复师
-
-					Long userId1 = userServiceInfo.getUserId();
-					String hospital = userServiceInfo.getHospital();
-					String photoUrl = userServiceInfo.getPhotoUrl();
-					String userName = userServiceInfo.getUserServiceName();
-					String offices = userServiceInfo.getOffices();
-					Long jobCategroy = userServiceInfo.getJobCategory();
-					Long cityCode = userServiceInfo.getCityCode();
-					Long districtCode = userServiceInfo.getDistrictCode();
-					String addressDetail = userServiceInfo.getAddressDetail();
-
-					TherapistsModel therapistsModel = new TherapistsModel();
-					therapistsModel.setUserId(Long.valueOf(userId1));
-					therapistsModel.setPhotoUrl(photoUrl);
-					therapistsModel.setUserName(userName);
-					therapistsModel.setJobCategroy(jobCategroy.intValue());
-					therapistsModel.setCityCode(cityCode.intValue());
-					therapistsModel.setDistrictCode(districtCode.intValue());
-					therapistsModel.setAddressDetail(addressDetail);
-					therapistsModel.setInfoWrite(user.getInfoWrite().intValue());
-					therapistsModel.setPositionAuditStatus(userServiceInfo.getPositionAuditStatus().intValue());
-					rtnData.put("data", therapistsModel);
-				}
-			} else {
+//		if (null != userServiceInfo) {
+//			if (null != userServiceInfo.getUserPosition() && !userServiceInfo.getUserPosition().equals(-2l)) {
+//				Long userPosition = userServiceInfo.getUserPosition();
+//				if (userPosition.equals(0l)) { // 医生
+//
+//					Long userId1 = userServiceInfo.getUserId();
+//					String hospital = userServiceInfo.getHospital();
+//					String photoUrl = userServiceInfo.getPhotoUrl();
+//					String userName = userServiceInfo.getUserServiceName();
+//					String offices = userServiceInfo.getOffices();
+//
+//					DocotorModel doctor = new DocotorModel();
+//
+//					doctor.setUserId(userId1);
+//					doctor.setHospital(hospital);
+//					doctor.setUserPosition(userPosition.intValue());
+//					doctor.setPhotoUrl(photoUrl);
+//					doctor.setUserName(userName);
+//					doctor.setOffices(offices);
+//					officeManager.getOffices();
+//					Office office = officeManager.getOffice(Long.valueOf(offices));
+//					doctor.setOffice(office);
+//					doctor.setInfoWrite(user.getInfoWrite().intValue());
+//					doctor.setPositionAuditStatus(userServiceInfo.getPositionAuditStatus().intValue());
+//					rtnData.put("data", doctor);
+//				} else if (userPosition.equals(1l)) { // 护士
+//
+//					Long userId1 = userServiceInfo.getUserId();
+//					String hospital = userServiceInfo.getHospital();
+//					String photoUrl = userServiceInfo.getPhotoUrl();
+//					String userName = userServiceInfo.getUserServiceName();
+//					String offices = userServiceInfo.getOffices();
+//					Long jobCategroy = userServiceInfo.getJobCategory();
+//					Long cityCode = userServiceInfo.getCityCode();
+//					Long districtCode = userServiceInfo.getDistrictCode();
+//					String addressDetail = userServiceInfo.getAddressDetail();
+//
+//					NurseModel nurseModel = new NurseModel();
+//					nurseModel.setUserId(Long.valueOf(userId1));
+//					nurseModel.setUserName(userName);
+//					nurseModel.setUserPosition(userPosition.intValue());
+//					nurseModel.setJobCategroy(jobCategroy.intValue());
+//					nurseModel.setCityCode(cityCode.intValue());
+//					nurseModel.setPhotoUrl(photoUrl);
+//					nurseModel.setDistrictCode(districtCode.intValue());
+//					nurseModel.setAddressDetail(addressDetail);
+//					nurseModel.setInfoWrite(user.getInfoWrite().intValue());
+//					nurseModel.setPositionAuditStatus(userServiceInfo.getPositionAuditStatus().intValue());
+//
+//					rtnData.put("data", nurseModel);
+//
+//				} else if (userPosition.equals(2l)) { // 康复师
+//
+//					Long userId1 = userServiceInfo.getUserId();
+//					String hospital = userServiceInfo.getHospital();
+//					String photoUrl = userServiceInfo.getPhotoUrl();
+//					String userName = userServiceInfo.getUserServiceName();
+//					String offices = userServiceInfo.getOffices();
+//					Long jobCategroy = userServiceInfo.getJobCategory();
+//					Long cityCode = userServiceInfo.getCityCode();
+//					Long districtCode = userServiceInfo.getDistrictCode();
+//					String addressDetail = userServiceInfo.getAddressDetail();
+//
+//					TherapistsModel therapistsModel = new TherapistsModel();
+//					therapistsModel.setUserId(Long.valueOf(userId1));
+//					therapistsModel.setPhotoUrl(photoUrl);
+//					therapistsModel.setUserName(userName);
+//					therapistsModel.setJobCategroy(jobCategroy.intValue());
+//					therapistsModel.setCityCode(cityCode.intValue());
+//					therapistsModel.setDistrictCode(districtCode.intValue());
+//					therapistsModel.setAddressDetail(addressDetail);
+//					therapistsModel.setInfoWrite(user.getInfoWrite().intValue());
+//					therapistsModel.setPositionAuditStatus(userServiceInfo.getPositionAuditStatus().intValue());
+//					rtnData.put("data", therapistsModel);
+//				}else{
+//					rtnData.put("data", userServiceInfo);
+//				}
+//			} else {
 				rtnData.put("data", userServiceInfo);
-			}
+//			}
 
-		}
+//		}
 
 		rtnData.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
 		rtnData.put("message", ExceptionConstants.responseSuccess.responseSuccess.message);
@@ -711,8 +724,6 @@ public class UserService {
 
 		userServiceInfo.setUserId(Long.valueOf(userId));
 
-		//userManager.updateUserServiceInfoIsEmptyByUserId(Long.valueOf(userId));
-
 		if (paramData.containsKey("jobCategory")) {
 			String jobCategory = paramData.get("jobCategory").toString();
 			userServiceInfo.setJobCategory(Long.valueOf(jobCategory));
@@ -738,6 +749,7 @@ public class UserService {
 		if (paramData.containsKey("userPosition")) {
 			String userPosition = paramData.get("userPosition").toString();
 			userServiceInfo.setUserPostion(Long.valueOf(userPosition));
+			userServiceInfo.setNewUserPosition(Integer.valueOf(userPosition));
 		}
 
 		if (paramData.containsKey("userName")) {
@@ -754,11 +766,9 @@ public class UserService {
 		if (paramData.containsKey("offices")) {
 			userServiceInfo.setOffices(paramData.get("offices").toString());
 		}
-		Adept[] adepts=null;
+		List<Integer> adepts=null;
 		if (paramData.containsKey("adepts")) {
-			//userServiceInfo.setAdept(paramData.get("adept").toString());
-			 adepts=(Adept[])paramData.get("adepts");
-			
+			 adepts=(List<Integer>) paramData.get("adepts");
 		}
 
 		// 反推一下，用户用户地址
@@ -814,10 +824,27 @@ public class UserService {
 			}
 
 		}
+		if(paramData.containsKey("infoWrite")){
+			String infoWrite=paramData.get("infoWrite").toString();
+			User user=new User();
+			user.setUserId(Long.valueOf(userId));
+			user.setInfoWrite(Byte.valueOf(infoWrite));
+			userManager.updateUser(user);
+		}
 
 		userManager.updateUserServiceInfo(userServiceInfo);
 		
-
+		if(null != adepts){
+			adeptMapManager.deleteUserAdeptAll(Long.valueOf(userId));
+			for(Integer adept:adepts){
+				adeptMapManager.insertSelective(Long.valueOf(adept),Long.valueOf(userId));
+			}
+		}
+		
+		//在第一次进入系统时，初始化为审核通过
+		if (paramData.containsKey("userPosition")) {
+			userManager.updateUserPositionStatusCheckePass(Long.valueOf(userId));
+		}
 		rtnData.put("status", ExceptionConstants.responseSuccess.responseSuccess.code);
 		rtnData.put("message", ExceptionConstants.responseSuccess.responseSuccess.message);
 
@@ -996,7 +1023,7 @@ public class UserService {
 					myInvationUserModel.setServicedUerNums(servicedUerNums.intValue());
 					myInvationUserModel.setInvitionUsers(rtnData);
 
-					responseMessage.setData(rtnData);
+					responseMessage.setData(myInvationUserModel);
 					responseMessage.setStatus(ExceptionConstants.responseSuccess.responseSuccess.code);
 					responseMessage.setMessage(ExceptionConstants.responseSuccess.responseSuccess.message);
 				} else {
@@ -1020,14 +1047,28 @@ public class UserService {
 
 	/**
 	 * @author liushuaic
-	 * @date 2016
+	 * @date 2016-03-24 19:30
+	 * @desc 提交职位审核
 	 */
-	public ResponseMessage submitUpdateUserPosition() {
+	public ResponseMessage submitUpdateUserPosition(Map<String,Object> paramData) {
 		ResponseMessage responseMessage = new ResponseMessage();
 
 		try {
+			if(paramData.containsKey("userPosition")){
+				String userPosition=paramData.get("userPosition").toString();
+				String userId=paramData.get("userId").toString();
+				userManager.submitUpdateUserPosition(Long.valueOf(userId),Long.valueOf(userPosition));
+				responseMessage.setStatus(ExceptionConstants.responseSuccess.responseSuccess.code);
+				responseMessage.setMessage(ExceptionConstants.responseSuccess.responseSuccess.message);
+			}else{
+				responseMessage.setStatus(ExceptionConstants.parameterException.parameterException.errorCode);
+				responseMessage.setMessage(ExceptionConstants.parameterException.parameterException.errorMessage);
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
+			responseMessage.setStatus(ExceptionConstants.systemException.systemException.errorCode);
+			responseMessage.setMessage(ExceptionConstants.systemException.systemException.errorMessage);
 		}
 
 		return responseMessage;

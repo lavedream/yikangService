@@ -14,4 +14,12 @@ public interface UserAdeptMapDao {
     int updateByPrimaryKeySelective(UserAdeptMap record);
 
     int updateByPrimaryKey(UserAdeptMap record);
+    
+    
+    /**
+     * @author liushuaic
+     * @date 2016-03-23 16:52
+     * @desc 删除用户的擅长 by  用户id
+     * **/
+    int deleteUserAdeptAllByUserId(Long userId);
 }

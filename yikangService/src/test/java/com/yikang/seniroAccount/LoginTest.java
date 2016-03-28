@@ -17,7 +17,7 @@ public class LoginTest {
 		
 		try {
 			Map<String,Object> paramData=new HashMap<String, Object>();
-			paramData.put("loginName","17822222222");
+			paramData.put("loginName","17801092532");
 			paramData.put("passWord","123456");
 			paramData.put("machineCode","123123");
 			

@@ -31,16 +31,16 @@ public class AdeptService {
 		ResponseMessage responseMessage=new ResponseMessage();
 		
 		try{
-			if(paramData.containsKey("jobPosition")){
-				String jobPosition=paramData.get("jobPosition").toString();
+			if(paramData.containsKey("userPosition")){
+				String jobPosition=paramData.get("userPosition").toString();
 				String userId=paramData.get("userId").toString();
-				List<Adept> data=adeptManager.getAdeptsByType(Long.valueOf(jobPosition));
+				List<Adept> data=adeptManager.getAdeptsByTypeAndUserId(Long.valueOf(jobPosition),Long.valueOf(userId));
 				responseMessage.setData(data);
 				responseMessage.setStatus(ExceptionConstants.responseSuccess.responseSuccess.code);
 				responseMessage.setMessage(ExceptionConstants.responseSuccess.responseSuccess.message);
 			}else{
-				responseMessage.setStatus(ExceptionConstants.systemException.systemException.errorCode);
-				responseMessage.setMessage(ExceptionConstants.systemException.systemException.errorMessage);
+				responseMessage.setStatus(ExceptionConstants.parameterException.parameterException.errorCode);
+				responseMessage.setMessage(ExceptionConstants.parameterException.parameterException.errorMessage);
 			}
 
 		}catch(Exception e){

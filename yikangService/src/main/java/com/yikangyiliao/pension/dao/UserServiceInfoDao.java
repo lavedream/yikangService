@@ -79,4 +79,21 @@ public interface UserServiceInfoDao {
     int submitUpdateUserPosition(Map<String,Object> paramData);
     
     
+    /**
+     * @author liushuaic
+     * @date 2016-03-25 14:41
+     * @desc 修改职位的审核状态
+     * 
+     * */
+    int updateUserPositionAuditStatusByStatusAndUserId(Map<String,Object> paramData);
+    
+    /**
+     * @author liushuaic
+     * @date 2016-03-25 14:41
+     * @desc 修改职位的审核状态
+     * 
+     * */
+    int updateUserPositionStatusCheckePass(Map<String,Object> paramData);
+    
+    
 }

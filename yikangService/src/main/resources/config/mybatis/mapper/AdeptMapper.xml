@@ -113,6 +113,28 @@
   	where type = #{type,jdbcType=INTEGER}
   </select>
   
+  <resultMap type="com.yikangyiliao.pension.entity.Adept" id="getAdeptsByTypeAndUserIdResultMap" extends="BaseResultMap">
+  	<result column="isCheck" property="isCheck"/>
+  </resultMap>
+  
+  
+  <select id="getAdeptsByTypeAndUserId" parameterType="map" resultMap="getAdeptsByTypeAndUserIdResultMap">
+	  select 
+  		adepts.*,
+	 case 
+		when adepts.adept_id=adm.adept_id then 1
+        else 0
+	end as isCheck
+  	from adepts
+    left join user_adept_maps adm
+    on (adepts.adept_id=adm.adept_id 
+	    <if test="null != userId">
+	    and adm.user_id=#{userId}
+	    </if>
+     )
+  	where type = #{type}
+  </select>
+  
   
   
   

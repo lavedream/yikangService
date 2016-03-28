@@ -31,6 +31,8 @@ public class UserServiceInfo {
     private Byte isDelete;
 
     private String userServiceName;
+    
+    private String userName;
 
     private Double longitude;
 
@@ -41,6 +43,8 @@ public class UserServiceInfo {
     private String hospital;
 
     private String offices;
+    
+    private Office officeObj;
 
     private String adept;
     
@@ -62,6 +66,8 @@ public class UserServiceInfo {
     //擅长列表
     private List<Adept> adepts=new ArrayList<Adept>();
     
+    //新修改的职位
+    private Integer newUserPosition;
 
     public Long getUserServiceInfoId() {
         return userServiceInfoId;
@@ -269,5 +275,30 @@ public class UserServiceInfo {
 
 	public void setUserPosition(Long userPosition) {
 		this.userPosition = userPosition;
+	}
+
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public Integer getNewUserPosition() {
+		return newUserPosition;
+	}
+
+	public void setNewUserPosition(Integer newUserPosition) {
+		this.newUserPosition = newUserPosition;
+	}
+
+	public Office getOfficeObj() {
+		return officeObj;
+	}
+
+	public void setOfficeObj(Office officeObj) {
+		this.officeObj = officeObj;
 	}
 }

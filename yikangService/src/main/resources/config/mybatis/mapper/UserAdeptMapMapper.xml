@@ -90,4 +90,11 @@
       update_time = #{updateTime,jdbcType=BIGINT}
     where user_adept_map_id = #{userAdeptMapId,jdbcType=BIGINT}
   </update>
+  
+  
+  <!--删除用户的所有擅长  -->
+  <delete id="deleteUserAdeptAllByUserId" parameterType="long">
+  	delete from user_adept_maps where user_id=#{userId}
+  </delete>
+  
 </mapper>

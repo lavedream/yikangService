@@ -43,6 +43,9 @@ public class CaptchaService {
 			String captcha=paramData.get("captchar").toString();
 			if(MobileCaptchaUtil.validateCaptcha(mobileNumber, captcha)){
 				responseMessage.setStatus(ExceptionConstants.responseSuccess.responseSuccess.code);
+				responseMessage.setMessage("验证码正确！");
+			}else{
+				responseMessage.setStatus(ExceptionConstants.systemException.systemException.errorCode);
 				responseMessage.setMessage("验证码不正确！");
 			}
 		}else{

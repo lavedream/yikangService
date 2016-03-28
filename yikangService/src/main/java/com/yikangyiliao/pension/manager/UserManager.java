@@ -263,9 +263,39 @@ public class UserManager {
     	paramData.put("userStatus",userStatus);
     	return userDao.getInvationUserInfoByInvationUserIdAndUserStatus(paramData);
     }
-    
-    public int submitUpdateUserPosition(){
-    	return 0;
+    /**
+     * @author liushuaic
+     * @date 2016-03-24 19:27
+     * @desc 提交信息用户的职位的申请
+     * */
+    public int submitUpdateUserPosition(Long userId,Long userPosition){
+    	Map<String,Object> paramData=new HashMap<String,Object>();
+    	paramData.put("userId",userId);
+    	paramData.put("userPosition", userPosition);
+    	return userServiceInfoDao.submitUpdateUserPosition(paramData);
     }
     
+    /**
+     * @author liushuaic
+     * @date 2016-03-25 14:53
+     * @desc 修改用户的职位状态为审核中
+     * */
+    public int updateUserPositionStatusChecking(Long userId){
+    	Map<String,Object> paramData=new HashMap<String,Object>();
+    	paramData.put("userId",userId);
+    	paramData.put("positionAuditStatus", 1);
+    	return userServiceInfoDao.updateUserPositionAuditStatusByStatusAndUserId(paramData);
+    }
+    
+    /**
+     * @author liushuaic
+     * @date 2016-03-25 14:54
+     * @desc  修改职位的审核状态为审核通过
+     * **/
+    public int updateUserPositionStatusCheckePass(Long userId){
+    	Map<String,Object> paramData=new HashMap<String,Object>();
+    	paramData.put("userId",userId);
+    	paramData.put("positionAuditStatus", 2);
+    	return userServiceInfoDao.updateUserPositionStatusCheckePass(paramData);
+    }
 }

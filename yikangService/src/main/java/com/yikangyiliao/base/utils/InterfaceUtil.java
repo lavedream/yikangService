@@ -227,6 +227,7 @@ public class InterfaceUtil {
 		mathodClassPath.put("00-17-05", "updateUserServiceAndServiceInfo");
 		
 		
+		
 		//忘记密码
 		YiKangServiceConfige forgotPassword=new YiKangServiceConfige();
 		forgotPassword.setServiceName("userService");
@@ -275,6 +276,20 @@ public class InterfaceUtil {
 		getInvationUserInfoByInvationUserIdTwo.setMethodName("getInvationUserInfoByInvationUserIdTwo");
 		getInvationUserInfoByInvationUserIdTwo.setIsFileter(true);
 		mathodServiceConfig.put("00-17-11",getInvationUserInfoByInvationUserIdTwo);
+		
+		//修改用户信息
+		YiKangServiceConfige updateUserServiceAndServiceInfoTwo=new YiKangServiceConfige();
+		updateUserServiceAndServiceInfoTwo.setServiceName("userService");
+		updateUserServiceAndServiceInfoTwo.setMethodName("updateUserServiceAndServiceInfoTwo");
+		updateUserServiceAndServiceInfoTwo.setIsFileter(false);
+		mathodServiceConfig.put("00-17-12",updateUserServiceAndServiceInfoTwo);
+		
+		//提交修改用户职位的接口
+		YiKangServiceConfige submitUpdateUserPosition=new YiKangServiceConfige();
+		submitUpdateUserPosition.setServiceName("userService");
+		submitUpdateUserPosition.setMethodName("submitUpdateUserPosition");
+		submitUpdateUserPosition.setIsFileter(false);
+		mathodServiceConfig.put("00-17-13",submitUpdateUserPosition);
 		
 		/**
 		 * @author liushuaic
@@ -347,7 +362,7 @@ public class InterfaceUtil {
 		
 		serviceClassName.put("00-23","adeptService");
 		YiKangServiceConfige getAdeptsByType=new YiKangServiceConfige();
-		getAdeptsByType.setServiceName("appointmentOrderService");
+		getAdeptsByType.setServiceName("adeptService");
 		getAdeptsByType.setMethodName("getAdeptsByType");
 		getAdeptsByType.setIsFileter(true);
 		mathodServiceConfig.put("00-23-01",getAdeptsByType);
@@ -384,7 +399,7 @@ public class InterfaceUtil {
 		validateCaptchar.setServiceName("captchaService");
 		validateCaptchar.setMethodName("validateCaptchar");
 		validateCaptchar.setIsFileter(false);
-		mathodServiceConfig.put("00-25-02",getCaptchar);
+		mathodServiceConfig.put("00-25-02",validateCaptchar);
 		
 		YiKangServiceConfige  userPasswordReset=new YiKangServiceConfige();
 		
