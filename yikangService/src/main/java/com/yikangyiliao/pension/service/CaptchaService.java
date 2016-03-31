@@ -40,7 +40,7 @@ public class CaptchaService {
 		ResponseMessage responseMessage=new ResponseMessage();
 		if(paramData.containsKey("mobileNumber") && paramData.containsKey("captchar")){
 			String mobileNumber=paramData.get("mobileNumber").toString();
-			String captcha=paramData.get("captchar").toString();
+			String captcha=paramData.get("captchar").toString(); 
 			if(MobileCaptchaUtil.validateCaptcha(mobileNumber, captcha)){
 				responseMessage.setStatus(ExceptionConstants.responseSuccess.responseSuccess.code);
 				responseMessage.setMessage("验证码正确！");

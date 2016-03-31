@@ -43,7 +43,7 @@ public class ServiceController {
 	@ResponseBody
 	public Object doMethod(@PathVariable String serverviceCode,String appId,String accessTicket, String paramData,HttpServletRequest request) throws JsonGenerationException, JsonMappingException, IOException {
 		SimpleDateFormat sdf =new  SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-		System.out.println("controller 接收到请求  "+sdf.format(new Date()));
+		logger.debug("controller 接收到请求  "+sdf.format(new Date()));
 		Map<String, Object> rtnMap = new HashMap<String, Object>();
 		ResponseMessage responseMessage=new ResponseMessage();
 		if (null != serverviceCode) {

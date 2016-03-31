@@ -360,11 +360,8 @@
 			<id column="office_id" property="officeId" />
 			<result column="office_name" property="officeName" />
 		</association>
-		<collection property="adepts"
-			javaType="com.yikangyiliao.pension.entity.Adept">
-			<result column="adeptId" property="adeptId" />
-			<result column="adeptName" property="adeptName" />
-		</collection>
+		<collection property="adepts"  fetchType="eager" column="userId" select="com.yikangyiliao.pension.dao.AdeptDao.getAdeptsByUserId">      
+        </collection>
 	</resultMap>
 
 

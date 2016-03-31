@@ -9,6 +9,8 @@ public class UserModel {
 	private Long userId;
 	//用户名
 	private String name;
+	//登陆名称
+	private String loginName;
 	// 用户出生日期
 	private String bithYear;
 	//用户性别
@@ -72,6 +74,12 @@ public class UserModel {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getLoginName() {
+		return loginName;
+	}
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
 	}
 
 }

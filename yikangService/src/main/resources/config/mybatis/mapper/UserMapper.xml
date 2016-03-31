@@ -218,6 +218,7 @@
   	select 
 		users.user_id 	  as userId,
 		users.user_name   as name,
+		users.login_name  as loginName,
 	    ui.user_sex       as sex,
 	    ''				  as bithYear,
 	    ''				  as photoUrl,

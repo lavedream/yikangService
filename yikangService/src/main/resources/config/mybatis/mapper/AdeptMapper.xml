@@ -135,6 +135,14 @@
   	where type = #{type}
   </select>
   
+  <!--查询某一个人所有擅长  -->
+  <select id="getAdeptsByUserId" resultMap="BaseResultMap" parameterType="long">
+  	select 
+		adepts.adept_id,adepts.adept_name
+	from adepts left join user_adept_maps uam 
+		on adepts.adept_id=uam.adept_id
+	where uam.user_id=#{userId}
+  </select>
   
   
   

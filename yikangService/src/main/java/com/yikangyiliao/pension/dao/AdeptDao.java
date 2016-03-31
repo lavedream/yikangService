@@ -38,4 +38,12 @@ public interface AdeptDao {
      * **/
     List<Adept> getAdeptsByTypeAndUserId(Map<String,Object> paramData);
     
+    
+    /**
+     * @author liushuaic
+     * @date 2016-03-31 18:28
+     * @desc 查询我的所有的擅长
+     * */
+    List<Adept> getAdeptsByUserId(Long userId);
+    
 }
