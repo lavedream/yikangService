@@ -354,6 +354,7 @@
 		<result column="infoWrite" property="infoWrite" />
 		<result column="positionAuditStatus" property="positionAuditStatus" />
 		<result column="nums" property="nums" />
+		<result column="invitationCode" property="invitationCode" />
 
 		<association property="officeObj" column="offices"
 			javaType="com.yikangyiliao.pension.entity.Office">

@@ -281,14 +281,14 @@ public class InterfaceUtil {
 		YiKangServiceConfige updateUserServiceAndServiceInfoTwo=new YiKangServiceConfige();
 		updateUserServiceAndServiceInfoTwo.setServiceName("userService");
 		updateUserServiceAndServiceInfoTwo.setMethodName("updateUserServiceAndServiceInfoTwo");
-		updateUserServiceAndServiceInfoTwo.setIsFileter(false);
+		updateUserServiceAndServiceInfoTwo.setIsFileter(true);
 		mathodServiceConfig.put("00-17-12",updateUserServiceAndServiceInfoTwo);
 		
 		//提交修改用户职位的接口
 		YiKangServiceConfige submitUpdateUserPosition=new YiKangServiceConfige();
 		submitUpdateUserPosition.setServiceName("userService");
 		submitUpdateUserPosition.setMethodName("submitUpdateUserPosition");
-		submitUpdateUserPosition.setIsFileter(false);
+		submitUpdateUserPosition.setIsFileter(true);
 		mathodServiceConfig.put("00-17-13",submitUpdateUserPosition);
 		
 		/**

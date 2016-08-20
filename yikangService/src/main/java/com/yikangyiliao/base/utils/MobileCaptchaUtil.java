@@ -116,13 +116,13 @@ public class MobileCaptchaUtil {
 				    	isTure=true;
 				    }
 			}
-			
+			int destoryTime=2;
 			if(cacheCMS == null || isTure){
 				
-					if (SMSUtil.sendMessage(mobileNumber, captcha + "", 1 + "")) {
+					if (SMSUtil.sendMessage(mobileNumber, captcha + "", destoryTime + "")) {
 						
 						CaptchaMessageSMS cms=new CaptchaMessageSMS();
-						cms.setDestoryTime(1); //设置销毁时间
+						cms.setDestoryTime(destoryTime); //设置销毁时间
 						cms.setMobileNumber(mobileNumber); //设置手机号
 						cms.setSendDate(currentDate);     //设置发送时间
 						cms.setCaptcha(captcha+"");
@@ -135,7 +135,7 @@ public class MobileCaptchaUtil {
 					}
 			}else{
 				responseMessage.setStatus(ExceptionConstants.systemException.systemException.errorCode);
-				responseMessage.setMessage("请1分钟后在获取！");
+				responseMessage.setMessage("请"+destoryTime+"分钟后在获取！");
 			}
 		
 		}else{
