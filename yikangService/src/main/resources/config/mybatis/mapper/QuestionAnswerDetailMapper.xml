@@ -24,7 +24,7 @@
     delete from question_answer_details
     where question_answer_detail_id = #{questionAnswerDetailId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.yikangyiliao.pension.entity.QuestionAnswerDetailWithBLOBs" >
+  <insert id="insert" parameterType="com.yikangyiliao.pension.entity.QuestionAnswerDetail" >
     insert into question_answer_details (question_answer_detail_id, question_answer_id, 
       create_time, update_time, create_user_id, 
       question_answer_detail_content, question_answer_html_content
@@ -34,7 +34,7 @@
       #{questionAnswerDetailContent,jdbcType=LONGVARCHAR}, #{questionAnswerHtmlContent,jdbcType=LONGVARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.yikangyiliao.pension.entity.QuestionAnswerDetailWithBLOBs" >
+  <insert id="insertSelective" parameterType="com.yikangyiliao.pension.entity.QuestionAnswerDetail" >
     insert into question_answer_details
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="questionAnswerDetailId != null" >
@@ -83,7 +83,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yikangyiliao.pension.entity.QuestionAnswerDetailWithBLOBs" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.yikangyiliao.pension.entity.QuestionAnswerDetail" >
     update question_answer_details
     <set >
       <if test="questionAnswerId != null" >
@@ -107,7 +107,7 @@
     </set>
     where question_answer_detail_id = #{questionAnswerDetailId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.yikangyiliao.pension.entity.QuestionAnswerDetailWithBLOBs" >
+  <update id="updateByPrimaryKey" parameterType="com.yikangyiliao.pension.entity.QuestionAnswerDetail" >
     update question_answer_details
     set question_answer_id = #{questionAnswerId,jdbcType=BIGINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
